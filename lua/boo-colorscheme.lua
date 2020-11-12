@@ -348,7 +348,7 @@ function M:treesitter()
     {keyword, c.cloud4:dark(.2):saturate(.01):light(.2), c.none, styles.italic},
     {constructors, c.cloud10},
     {types, c.cloud10},
-    {includes, c.cloud10},
+    {includes, c.cloud4},
     {labels, c.cloud4:light()},
     {namespaces, c.cloud4},
     {variables, c.cloud6},
