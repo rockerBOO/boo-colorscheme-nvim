@@ -238,12 +238,14 @@ function M:typescript()
   -- Actually used as this? not sure if case sensitive
   Group.new("typescriptparenexp", c.cloud10)
 
+  Group.new('typescripttypeannotation', c.cloud3:dark(.35))
+
   Group.new("typescriptEnum", c.cloud10)
   Group.new("typescriptString", c.cloud10:light(.3))
   Group.new("typescriptProp", c.cloud10)
   Group.new("typescriptUnion", c.cloud8:dark())
 
-  Group.new("typescriptObjectColon", c.cloud8:dark())
+  Group.new("typescriptObjectColon", c.cloud3:dark(.35))
   Group.new("typescriptObjectSpread", c.cloud14:dark(.1))
 
   Group.new("typescriptInterfaceTypeParameter", c.cloud8:dark())
@@ -259,7 +261,7 @@ function M:typescript()
   Group.new("typescript1", c.cloud6:dark():saturate(.1))
 
   Group.new("typescriptAssign", c.cloud6:dark():saturate(.1))
-  Group.new("typescriptbraces", c.cloud10)
+  Group.new("typescriptbraces", c.cloud8:dark(.2))
   Group.new("typescriptendcolons", c.cloud10:light())
 
   Group.new("typescriptFuncCallArg", c.cloud6)
@@ -347,7 +349,7 @@ function M:treesitter()
 
   local groups = {
     {error, c.cloud1:light(), c.cloud9:dark(.5)},
-    {punctuation, c.cloud3:dark():dark()},
+    {punctuation, c.cloud3:dark(.35)},
     {constants, c.cloud5:light()},
     {string, c.cloud10:light():light():saturate(.25)},
     {boolean, c.cloud2:light()},
