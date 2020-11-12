@@ -13,8 +13,8 @@ Brightness range on syntax to ramp up to values and variables.
 
 ## Requirements
 
-Neovim 0.4
-[colorbuddy.nvim](https://github.com/tjdevries/colorbuddy.nvim)
+* Neovim 0.4
+* [colorbuddy.nvim](https://github.com/tjdevries/colorbuddy.nvim)
 
 ## Install
 
@@ -31,9 +31,11 @@ lua require'boo-colorscheme'.use{}
 
 ## Support
 
-Typescript/TSX/JSX:
+### Typescript/TSX/JSX
+
 ![typescript](https://user-images.githubusercontent.com/15027/98894240-5c661e00-2472-11eb-9bbe-96cca05c5590.png)
 
-Lua
+### Lua
+
 ![lua](https://user-images.githubusercontent.com/15027/98894334-9505f780-2472-11eb-9b73-b76b2b1f68b9.png)
 
