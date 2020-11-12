@@ -170,6 +170,7 @@ function M:colors()
   M:typescript()
   M:markdown()
   M:vim()
+  M:telescope()
 end
 
 function M:vim()
@@ -204,6 +205,15 @@ function M:ale()
   -- Clear ALEError
   vim.cmd("highlight clear ALEWarning")
   vim.cmd("highlight clear ALEError")
+end
+
+function M:telescope()
+  Group.new('TelescopeBorder', c.cloud8:dark(.3))
+  Group.new('TelescopeNormal', c.cloud0:light(.3))
+  Group.new('TelescopePromptPrefix', c.cloud10:dark(.2))
+ 
+  Group.new('TelescopeSelection', c.cloud10:light(), c.cloud8:dark(.2), styles.bold)
+  Group.new('TelescopeMatching', c.cloud4:light())
 end
 
 function M:typescript()
