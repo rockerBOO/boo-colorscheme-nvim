@@ -6,7 +6,7 @@ local Color, c, Group, g, styles = require"colorbuddy".setup()
 local M = {}
 
 function M:use()
-  vim.cmd('hi! clear')
+  vim.cmd("hi! clear")
   M:colors()
   M:treesitter()
 end
@@ -37,6 +37,7 @@ function M:colors()
   Color.new("fg", "#e4dcec")
   Color.new("bg", "#111113")
 
+
   Group.new("Normal", c.fg:dark(.01), c.bg:light(.01))
 
   -- Conceal
@@ -47,7 +48,7 @@ function M:colors()
   Group.new("Function", c.cloud8, c.none, styles.bold)
 
   Group.new("Error", c.cloud9, c.none, styles.bold)
-  Group.new("ErrorMsg", c.cloud1:light():light(), c.cloud9:dark():saturate(.1), styles.bold)
+  Group.new("ErrorMsg", c.cloud1:dark():saturate(.1), c.cloud1:dark(.7):saturate(.1):dark(.05))
 
   Group.new("WarningMsg", c.cloud4:light(.3), c.cloud12:dark(.3))
   Group.new("Exception", c.cloud9, c.none, styles.NONE)
@@ -208,12 +209,12 @@ function M:ale()
 end
 
 function M:telescope()
-  Group.new('TelescopeBorder', c.cloud8:dark(.3))
-  Group.new('TelescopeNormal', c.cloud0:light(.3))
-  Group.new('TelescopePromptPrefix', c.cloud10:dark(.2))
- 
-  Group.new('TelescopeSelection', c.cloud10:light(), c.cloud8:dark(.2), styles.bold)
-  Group.new('TelescopeMatching', c.cloud4:light())
+  Group.new("TelescopeBorder", c.cloud8:dark(.3))
+  Group.new("TelescopeNormal", c.cloud0:light(.3))
+  Group.new("TelescopePromptPrefix", c.cloud10:dark(.2))
+
+  Group.new("TelescopeSelection", c.cloud10:light(), c.cloud8:dark(.2), styles.bold)
+  Group.new("TelescopeMatching", c.cloud4:light())
 end
 
 function M:typescript()
@@ -238,7 +239,7 @@ function M:typescript()
   -- Actually used as this? not sure if case sensitive
   Group.new("typescriptparenexp", c.cloud10)
 
-  Group.new('typescripttypeannotation', c.cloud3:dark(.35))
+  Group.new("typescripttypeannotation", c.cloud3:dark(.35))
 
   Group.new("typescriptEnum", c.cloud10)
   Group.new("typescriptString", c.cloud10:light(.3))
