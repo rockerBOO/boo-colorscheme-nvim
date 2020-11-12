@@ -243,6 +243,9 @@ function M:typescript()
   Group.new("typescriptProp", c.cloud10)
   Group.new("typescriptUnion", c.cloud8:dark())
 
+  Group.new("typescriptObjectColon", c.cloud8:dark())
+  Group.new("typescriptObjectSpread", c.cloud14:dark(.1))
+
   Group.new("typescriptInterfaceTypeParameter", c.cloud8:dark())
   Group.new("typescriptInterfaceName", c.cloud10)
 
