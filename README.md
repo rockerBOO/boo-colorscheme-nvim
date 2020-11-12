@@ -8,7 +8,7 @@ Boo is a colorscheme for Neovim with handcrafted support for LSP, Treesitter.
 
 ## Goal
 
-To use sutle changes in colors to help lessen the syntax noise.
+To use subtle changes in colors to help lessen the syntax noise.
 Brightness range on syntax to ramp up to values and variables.
 
 ## Requirements
