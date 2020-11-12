@@ -5,6 +5,12 @@
 local Color, c, Group, g, styles = require"colorbuddy".setup()
 local M = {}
 
+function M:use()
+  vim.cmd('hi! clear')
+  M:colors()
+  M:treesitter()
+end
+
 function M:colors()
   local themeColors = {
     "#222827",
