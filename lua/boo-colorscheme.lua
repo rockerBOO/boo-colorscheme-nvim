@@ -37,7 +37,6 @@ function M:colors()
   Color.new("fg", "#e4dcec")
   Color.new("bg", "#111113")
 
-
   Group.new("Normal", c.fg:dark(.01), c.bg:light(.01))
 
   -- Conceal
@@ -134,9 +133,9 @@ function M:colors()
   Group.new("NonText", c.bg:light(), c.none)
 
   -- Popup Menu
-  Group.new("PMenu", c.cloud4, c.cloud0)
-  Group.new("PmenuSbar", c.cloud4, c.cloud2)
-  Group.new("PMenuSel", c.cloud10, c.cloud0)
+  Group.new("PMenu", c.cloud2:light(), c.cloud5:dark(.3))
+  Group.new("PmenuSbar", c.cloud4, c.cloud0:dark())
+  Group.new("PMenuSel", c.cloud2:saturate(.9):light(.2), c.cloud0:dark(.7))
   Group.new("PmenuThumb", c.cloud8, c.cloud3)
 
   -- Special
@@ -248,6 +247,9 @@ function M:typescript()
 
   Group.new("typescriptObjectColon", c.cloud3:dark(.35))
   Group.new("typescriptObjectSpread", c.cloud14:dark(.1))
+  Group.new("typescriptObjectType", c.cloud8:dark())
+
+  Group.new("typescriptRestOrSpread", c.cloud8:dark())
 
   Group.new("typescriptInterfaceTypeParameter", c.cloud8:dark())
   Group.new("typescriptInterfaceName", c.cloud10)
@@ -256,6 +258,9 @@ function M:typescript()
   Group.new("typescriptTernaryOp", c.cloud8)
   Group.new("typescriptParenthesizedType", c.cloud10:dark(.2))
   Group.new("typescriptIdentifierName", c.cloud10)
+
+  Group.new("typescriptMemberOptionality", c.cloud10:light())
+  Group.new("typescriptMember", c.cloud10:light(.2))
 
   Group.new("typescriptGlobal", c.cloud7)
   Group.new("typescriptGenericCall", c.cloud8)
