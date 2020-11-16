@@ -371,8 +371,8 @@ function M:treesitter()
     {types, c.cloud10},
     {includes, c.cloud4},
     {labels, c.cloud4:light()},
-    {namespaces, c.cloud4},
-    {variables, c.cloud6},
+    {namespaces, c.cloud14:light()},
+    {variables, c.cloud10:light(.2)},
     {tags, c.cloud8},
     {text, c.fg},
   }
@@ -384,6 +384,7 @@ function M:treesitter()
 
   -- Group.new("TSPunctBracket", c.blue)
   Group.new("TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1))
+  Group.new("TSPunctSpecial", c.cloud12:dark():dark():saturate(.01):light(.05))
   Group.new("TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold)
 
 
