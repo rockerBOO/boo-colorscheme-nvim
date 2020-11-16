@@ -386,11 +386,16 @@ function M:treesitter()
   Group.new("TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1))
   Group.new("TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold)
 
+
   -- null
   Group.new("TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold)
 
   Group.new("TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold)
   Group.new("TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold)
+
+  Group.new("TSVariableBuiltin", c.cloud12:dark(.2)) 
+
+  Group.new("TSField", c.cloud8)
 
   -- Group.new("TSTitle", c.cloud4)
   -- Group.new("TSStrong", c.cloud4, c.none, styles.bold)
