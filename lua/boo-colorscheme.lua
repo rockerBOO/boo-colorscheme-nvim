@@ -167,7 +167,7 @@ function M:colors()
 
   M:lsp()
   M:ale()
-  -- M:typescript()
+  M:typescript()
   M:markdown()
   M:vim()
   M:telescope()
