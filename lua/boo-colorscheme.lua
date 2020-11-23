@@ -167,7 +167,7 @@ function M:colors()
 
   M:lsp()
   M:ale()
-  M:typescript()
+  -- M:typescript()
   M:markdown()
   M:vim()
   M:telescope()
@@ -373,7 +373,7 @@ function M:treesitter()
     {labels, c.cloud4:light()},
     {namespaces, c.cloud14:light()},
     {variables, c.cloud10:light(.2)},
-    {tags, c.cloud8},
+    {tags, c.cloud10:light()},
     {text, c.fg},
   }
 
@@ -384,7 +384,10 @@ function M:treesitter()
 
   -- Group.new("TSPunctBracket", c.blue)
   Group.new("TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1))
-  Group.new("TSPunctSpecial", c.cloud12:dark():dark():saturate(.01):light(.05))
+  Group.new("TSTagDelimiter", c.cloud8:dark(.15))
+
+
+  Group.new("TSPunctSpecial", c.cloud12:dark():dark():light(.3))
   Group.new("TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold)
 
 
