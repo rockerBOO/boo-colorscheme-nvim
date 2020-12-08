@@ -76,8 +76,6 @@ function M:use()
   setup_colors()
 
   for _, group in ipairs(merge({M:colors(), M:treesitter()})) do
-    
-    log(vim.inspect(group[1]))
     Group.new(group[1], group[2], group[3], group[4])
   end
 end
