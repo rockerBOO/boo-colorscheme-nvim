@@ -5,13 +5,19 @@
 local Color, c, Group, g, styles = require"colorbuddy".setup()
 local M = {}
 
-function M:use()
-  vim.cmd("hi! clear")
-  M:colors()
-  M:treesitter()
+local log_to_file = function(logfile) 
+  return function(log_value) 
+    local file = io.open(logfile, "a")
+    if not file then file:close() return end
+ 
+    file:write(log_value .. "\n") 
+    file:close()
+  end
 end
 
-function M:colors()
+local log = log_to_file('boo-colorscheme.log')
+
+local setup_colors = function()
   local themeColors = {
     "#222827",
     "#d5a8e4",
@@ -36,168 +42,214 @@ function M:colors()
 
   Color.new("fg", "#e4dcec")
   Color.new("bg", "#111113")
+end
 
-  Group.new("Normal", c.fg:dark(.01), c.bg:light(.01))
+-- Merge a list of list-like tables togeter
+-- { {'x'}, {'y'} } -> {'x', 'y'}
+local merge = function(list)
+  local acc = {}
 
-  -- Conceal
-  Group.new("Conceal", c.cloud3:light(), c.none)
+  for _, result in ipairs(list) do 
+    vim.list_extend(acc, result) 
+  end
 
-  Group.new("VertSplit", c.cloud0, c.none)
+  return acc
+end
 
-  Group.new("Function", c.cloud8, c.none, styles.bold)
+-- param groups table list of Groups to apply the highlights
+local highlight_to_groups = function(highlight)
+  -- param highlight table 3 element table { fg colorbuddy.Color, bg colorbuddy.Color, styles colorbuddy.Styles }
+  return function(groups)
+    local acc = {}
 
-  Group.new("Error", c.cloud9, c.none, styles.bold)
-  Group.new("ErrorMsg", c.cloud1:dark():saturate(.1), c.cloud1:dark(.7):saturate(.1):dark(.05))
+    for _, name in ipairs(groups) do
+      table.insert(acc, {name, highlight[1], highlight[2], highlight[3]})
+    end
 
-  Group.new("WarningMsg", c.cloud4:light(.3), c.cloud12:dark(.3))
-  Group.new("Exception", c.cloud9, c.none, styles.NONE)
+    return acc
+  end
+end
+-- Use this function in your config
+function M:use()
+  vim.cmd("set termguicolors")
+  vim.cmd("hi! clear")
+  setup_colors()
 
-  Group.new("Boolean", c.cloud2:dark(), c.none, styles.NONE)
-  Group.new("Character", c.cloud14, c.none, styles.NONE)
-  Group.new("Comment", c.cloud3:dark(), c.bg:light(.04), styles.NONE)
-  Group.new("Conditional", c.cloud10, c.none, styles.NONE)
-  Group.new("Constant", c.cloud4, c.none, styles.NONE)
+  for _, group in ipairs(merge({M:colors(), M:treesitter()})) do
+    
+    log(vim.inspect(group[1]))
+    Group.new(group[1], group[2], group[3], group[4])
+  end
+end
 
-  Group.new("Underlined", c.none, c.none, styles.italic)
+--[[ How this works:
+--  We create a data structure that is a list of 4 item tables
+--  { { group, fg, bg, styles }, ... }
+--]]
+function M:colors()
+  local vim_groups = {
+    {"Normal", c.fg:dark(.01), c.bg:light(.01)},
 
-  Group.new("Float", c.cloud4, c.none, styles.NONE)
+    -- Conceal
+    {"Conceal", c.cloud3:light(), c.none},
 
-  Group.new("NormalFloat", c.cloud4, c.cloud0:dark(.4))
+    {"VertSplit", c.cloud0, c.none},
 
-  -- Search
-  Group.new("IncSearch", c.cloud10:light(), c.cloud10:dark(.5), styles.italic)
-  Group.new("Search", c.cloud10, c.cloud10:dark(.8))
+    {"Function", c.cloud8, c.none, styles.bold}, 
 
-  -- Numbers
-  Group.new("Number", c.cloud15, c.none, styles.NONE)
+    {"Error", c.cloud9, c.none, styles.bold},
+    {"ErrorMsg", c.cloud1:dark():saturate(.1), c.cloud1:dark(.7):saturate(.1):dark(.05)},
 
-  Group.new("Define", c.cloud10, c.none, styles.NONE)
+    {"WarningMsg", c.cloud4:light(.3), c.cloud12:dark(.3)},
+    {"Exception", c.cloud9, c.none, styles.NONE},
 
-  Group.new("Delimiter", c.cloud6, c.none, styles.NONE)
+    {"Boolean", c.cloud2:dark(), c.none, styles.NONE},
+    {"Character", c.cloud14, c.none, styles.NONE},
+    {"Comment", c.cloud3:dark(), c.bg:light(.04), styles.NONE},
+    {"Conditional", c.cloud10, c.none, styles.NONE},
+    {"Constant", c.cloud4, c.none, styles.NONE},
 
-  Group.new("Directory", c.cloud4)
+    -- {.none, c.none, styles.underline}},
 
-  Group.new("Function", c.cloud8)
+    {"Float", c.cloud4, c.none, styles.NONE},
 
-  -- Folds
-  Group.new("Folded", c.cloud4:dark(.1))
-  Group.new("FoldColumn", c.cloud4:light())
+    {"NormalFloat", c.cloud4, c.cloud0:dark(.4)},
 
-  -- Diff
-  Group.new("DiffAdd", c.none, c.cloud10)
-  Group.new("DiffChange", c.none, c.cloud12)
-  Group.new("DiffDelete", c.none, c.cloud9)
-  Group.new("DiffText", c.none, c.cloud3)
+    -- Search
+    {"IncSearch", c.cloud10:light(), c.cloud10:dark(.5), styles.italic},
+    {"Search", c.cloud10, c.cloud10:dark(.8)},
 
-  Group.new("Identifier", c.cloud2, c.none, styles.NONE)
-  Group.new("Include", c.cloud10, c.none, styles.NONE)
+    -- Numbers
+    {"Number", c.cloud15, c.none, styles.NONE},
 
-  Group.new("Keyword", c.cloud4, c.none, styles.italic)
+    {"Define", c.cloud10, c.none, styles.NONE},
 
-  Group.new("Label", c.cloud10, c.none, styles.italic)
+    {"Delimiter", c.cloud6, c.none, styles.NONE},
 
-  Group.new("Operator", c.cloud12:dark(), c.none, styles.NONE)
+    {"Directory", c.cloud4},
 
-  Group.new("PreProc", c.cloud10, c.none, styles.NONE)
+    {"Function", c.cloud8},
 
-  Group.new("Repeat", c.cloud12:dark(), c.none, styles.NONE)
+    -- Folds
+    {"Folded", c.cloud4:dark(.1)},
+    {"FoldColumn", c.cloud4:light()},
 
-  Group.new("Statement", c.cloud10, c.none, styles.NONE)
-  Group.new("StorageClass", c.cloud10, c.none, styles.NONE)
-  Group.new("String", c.cloud14, c.none, styles.NONE)
-  Group.new("Structure", c.cloud10, c.none, styles.NONE)
-  Group.new("Tag", c.cloud4, c.none, styles.NONE)
+    -- Diff
+    {"DiffAdd", c.none, c.cloud10},
+    {"DiffChange", c.none, c.cloud12},
+    {"DiffDelete", c.none, c.cloud9},
+    {"DiffText", c.none, c.cloud3},
 
-  Group.new("Title", c.cloud4, c.none)
+    {"Identifier", c.cloud2, c.none, styles.NONE},
+    {"Include", c.cloud10, c.none, styles.NONE},
 
-  Group.new("Todo", c.cloud13, c.none, styles.NONE)
+    {"Keyword", c.cloud4, c.none, styles.italic},
 
-  Group.new("Type", c.cloud10:light(), c.none, styles.italic)
-  Group.new("Typedef", c.cloud10, c.none, styles.NONE)
+    {"Label", c.cloud10, c.none, styles.italic},
 
-  -- Side Column
-  Group.new("CursorColumn", c.cloud1, c.none, styles.NONE)
-  Group.new("LineNr", c.cloud10, c.none, styles.NONE)
-  Group.new("CursorLineNr", c.cloud5, c.none, styles.NONE)
-  Group.new("Line", c.cloud12, c.none, styles.bold)
-  Group.new("SignColumn", c.none, c.none, styles.NONE)
+    {"Operator", c.cloud12:dark(), c.none, styles.NONE},
 
-  Group.new("ColorColumn", c.none, c.cloud1)
-  Group.new("Cursor", c.cloud0, c.cloud4)
-  Group.new("CursorLine", c.none, c.cloud0)
-  Group.new("iCursor", c.cloud0, c.cloud4)
+    {"PreProc", c.cloud10, c.none, styles.NONE},
 
-  Group.new("EndOfBuffer", c.cloud3, c.none)
+    {"Repeat", c.cloud12:dark(), c.none, styles.NONE},
 
-  Group.new("MatchParen", c.none, c.cloud13:dark())
-  Group.new("NonText", c.bg:light(), c.none)
+    {"Statement", c.cloud10, c.none, styles.NONE},
+    {"StorageClass", c.cloud10, c.none, styles.NONE},
+    {"String", c.cloud14, c.none, styles.NONE},
+    {"Structure", c.cloud10, c.none, styles.NONE},
+    {"Tag", c.cloud4, c.none, styles.NONE},
 
-  -- Popup Menu
-  Group.new("PMenu", c.cloud2:light(), c.cloud5:dark(.3))
-  Group.new("PmenuSbar", c.cloud4, c.cloud0:dark())
-  Group.new("PMenuSel", c.cloud2:saturate(.9):light(.2), c.cloud0:dark(.7))
-  Group.new("PmenuThumb", c.cloud8, c.cloud3)
+    {"Title", c.cloud4, c.none},
 
-  -- Special
-  Group.new("Special", c.cloud4, c.none, styles.NONE)
-  Group.new("SpecialChar", c.cloud13, c.none, styles.NONE)
-  Group.new("SpecialKey", c.cloud13)
-  Group.new("SpecialComment", c.cloud8, c.none, styles.NONE)
+    {"Todo", c.cloud13, c.none, styles.NONE},
 
-  -- Spell
-  Group.new("SpellBad", c.cloud11, c.none)
-  Group.new("SpellCap", c.cloud13, c.none)
-  Group.new("SpellLocal", c.cloud5, c.none)
-  Group.new("SpellRare", c.cloud6, c.none)
+    {"Type", c.cloud10:light(), c.none, styles.italic},
+    {"Typedef", c.cloud10, c.none, styles.NONE},
 
-  -- Statusline
-  Group.new("StatusLine", c.cloud10, c.cloud8:dark(.2))
-  Group.new("StatusLineNC", c.cloud4, c.cloud8:dark(.3))
+    -- Side Column
+    {"CursorColumn", c.cloud1, c.none, styles.NONE},
+    {"LineNr", c.cloud10, c.none, styles.NONE},
+    {"CursorLineNr", c.cloud5, c.none, styles.NONE},
+    {"Line", c.cloud12, c.none, styles.bold},
+    {"SignColumn", c.none, c.none, styles.NONE},
 
-  -- Tabline
-  Group.new("TabLine", c.cloud2, c.cloud0:dark())
-  Group.new("TabLineSel", c.cloud10:light(), c.cloud13, styles.bold)
-  Group.new("TabLineFill", c.cloud2, c.cloud0:dark())
+    {"ColorColumn", c.none, c.cloud1},
+    {"Cursor", c.cloud0, c.cloud4},
+    {"CursorLine", c.none, c.cloud0},
+    {"iCursor", c.cloud0, c.cloud4},
 
-  Group.new("Question", c.cloud10, c.none, styles.bold)
+    {"EndOfBuffer", c.cloud3, c.none},
 
-  -- Visual
-  Group.new("Visual", c.cloud10, c.cloud13:dark(.2))
-  Group.new("VisualNOS", c.cloud2, c.cloud1)
+    {"MatchParen", c.none, c.cloud13:dark()},
+    {"NonText", c.bg:light(), c.none},
 
-  M:lsp()
-  M:ale()
-  M:typescript()
-  M:markdown()
-  M:vim()
-  M:telescope()
+    -- Popup Menu
+    {"PMenu", c.cloud2:light(), c.cloud5:dark(.3)},
+    {"PmenuSbar", c.cloud4, c.cloud0:dark()},
+    {"PMenuSel", c.cloud2:saturate(.9):light(.2), c.cloud0:dark(.7)},
+    {"PmenuThumb", c.cloud8, c.cloud3},
+
+    -- Special
+    {"Special", c.cloud4, c.none, styles.NONE},
+    {"SpecialChar", c.cloud13, c.none, styles.NONE},
+    {"SpecialKey", c.cloud13},
+    {"SpecialComment", c.cloud8, c.none, styles.NONE},
+
+    -- Spell
+    {"SpellBad", c.cloud11, c.none},
+    {"SpellCap", c.cloud13, c.none},
+    {"SpellLocal", c.cloud5, c.none},
+    {"SpellRare", c.cloud6, c.none},
+
+    -- Statusline
+    {"StatusLine", c.cloud10, c.cloud8:dark(.2)},
+    {"StatusLineNC", c.cloud4, c.cloud8:dark(.3)},
+
+    -- Tabline
+    {"TabLine", c.cloud2, c.cloud0:dark()},
+    {"TabLineSel", c.cloud10:light(), c.cloud13, styles.bold},
+    {"TabLineFill", c.cloud2, c.cloud0:dark()},
+
+    {"Question", c.cloud10, c.none, styles.bold},
+
+    -- Visual
+    {"Visual", c.cloud10, c.cloud13:dark(.2)},
+    {"VisualNOS", c.cloud2, c.cloud1},
+  }
+
+  -- M:ale()
+
+  return merge({vim_groups, M:lsp(),  M:typescript(), M:markdown(), M:vim(), M:telescope()})
 end
 
 function M:vim()
-  Group.new("vimcommand", c.cloud4)
-  Group.new("vimmap", c.cloud4)
-  Group.new("vimbracket", c.cloud10)
-  Group.new("vimmapmodkey", c.cloud6)
-  Group.new("vimnotation", c.cloud6)
-  Group.new("vimmaplhs", c.cloud10)
-  Group.new("vimiscommand", c.cloud10:light())
-  Group.new("vimFilter", c.cloud7)
-  Group.new("vimMapRhs", c.cloud15:dark(.1))
-  Group.new("vimMapRhsExtend", c.cloud15:dark(.1))
+  return {
+    {"vimcommand", c.cloud4},
+    {"vimmap", c.cloud4},
+    {"vimbracket", c.cloud10},
+    {"vimmapmodkey", c.cloud6},
+    {"vimnotation", c.cloud6},
+    {"vimmaplhs", c.cloud10},
+    {"vimiscommand", c.cloud10:light()},
+    {"vimFilter", c.cloud7},
+    {"vimMapRhs", c.cloud15:dark(.1)},
+    {"vimMapRhsExtend", c.cloud15:dark(.1)},
 
-  Group.new("vimlet", c.cloud4:dark())
-  Group.new("vimnotfunc", c.cloud4:dark())
-  Group.new("vimAutoCmdSfxList", c.cloud6)
-  Group.new("vimUserFunc", c.cloud10)
-  Group.new("vimSetEqual", c.cloud6)
+    {"vimlet", c.cloud4:dark()},
+    {"vimnotfunc", c.cloud4:dark()},
+    {"vimAutoCmdSfxList", c.cloud6},
+    {"vimUserFunc", c.cloud10},
+    {"vimSetEqual", c.cloud6},
+  }
 end
 
 function M:lsp()
-  Group.new("LspDiagnosticsDefaultHint", c.cloud13:saturate(.05):light(), c.cloud13:dark(.9))
-  Group.new("LspDiagnosticsDefaultError", c.cloud1:dark():saturate(.5),
-            c.cloud1:dark(.7):saturate(.1))
-  Group.new("LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:dark(.6):saturate(.2):light(.001))
-  Group.new("LspDiagnosticsDefaultInformation", c.fg)
+  return {
+    {"LspDiagnosticsDefaultHint", c.cloud13:saturate(.05):light(), c.cloud13:dark(.9)},
+    {"LspDiagnosticsDefaultError", c.cloud1:dark():saturate(.5), c.cloud1:dark(.7):saturate(.1)},
+    {"LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:dark(.6):saturate(.2):light(.001)},
+    {"LspDiagnosticsDefaultInformation", c.fg},
+  }
 end
 
 function M:ale()
@@ -208,106 +260,115 @@ function M:ale()
 end
 
 function M:telescope()
-  Group.new("TelescopeBorder", c.cloud8:dark(.3))
-  Group.new("TelescopeNormal", c.cloud0:light(.3))
-  Group.new("TelescopePromptPrefix", c.cloud10:dark(.2))
+  return {
+    {"TelescopeBorder", c.cloud8:dark(.3)},
+    {"TelescopeNormal", c.cloud0:light(.3)},
+    {"TelescopePromptPrefix", c.cloud10:dark(.2)},
 
-  Group.new("TelescopeSelection", c.cloud10:light(), c.cloud8:dark(.2), styles.bold)
-  Group.new("TelescopeMatching", c.cloud4:light())
+    {"TelescopeSelection", c.cloud10:light(), c.cloud8:dark(.2), styles.bold},
+    {"TelescopeMatching", c.cloud4:light()},
+  }
 end
 
 function M:typescript()
-  -- Group.new("typescriptbraces", c.cloud14:dark())
+  -- {"typescriptbraces", c.cloud14:dark()},
 
   -- tsx
-  Group.new("tsxJsBlock", c.cloud8:light())
-  Group.new("tsxclosetag", c.cloud8)
-  Group.new("tsxelseoperator", c.cloud10:dark(.2))
-  Group.new("tsxclosetagname", c.cloud10)
+  return {
+    {"tsxJsBlock", c.cloud8:light()},
+    {"tsxclosetag", c.cloud8},
+    {"tsxelseoperator", c.cloud10:dark(.2)},
+    {"tsxclosetagname", c.cloud10},
 
-  Group.new("tsxclosetag", c.cloud8:dark())
+    {"tsxclosetag", c.cloud8:dark()},
 
-  Group.new("tsxtypes", c.cloud10:light(), c.none, styles.none)
-  Group.new("tsxtag", c.cloud8)
+    {"tsxtypes", c.cloud10:light(), c.none, styles.none},
+    {"tsxtag", c.cloud8},
 
-  Group.new("typescriptAliasDeclaration", c.cloud8)
-  Group.new("typescriptObjectLiteral", c.cloud8)
-  Group.new("typescriptBinaryOp", c.cloud8)
+    {"typescriptAliasDeclaration", c.cloud8},
+    {"typescriptObjectLiteral", c.cloud8},
+    {"typescriptBinaryOp", c.cloud8},
 
-  Group.new("typescriptParenExp", c.cloud8)
-  -- Actually used as this? not sure if case sensitive
-  Group.new("typescriptparenexp", c.cloud10)
+    {"typescriptParenExp", c.cloud8},
+    -- Actually used as this? not sure if case sensitive
+    {"typescriptparenexp", c.cloud10},
 
-  Group.new("typescripttypeannotation", c.cloud3:dark(.35))
+    {"typescripttypeannotation", c.cloud3:dark(.35)},
 
-  Group.new("typescriptEnum", c.cloud10)
-  Group.new("typescriptString", c.cloud10:light(.3))
-  Group.new("typescriptProp", c.cloud10)
-  Group.new("typescriptUnion", c.cloud8:dark())
+    {"typescriptEnum", c.cloud10},
+    {"typescriptString", c.cloud10:light(.3)},
+    {"typescriptProp", c.cloud10},
+    {"typescriptUnion", c.cloud8:dark()},
 
-  Group.new("typescriptObjectColon", c.cloud3:dark(.35))
-  Group.new("typescriptObjectSpread", c.cloud14:dark(.1))
-  Group.new("typescriptObjectType", c.cloud8:dark())
+    {"typescriptObjectColon", c.cloud3:dark(.35)},
+    {"typescriptObjectSpread", c.cloud14:dark(.1)},
+    {"typescriptObjectType", c.cloud8:dark()},
 
-  Group.new("typescriptRestOrSpread", c.cloud8:dark())
+    {"typescriptRestOrSpread", c.cloud8:dark()},
 
-  Group.new("typescriptInterfaceTypeParameter", c.cloud8:dark())
-  Group.new("typescriptInterfaceName", c.cloud10)
+    {"typescriptInterfaceTypeParameter", c.cloud8:dark()},
+    {"typescriptInterfaceName", c.cloud10},
 
-  Group.new("typescriptParens", c.cloud8)
-  Group.new("typescriptTernaryOp", c.cloud8)
-  Group.new("typescriptParenthesizedType", c.cloud10:dark(.2))
-  Group.new("typescriptIdentifierName", c.cloud10)
+    {"typescriptParens", c.cloud8},
+    {"typescriptTernaryOp", c.cloud8},
+    {"typescriptParenthesizedType", c.cloud10:dark(.2)},
+    {"typescriptIdentifierName", c.cloud10},
 
-  Group.new("typescriptMemberOptionality", c.cloud10:light())
-  Group.new("typescriptMember", c.cloud10:light(.2))
+    {"typescriptMemberOptionality", c.cloud10:light()},
+    {"typescriptMember", c.cloud10:light(.2)},
 
-  Group.new("typescriptGlobal", c.cloud7)
-  Group.new("typescriptGenericCall", c.cloud8)
-  Group.new("typescript1", c.cloud6:dark():saturate(.1))
+    {"typescriptGlobal", c.cloud7},
+    {"typescriptGenericCall", c.cloud8},
+    {"typescript1", c.cloud6:dark():saturate(.1)},
 
-  Group.new("typescriptAssign", c.cloud6:dark():saturate(.1))
-  Group.new("typescriptbraces", c.cloud8:dark(.2))
-  Group.new("typescriptendcolons", c.cloud10:light())
+    {"typescriptAssign", c.cloud6:dark():saturate(.1)},
+    {"typescriptbraces", c.cloud8:dark(.2)},
+    {"typescriptendcolons", c.cloud10:light()},
 
-  Group.new("typescriptFuncCallArg", c.cloud6)
-  Group.new("typescriptTypeBrackets", c.cloud8:dark())
-  Group.new("typescriptTypeAnnotation", c.cloud8)
-  Group.new("typescriptTypeArguments", c.cloud8)
-  Group.new("typescriptTypeReference", c.cloud10)
-  Group.new("typescriptTypeCast", c.cloud8)
-  Group.new("typescriptFuncType", c.cloud10)
+    {"typescriptFuncCallArg", c.cloud6},
+    {"typescriptTypeBrackets", c.cloud8:dark()},
+    {"typescriptTypeAnnotation", c.cloud8},
+    {"typescriptTypeArguments", c.cloud8},
+    {"typescriptTypeReference", c.cloud10},
+    {"typescriptTypeCast", c.cloud8},
+    {"typescriptFuncType", c.cloud10},
 
-  Group.new("typescriptUnaryOp", c.cloud4:light(.3), c.none, styles.bold)
+    {"typescriptUnaryOp", c.cloud4:light(.3), c.none, styles.bold},
 
-  Group.new("typescriptaliasdeclaration", c.cloud10)
+    {"typescriptaliasdeclaration", c.cloud10},
+  }
 end
 
 function M:markdown()
-  Group.new("markdownh1", c.cloud6:light():saturate(.7), c.cloud0:dark(), styles.bold)
-  Group.new("markdownh2", c.cloud6:saturate(.7), c.cloud0:dark(), styles.bold)
-  Group.new("markdownh3", c.cloud6:dark(), c.cloud0:dark(), styles.bold)
-  Group.new("markdownh4", c.cloud6:dark(), c.cloud0:dark(), styles.bold)
-  Group.new("markdownh5", c.cloud6:dark(), c.cloud0:dark(), styles.bold)
 
-  local delimiters = {
+  local to_groups = highlight_to_groups({c.cloud5:dark(), c.cloud5:light()})
+  local delimiters = to_groups({
     "markdownH1Delimiter",
     "markdownH2Delimiter",
     "markdownH3Delimiter",
     "markdownH4Delimiter",
     "markdownH5Delimiter",
     "markdownH6Delimiter",
-  }
+  })
 
-  for _, delimiter in ipairs(delimiters) do Group.new(delimiter, c.cloud6:dark(), c.cloud0:dark()) end
+  return merge({
+    delimiters,
+    {
+      {"markdownh1", c.cloud6:light():saturate(.7), c.cloud0:dark(), styles.bold},
+      {"markdownh2", c.cloud6:saturate(.7), c.cloud0:dark(), styles.bold},
+      {"markdownh3", c.cloud6:dark(), c.cloud0:dark(), styles.bold},
+      {"markdownh4", c.cloud6:dark(), c.cloud0:dark(), styles.bold},
+      {"markdownh5", c.cloud6:dark(), c.cloud0:dark(), styles.bold},
 
-  Group.new("markdownCodeDelimiter", c.cloud8:dark(), c.cloud0:dark(.1))
-  Group.new("markdownCode", c.cloud4, c.cloud0:dark(.1))
-  Group.new("markdownUrl", c.cloud14)
-  Group.new("markdownLinkText", c.cloud10)
+      {"markdownCodeDelimiter", c.cloud8:dark(), c.cloud0:dark(.1)},
+      {"markdownCode", c.cloud4, c.cloud0:dark(.1)},
+      {"markdownUrl", c.cloud14},
+      {"markdownLinkText", c.cloud10},
 
-  Group.new("markdownLinkTextDelimiter", c.cloud8)
-  Group.new("markdownLinkDelimiter", c.cloud8)
+      {"markdownLinkTextDelimiter", c.cloud8},
+      {"markdownLinkDelimiter", c.cloud8},
+    },
+  })
 end
 
 function M:treesitter()
@@ -354,13 +415,13 @@ function M:treesitter()
   local text = {"TSText", "TSStrong", "TSEmphasis", "TSUnderline", "TSTitle", "TSLiteral", "TSURI"}
 
   local groups = {
-    {error, c.cloud1:light(), c.cloud9:dark(.5)},
+    {error, c.cloud1:light(), c.cloud9:dark(.5), styles.none},
     {punctuation, c.cloud3:dark(.35)},
     {constants, c.cloud5:light()},
     {string, c.cloud10:light():light():saturate(.25)},
     {boolean, c.cloud2:light()},
-    {functions, c.cloud14:light(.1)},
-    {methods, c.cloud14:light(.1)},
+    {functions, c.cloud14},
+    {methods, c.cloud14:light(.1), c.none, styles.italic},
     {fields, c.cloud8:light()},
     {number, c.cloud6:light()},
     {parameters, c.cloud6:dark()},
@@ -377,32 +438,35 @@ function M:treesitter()
     {text, c.fg},
   }
 
+  local highlights = {}
+
   -- Apply grouping to each color group
   for _, group in ipairs(groups) do
-    for _, color in ipairs(group[1]) do Group.new(color, group[2], group[3], group[4]) end
+    highlights = merge({highlights, highlight_to_groups({group[2], group[3], group[4]})(group[1])})
   end
 
-  -- Group.new("TSPunctBracket", c.blue)
-  Group.new("TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1))
-  Group.new("TSTagDelimiter", c.cloud8:dark(.15))
+  return merge({highlights, {
 
+    -- {"TSPunctBracket", c.blue},
+    {"TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1)},
+    {"TSTagDelimiter", c.cloud8:dark(.15)},
 
-  Group.new("TSPunctSpecial", c.cloud12:dark():dark():light(.3))
-  Group.new("TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold)
+    {"TSPunctSpecial", c.cloud12:dark():dark():light(.3)},
+    {"TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold},
 
+    -- null
+    {"TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold},
 
-  -- null
-  Group.new("TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold)
+    {"TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold},
+    {"TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold},
 
-  Group.new("TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold)
-  Group.new("TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold)
+    {"TSVariableBuiltin", c.cloud12:dark(.2)},
 
-  Group.new("TSVariableBuiltin", c.cloud12:dark(.2)) 
+    {"TSField", c.cloud8},
 
-  Group.new("TSField", c.cloud8)
-
-  -- Group.new("TSTitle", c.cloud4)
-  -- Group.new("TSStrong", c.cloud4, c.none, styles.bold)
+    -- {"TSTitle", c.cloud4},
+    -- {"TSStrong", c.cloud4, c.none, styles.bold},
+  }})
 end
 
 return M
