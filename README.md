@@ -46,3 +46,7 @@ lua require'boo-colorscheme'.use{}
 
 ![lua](https://user-images.githubusercontent.com/15027/98894334-9505f780-2472-11eb-9b73-b76b2b1f68b9.png)
 
+### Go
+
+![go](https://user-images.githubusercontent.com/15027/101699325-ef31b280-3a48-11eb-94e8-a89152204358.png)
+
