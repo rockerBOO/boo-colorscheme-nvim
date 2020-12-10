@@ -5,17 +5,20 @@
 local Color, c, Group, g, styles = require"colorbuddy".setup()
 local M = {}
 
-local log_to_file = function(logfile) 
-  return function(log_value) 
+local log_to_file = function(logfile)
+  return function(log_value)
     local file = io.open(logfile, "a")
-    if not file then file:close() return end
- 
-    file:write(log_value .. "\n") 
+    if not file then
+      file:close()
+      return
+    end
+
+    file:write(log_value .. "\n")
     file:close()
   end
 end
 
-local log = log_to_file('boo-colorscheme.log')
+local log = log_to_file("boo-colorscheme.log")
 
 local setup_colors = function()
   local themeColors = {
@@ -49,9 +52,7 @@ end
 local merge = function(list)
   local acc = {}
 
-  for _, result in ipairs(list) do 
-    vim.list_extend(acc, result) 
-  end
+  for _, result in ipairs(list) do vim.list_extend(acc, result) end
 
   return acc
 end
@@ -75,9 +76,7 @@ function M:use()
   vim.cmd("hi! clear")
   setup_colors()
 
-  for _, group in ipairs(merge({M:colors(), M:treesitter()})) do
-    Group.new(group[1], group[2], group[3], group[4])
-  end
+  for _, group in ipairs(M:colors()) do Group.new(group[1], group[2], group[3], group[4]) end
 end
 
 --[[ How this works:
@@ -93,7 +92,7 @@ function M:colors()
 
     {"VertSplit", c.cloud0, c.none},
 
-    {"Function", c.cloud8, c.none, styles.bold}, 
+    {"Function", c.cloud8, c.none, styles.bold},
 
     {"Error", c.cloud9, c.none, styles.bold},
     {"ErrorMsg", c.cloud1:dark():saturate(.1), c.cloud1:dark(.7):saturate(.1):dark(.05)},
@@ -217,7 +216,15 @@ function M:colors()
 
   -- M:ale()
 
-  return merge({vim_groups, M:lsp(),  M:typescript(), M:markdown(), M:vim(), M:telescope()})
+  return merge({
+    vim_groups,
+    M:lsp(),
+    M:treesitter(),
+    M:typescript(),
+    M:markdown(),
+    M:vim(),
+    M:telescope(),
+  })
 end
 
 function M:vim()
@@ -443,28 +450,31 @@ function M:treesitter()
     highlights = merge({highlights, highlight_to_groups({group[2], group[3], group[4]})(group[1])})
   end
 
-  return merge({highlights, {
+  return merge({
+    highlights,
+    {
 
-    -- {"TSPunctBracket", c.blue},
-    {"TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1)},
-    {"TSTagDelimiter", c.cloud8:dark(.15)},
+      -- {"TSPunctBracket", c.blue},
+      {"TSPunctDelimiter", c.cloud3:dark():dark():saturate(.1)},
+      {"TSTagDelimiter", c.cloud8:dark(.15)},
 
-    {"TSPunctSpecial", c.cloud12:dark():dark():light(.3)},
-    {"TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold},
+      {"TSPunctSpecial", c.cloud12:dark():dark():light(.3)},
+      {"TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold},
 
-    -- null
-    {"TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold},
+      -- null
+      {"TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold},
 
-    {"TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold},
-    {"TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold},
+      {"TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold},
+      {"TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold},
 
-    {"TSVariableBuiltin", c.cloud12:dark(.2)},
+      {"TSVariableBuiltin", c.cloud12:dark(.2)},
 
-    {"TSField", c.cloud8},
+      {"TSField", c.cloud8},
 
-    -- {"TSTitle", c.cloud4},
-    -- {"TSStrong", c.cloud4, c.none, styles.bold},
-  }})
+      -- {"TSTitle", c.cloud4},
+      -- {"TSStrong", c.cloud4, c.none, styles.bold},
+    },
+  })
 end
 
 return M
