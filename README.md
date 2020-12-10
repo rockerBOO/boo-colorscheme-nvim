@@ -36,6 +36,13 @@ Then in your `init.vim` you can set it to use it as your color scheme.
 lua require'boo-colorscheme'.use{}
 ```
 
+## Tests
+
+Requires a busted supported test runner. 
+
+- `make test` - 
+
+
 ## Support
 
 ### Typescript/TSX/JSX
