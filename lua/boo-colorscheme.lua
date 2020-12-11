@@ -20,32 +20,6 @@ end
 
 local log = log_to_file("boo-colorscheme.log")
 
-local setup_colors = function()
-  local themeColors = {
-    "#222827",
-    "#d5a8e4",
-    "#9c75dd",
-    "#9898ae",
-    "#654a96",
-    "#625566",
-    "#a9d1df",
-    "#e6ebe5",
-    "#5d6f74",
-    "#cd749c",
-    "#63b0b0",
-    "#c0c0dd",
-    "#5786bc",
-    "#3f3442",
-    "#849da2",
-    "#d9d6cf",
-  }
-
-  -- cloud0 to cloud16 for all the available colors. 
-  for i, color in ipairs(themeColors) do Color.new("cloud" .. i - 1, color) end
-
-  Color.new("fg", "#e4dcec")
-  Color.new("bg", "#111113")
-end
 
 -- Merge a list of list-like tables togeter
 -- { {'x'}, {'y'} } -> {'x', 'y'}
@@ -74,10 +48,38 @@ end
 function M:use()
   vim.cmd("set termguicolors")
   vim.cmd("hi! clear")
-  setup_colors()
+  M:setup()
 
   for _, group in ipairs(M:colors()) do Group.new(group[1], group[2], group[3], group[4]) end
 end
+
+function M:setup()
+  local themeColors = {
+    "#222827",
+    "#d5a8e4",
+    "#9c75dd",
+    "#9898ae",
+    "#654a96",
+    "#625566",
+    "#a9d1df",
+    "#e6ebe5",
+    "#5d6f74",
+    "#cd749c",
+    "#63b0b0",
+    "#c0c0dd",
+    "#5786bc",
+    "#3f3442",
+    "#849da2",
+    "#d9d6cf",
+  }
+
+  -- cloud0 to cloud16 for all the available colors. 
+  for i, color in ipairs(themeColors) do Color.new("cloud" .. i - 1, color) end
+
+  Color.new("fg", "#e4dcec")
+  Color.new("bg", "#111113")
+end
+
 
 --[[ How this works:
 --  We create a data structure that is a list of 4 item tables
