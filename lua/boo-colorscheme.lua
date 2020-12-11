@@ -2,24 +2,23 @@
 -- with Treesitter, Typescript, LSP supported
 -- colors from colorsx cloud (defunct website)
 --
-local Color, c, Group, g, styles = require"colorbuddy".setup()
+local Color, c, Group, styles = require"colorbuddy".setup()
 local M = {}
 
-local log_to_file = function(logfile)
-  return function(log_value)
-    local file = io.open(logfile, "a")
-    if not file then
-      file:close()
-      return
-    end
+-- local log_to_file = function(logfile)
+--   return function(log_value)
+--     local file = io.open(logfile, "a")
+--     if not file then
+--       file:close()
+--       return
+--     end
 
-    file:write(log_value .. "\n")
-    file:close()
-  end
-end
+--     file:write(log_value .. "\n")
+--     file:close()
+--   end
+-- end
 
-local log = log_to_file("boo-colorscheme.log")
-
+-- local log = log_to_file("boo-colorscheme.log")
 
 -- Merge a list of list-like tables togeter
 -- { {'x'}, {'y'} } -> {'x', 'y'}
@@ -73,7 +72,7 @@ function M:setup()
     "#d9d6cf",
   }
 
-  -- cloud0 to cloud16 for all the available colors. 
+  -- cloud0 to cloud16 for all the available colors.
   for i, color in ipairs(themeColors) do Color.new("cloud" .. i - 1, color) end
 
   Color.new("fg", "#e4dcec")
