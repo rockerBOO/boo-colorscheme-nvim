@@ -2,23 +2,24 @@
 -- with Treesitter, Typescript, LSP supported
 -- colors from colorsx cloud (defunct website)
 --
-local Color, c, Group, styles = require"colorbuddy".setup()
+local Color, c, Group =  require"colorbuddy".setup()
+local s = require'colorbuddy.style'.styles
 local M = {}
 
--- local log_to_file = function(logfile)
---   return function(log_value)
---     local file = io.open(logfile, "a")
---     if not file then
---       file:close()
---       return
---     end
+local log_to_file = function(logfile)
+  return function(log_value)
+    local file = io.open(logfile, "a")
+    if not file then
+      file:close()
+      return
+    end
 
---     file:write(log_value .. "\n")
---     file:close()
---   end
--- end
+    file:write(log_value .. "\n")
+    file:close()
+  end
+end
 
--- local log = log_to_file("boo-colorscheme.log")
+local log = log_to_file("boo-colorscheme.log")
 
 -- Merge a list of list-like tables togeter
 -- { {'x'}, {'y'} } -> {'x', 'y'}
@@ -42,14 +43,6 @@ local highlight_to_groups = function(highlight)
 
     return acc
   end
-end
--- Use this function in your config
-function M:use()
-  vim.cmd("set termguicolors")
-  vim.cmd("hi! clear")
-  M:setup()
-
-  for _, group in ipairs(M:colors()) do Group.new(group[1], group[2], group[3], group[4]) end
 end
 
 function M:setup()
@@ -79,50 +72,67 @@ function M:setup()
   Color.new("bg", "#111113")
 end
 
+-- Use this function in your config
+function M:use()
+  vim.cmd("set termguicolors")
+  vim.cmd("hi! clear")
+  M.setup(self)
+
+  for _, group in ipairs(M:colors()) do 
+    local check_none = function(none_resp) return function(x) return not x and none_resp or x end end
+    
+    local cNone = check_none(c.none)
+    local sNone = check_none(s.none)
+
+    Group.new(group[1], cNone(group[2]), cNone(group[3]), sNone(group[4])) 
+  end
+end
 
 --[[ How this works:
 --  We create a data structure that is a list of 4 item tables
 --  { { group, fg, bg, styles }, ... }
 --]]
 function M:colors()
+
+
   local vim_groups = {
     {"Normal", c.fg:dark(.01), c.bg:light(.01)},
 
     -- Conceal
-    {"Conceal", c.cloud3:light(), c.none},
+    {"Conceal", c.cloud3:light()},
 
-    {"VertSplit", c.cloud0, c.none},
+    {"VertSplit", c.cloud0},
 
-    {"Function", c.cloud8, c.none, styles.bold},
+    {"Function", c.cloud8, c.none, s.bold},
 
-    {"Error", c.cloud9, c.none, styles.bold},
+    {"Error", c.cloud9, c.none, s.bold},
     {"ErrorMsg", c.cloud1:dark():saturate(.1), c.cloud1:dark(.7):saturate(.1):dark(.05)},
 
     {"WarningMsg", c.cloud4:light(.3), c.cloud12:dark(.3)},
-    {"Exception", c.cloud9, c.none, styles.NONE},
+    {"Exception", c.cloud9, c.none, s.NONE},
 
-    {"Boolean", c.cloud2:dark(), c.none, styles.NONE},
-    {"Character", c.cloud14, c.none, styles.NONE},
-    {"Comment", c.cloud3:dark(), c.bg:light(.04), styles.NONE},
-    {"Conditional", c.cloud10, c.none, styles.NONE},
-    {"Constant", c.cloud4, c.none, styles.NONE},
+    {"Boolean", c.cloud2:dark(), c.none, s.NONE},
+    {"Character", c.cloud14, c.none, s.NONE},
+    {"Comment", c.cloud3:dark(), c.bg:light(.04), s.NONE},
+    {"Conditional", c.cloud10, c.none, s.NONE},
+    {"Constant", c.cloud4, c.none, s.NONE},
 
-    -- {.none, c.none, styles.underline}},
+    -- {.none, c.none, s.underline}},
 
-    {"Float", c.cloud4, c.none, styles.NONE},
+    {"Float", c.cloud4, c.none, s.NONE},
 
     {"NormalFloat", c.cloud4, c.cloud0:dark(.4)},
 
     -- Search
-    {"IncSearch", c.cloud10:light(), c.cloud10:dark(.5), styles.italic},
+    {"IncSearch", c.cloud10:light(), c.cloud10:dark(.5), s.italic},
     {"Search", c.cloud10, c.cloud10:dark(.8)},
 
     -- Numbers
-    {"Number", c.cloud15, c.none, styles.NONE},
+    {"Number", c.cloud15, c.none, s.NONE},
 
-    {"Define", c.cloud10, c.none, styles.NONE},
+    {"Define", c.cloud10, c.none, s.NONE},
 
-    {"Delimiter", c.cloud6, c.none, styles.NONE},
+    {"Delimiter", c.cloud6, c.none, s.NONE},
 
     {"Directory", c.cloud4},
 
@@ -138,38 +148,38 @@ function M:colors()
     {"DiffDelete", c.none, c.cloud9},
     {"DiffText", c.none, c.cloud3},
 
-    {"Identifier", c.cloud2, c.none, styles.NONE},
-    {"Include", c.cloud10, c.none, styles.NONE},
+    {"Identifier", c.cloud2, c.none, s.NONE},
+    {"Include", c.cloud10, c.none, s.NONE},
 
-    {"Keyword", c.cloud4, c.none, styles.italic},
+    {"Keyword", c.cloud4, c.none, s.italic},
 
-    {"Label", c.cloud10, c.none, styles.italic},
+    {"Label", c.cloud10, c.none, s.italic},
 
-    {"Operator", c.cloud12:dark(), c.none, styles.NONE},
+    {"Operator", c.cloud12:dark(), c.none, s.NONE},
 
-    {"PreProc", c.cloud10, c.none, styles.NONE},
+    {"PreProc", c.cloud10, c.none, s.NONE},
 
-    {"Repeat", c.cloud12:dark(), c.none, styles.NONE},
+    {"Repeat", c.cloud12:dark(), c.none, s.NONE},
 
-    {"Statement", c.cloud10, c.none, styles.NONE},
-    {"StorageClass", c.cloud10, c.none, styles.NONE},
-    {"String", c.cloud14, c.none, styles.NONE},
-    {"Structure", c.cloud10, c.none, styles.NONE},
-    {"Tag", c.cloud4, c.none, styles.NONE},
+    {"Statement", c.cloud10, c.none, s.NONE},
+    {"StorageClass", c.cloud10, c.none, s.NONE},
+    {"String", c.cloud14, c.none, s.NONE},
+    {"Structure", c.cloud10, c.none, s.NONE},
+    {"Tag", c.cloud4, c.none, s.NONE},
 
     {"Title", c.cloud4, c.none},
 
-    {"Todo", c.cloud13, c.none, styles.NONE},
+    {"Todo", c.cloud13, c.none, s.NONE},
 
-    {"Type", c.cloud10:light(), c.none, styles.italic},
-    {"Typedef", c.cloud10, c.none, styles.NONE},
+    {"Type", c.cloud10:light(), c.none, s.italic},
+    {"Typedef", c.cloud10, c.none, s.NONE},
 
     -- Side Column
-    {"CursorColumn", c.cloud1, c.none, styles.NONE},
-    {"LineNr", c.cloud10, c.none, styles.NONE},
-    {"CursorLineNr", c.cloud5, c.none, styles.NONE},
-    {"Line", c.cloud12, c.none, styles.bold},
-    {"SignColumn", c.none, c.none, styles.NONE},
+    {"CursorColumn", c.cloud1, c.none, s.NONE},
+    {"LineNr", c.cloud10, c.none, s.NONE},
+    {"CursorLineNr", c.cloud5, c.none, s.NONE},
+    {"Line", c.cloud12, c.none, s.bold},
+    {"SignColumn", c.none, c.none, s.NONE},
 
     {"ColorColumn", c.none, c.cloud1},
     {"Cursor", c.cloud0, c.cloud4},
@@ -188,10 +198,10 @@ function M:colors()
     {"PmenuThumb", c.cloud8, c.cloud3},
 
     -- Special
-    {"Special", c.cloud4, c.none, styles.NONE},
-    {"SpecialChar", c.cloud13, c.none, styles.NONE},
+    {"Special", c.cloud4, c.none, s.NONE},
+    {"SpecialChar", c.cloud13, c.none, s.NONE},
     {"SpecialKey", c.cloud13},
-    {"SpecialComment", c.cloud8, c.none, styles.NONE},
+    {"SpecialComment", c.cloud8, c.none, s.NONE},
 
     -- Spell
     {"SpellBad", c.cloud11, c.none},
@@ -205,10 +215,10 @@ function M:colors()
 
     -- Tabline
     {"TabLine", c.cloud2, c.cloud0:dark()},
-    {"TabLineSel", c.cloud10:light(), c.cloud13, styles.bold},
+    {"TabLineSel", c.cloud10:light(), c.cloud13, s.bold},
     {"TabLineFill", c.cloud2, c.cloud0:dark()},
 
-    {"Question", c.cloud10, c.none, styles.bold},
+    {"Question", c.cloud10, c.none, s.bold},
 
     -- Visual
     {"Visual", c.cloud10, c.cloud13:dark(.2)},
@@ -271,7 +281,7 @@ function M:telescope()
     {"TelescopeNormal", c.cloud0:light(.3)},
     {"TelescopePromptPrefix", c.cloud10:dark(.2)},
 
-    {"TelescopeSelection", c.cloud10:light(), c.cloud8:dark(.2), styles.bold},
+    {"TelescopeSelection", c.cloud10:light(), c.cloud8:dark(.2), s.bold},
     {"TelescopeMatching", c.cloud4:light()},
   }
 end
@@ -288,7 +298,7 @@ function M:typescript()
 
     {"tsxclosetag", c.cloud8:dark()},
 
-    {"tsxtypes", c.cloud10:light(), c.none, styles.none},
+    {"tsxtypes", c.cloud10:light(), c.none, s.none},
     {"tsxtag", c.cloud8},
 
     {"typescriptAliasDeclaration", c.cloud8},
@@ -339,7 +349,7 @@ function M:typescript()
     {"typescriptTypeCast", c.cloud8},
     {"typescriptFuncType", c.cloud10},
 
-    {"typescriptUnaryOp", c.cloud4:light(.3), c.none, styles.bold},
+    {"typescriptUnaryOp", c.cloud4:light(.3), c.none, s.bold},
 
     {"typescriptaliasdeclaration", c.cloud10},
   }
@@ -360,11 +370,11 @@ function M:markdown()
   return merge({
     delimiters,
     {
-      {"markdownh1", c.cloud6:light():saturate(.7), c.cloud0:dark(), styles.bold},
-      {"markdownh2", c.cloud6:saturate(.7), c.cloud0:dark(), styles.bold},
-      {"markdownh3", c.cloud6:dark(), c.cloud0:dark(), styles.bold},
-      {"markdownh4", c.cloud6:dark(), c.cloud0:dark(), styles.bold},
-      {"markdownh5", c.cloud6:dark(), c.cloud0:dark(), styles.bold},
+      {"markdownh1", c.cloud6:light():saturate(.7), c.cloud0:dark(), s.bold},
+      {"markdownh2", c.cloud6:saturate(.7), c.cloud0:dark(), s.bold},
+      {"markdownh3", c.cloud6:dark(), c.cloud0:dark(), s.bold},
+      {"markdownh4", c.cloud6:dark(), c.cloud0:dark(), s.bold},
+      {"markdownh5", c.cloud6:dark(), c.cloud0:dark(), s.bold},
 
       {"markdownCodeDelimiter", c.cloud8:dark(), c.cloud0:dark(.1)},
       {"markdownCode", c.cloud4, c.cloud0:dark(.1)},
@@ -421,19 +431,19 @@ function M:treesitter()
   local text = {"TSText", "TSStrong", "TSEmphasis", "TSUnderline", "TSTitle", "TSLiteral", "TSURI"}
 
   local groups = {
-    {error, c.cloud1:light(), c.cloud9:dark(.5), styles.none},
+    {error, c.cloud1:light(), c.cloud9:dark(.5), s.none},
     {punctuation, c.cloud3:dark(.35)},
     {constants, c.cloud5:light()},
     {string, c.cloud10:light():light():saturate(.25)},
     {boolean, c.cloud2:light()},
     {functions, c.cloud14},
-    {methods, c.cloud14:light(.1), c.none, styles.italic},
+    {methods, c.cloud14:light(.1), c.none, s.italic},
     {fields, c.cloud8:light()},
     {number, c.cloud6:light()},
     {parameters, c.cloud6:dark()},
     {operators, c.cloud3:dark():dark()},
     {forwords, c.cloud8:saturate(.1):light(), c.none},
-    {keyword, c.cloud4:dark(.2):saturate(.01):light(.2), c.none, styles.italic},
+    {keyword, c.cloud4:dark(.2):saturate(.01):light(.2), c.none, s.italic},
     {constructors, c.cloud10},
     {types, c.cloud10},
     {includes, c.cloud4},
@@ -460,20 +470,20 @@ function M:treesitter()
       {"TSTagDelimiter", c.cloud8:dark(.15)},
 
       {"TSPunctSpecial", c.cloud12:dark():dark():light(.3)},
-      {"TSVariableBuiltin", c.cloud6:dark(), c.none, styles.bold},
+      {"TSVariableBuiltin", c.cloud6:dark(), c.none, s.bold},
 
       -- null
-      {"TSConstBuiltin", c.cloud6:dark(.3), c.none, styles.bold},
+      {"TSConstBuiltin", c.cloud6:dark(.3), c.none, s.bold},
 
-      {"TSTypeBuiltin", c.cloud10:dark(.2), c.none, styles.bold},
-      {"TSFuncBuiltin", c.cloud8:light(.1), c.none, styles.bold},
+      {"TSTypeBuiltin", c.cloud10:dark(.2), c.none, s.bold},
+      {"TSFuncBuiltin", c.cloud8:light(.1), c.none, s.bold},
 
       {"TSVariableBuiltin", c.cloud12:dark(.2)},
 
       {"TSField", c.cloud8},
 
       -- {"TSTitle", c.cloud4},
-      -- {"TSStrong", c.cloud4, c.none, styles.bold},
+      -- {"TSStrong", c.cloud4, c.none, s.bold},
     },
   })
 end
