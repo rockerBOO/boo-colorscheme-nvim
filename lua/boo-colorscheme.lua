@@ -2,24 +2,24 @@
 -- with Treesitter, Typescript, LSP supported
 -- colors from colorsx cloud (defunct website)
 --
-local Color, c, Group =  require"colorbuddy".setup()
-local s = require'colorbuddy.style'.styles
+local Color, c, Group = require"colorbuddy".setup()
+local s = require"colorbuddy.style".styles
 local M = {}
 
-local log_to_file = function(logfile)
-  return function(log_value)
-    local file = io.open(logfile, "a")
-    if not file then
-      file:close()
-      return
-    end
+-- local log_to_file = function(logfile)
+--   return function(log_value)
+--     local file = io.open(logfile, "a")
+--     if not file then
+--       file:close()
+--       return
+--     end
 
-    file:write(log_value .. "\n")
-    file:close()
-  end
-end
+--     file:write(log_value .. "\n")
+--     file:close()
+--   end
+-- end
 
-local log = log_to_file("boo-colorscheme.log")
+-- local log = log_to_file("boo-colorscheme.log")
 
 -- Merge a list of list-like tables togeter
 -- { {'x'}, {'y'} } -> {'x', 'y'}
@@ -78,13 +78,17 @@ function M:use()
   vim.cmd("hi! clear")
   M.setup(self)
 
-  for _, group in ipairs(M:colors()) do 
-    local check_none = function(none_resp) return function(x) return not x and none_resp or x end end
-    
+  for _, group in ipairs(M:colors()) do
+    local check_none = function(none_resp)
+      return function(x)
+        return not x and none_resp or x
+      end
+    end
+
     local cNone = check_none(c.none)
     local sNone = check_none(s.none)
 
-    Group.new(group[1], cNone(group[2]), cNone(group[3]), sNone(group[4])) 
+    Group.new(group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]))
   end
 end
 
@@ -93,7 +97,6 @@ end
 --  { { group, fg, bg, styles }, ... }
 --]]
 function M:colors()
-
 
   local vim_groups = {
     {"Normal", c.fg:dark(.01), c.bg:light(.01)},
