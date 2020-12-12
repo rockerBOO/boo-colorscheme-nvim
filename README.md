@@ -4,7 +4,10 @@ Sorry, didn't mean to scare you.
 
 Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Treesitter.
 
+
 ![Full Screen](https://user-images.githubusercontent.com/15027/98894239-5bcd8780-2472-11eb-9ca4-a2c3142a848a.png)
+
+[![Action Status](https://github.com/rockerBOO/boo-colorscheme-nvim/workflows/Tests/badge.svg)](https://github.com/rockerBOO/boo-colorscheme-nvim/actions)
 
 ## Goal
 
