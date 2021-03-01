@@ -1,8 +1,7 @@
-local cs = require'boo-colorscheme'
+local cs = require("boo-colorscheme")
 
-describe('colorscheme', function() 
-  it("should not error", function() 
-    cs.setup()
-    assert.has_no.errors(cs.colors)
-  end)
+describe("colorscheme", function()
+	it("should not error", function()
+		assert.has_no.errors(cs.setup)
+	end)
 end)
