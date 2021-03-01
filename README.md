@@ -27,7 +27,7 @@ endif
 
 ```vimscript
 Plug 'tjdevries/colorbuddy.nvim'
-Plug 'rockerBOO/boo-colorscheme-nvim'
+Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
 ```
 
 Then in your `init.vim` you can set it to use it as your color scheme.
