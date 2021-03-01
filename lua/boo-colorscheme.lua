@@ -101,13 +101,6 @@ local lsp = function(c)
 	}
 end
 
-local ale = function()
-	-- Clear ALEWarning
-	-- Clear ALEError
-	vim.cmd("highlight clear ALEWarning")
-	vim.cmd("highlight clear ALEError")
-end
-
 local telescope = function(c)
 	return {
 		{ "TelescopeBorder", c.cloud8:dark(0.3) },
@@ -465,22 +458,6 @@ local colorscheme = function(c)
 		telescope(c),
 	})
 end
--- Non-functional WIP
-local save_vim_colorscheme = function(groups)
-	-- local groups = require'colorbuddy.group'.list_groups()
-	-- require"colorbuddy.group".save_vim_colorscheme("boo", "colors/boo.vim",
-	--                                                require"colorbuddy.group".generate_vim_highlights(g))
-	--
-
-	-- local colorscheme = [[
-	--   " boo-colorscheme-nvim
-	-- ]]
-
-	-- for _, group in ipairs(groups) do
-
-	--   highlights = string.format(" %s %s %s", group.
-	-- end
-end
 
 local M = {}
 
@@ -498,9 +475,9 @@ end
 M.use = function()
 	vim.g.termguicolors = true
 	-- vim.cmd("hi! clear")
-	local colors = M.setup()
+	local colormap = M.setup()
 
-	for _, group in ipairs(colors) do
+	for _, group in ipairs(colormap) do
 		local check_none = function(none_resp)
 			return function(x)
 				return not x and none_resp or x
@@ -521,8 +498,8 @@ M.setup = function()
 	}
 
 	-- cloud0 to cloud16 for all the available colors.
-	for i, color in ipairs(cloud_map) do
-		color_map["cloud" .. i - 1] = colors(color)
+	for i, c in ipairs(cloud_map) do
+		color_map["cloud" .. i - 1] = colors(c)
 	end
 
 	color_map["fg"] = colors("#e4dcec")
