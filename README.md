@@ -29,7 +29,6 @@ endif
 ## Install
 
 ```vimscript
-Plug 'tjdevries/colorbuddy.nvim'
 Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
 ```
 
