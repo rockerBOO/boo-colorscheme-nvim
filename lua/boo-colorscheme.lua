@@ -7,7 +7,6 @@
 local colors = require"colors"
 local s = require'style'
 
-local group = require'group'
 -- local Group = colorbuddy_group.Group
 -- local log_to_file = function(logfile)
 --   return function(log_value)
