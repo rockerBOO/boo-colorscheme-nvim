@@ -1,25 +1,8 @@
--- Colorscheme using colorbuddy
+-- Colorscheme
 -- with Treesitter, Typescript, LSP supported
 -- colors from colorsx cloud (defunct website)
---
--- local Color, c, Group, g, s = require"colorbuddy".setup()
-
 local colors = require("colors")
 local s = require("style")
-
--- local Group = colorbuddy_group.Group
--- local log_to_file = function(logfile)
---   return function(log_value)
---     local file = io.open(logfile, "a")
---     if not file then
---       file:close()
---       return
---     end
-
---     file:write(log_value .. "\n")
---     file:close()
---   end
--- end
 
 -- local log = log_to_file("boo-colorscheme.log")
 
@@ -94,9 +77,13 @@ end
 
 local lsp = function(c)
 	return {
-		{ "LspDiagnosticsDefaultHint", c.cloud13:saturate(0.05):light(), c.cloud13:dark(0.9) },
-		{ "LspDiagnosticsDefaultError", c.cloud1:dark():saturate(0.5), c.cloud1:dark(0.7):saturate(0.1) },
-		{ "LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:dark(0.6):saturate(0.2):light(0.001) },
+		{ "LspDiagnosticsDefaultHint", c.cloud13:saturate(0.05):light(0.1), c.cloud13:dark(0.9) },
+		{
+			"LspDiagnosticsDefaultError",
+			c.cloud1:saturate(0.05):lighten_to(0.7),
+			c.cloud1:shade(0.8):lighten_by(0.7),
+		},
+		{ "LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
 		{ "LspDiagnosticsDefaultInformation", c.fg },
 	}
 end
@@ -182,7 +169,7 @@ local typescript = function(c)
 end
 
 local markdown = function(c)
-	local to_groups = highlight_to_groups({ c.cloud5:dark(), c.cloud5:light() })
+	local to_groups = highlight_to_groups({ c.cloud5:lighten_by(1), c.cloud5:lighten_to(0.2) })
 	local delimiters = to_groups({
 		"markdownH1Delimiter",
 		"markdownH2Delimiter",
@@ -192,14 +179,16 @@ local markdown = function(c)
 		"markdownH6Delimiter",
 	})
 
+	local hbg = c.cloud0:lighten_by(1)
+
 	return merge({
 		delimiters,
 		{
-			{ "markdownh1", c.cloud6:light():saturate(0.7), c.cloud0:dark(), s.bold },
-			{ "markdownh2", c.cloud6:saturate(0.7), c.cloud0:dark(), s.bold },
-			{ "markdownh3", c.cloud6:dark(), c.cloud0:dark(), s.bold },
-			{ "markdownh4", c.cloud6:dark(), c.cloud0:dark(), s.bold },
-			{ "markdownh5", c.cloud6:dark(), c.cloud0:dark(), s.bold },
+			{ "markdownh1", c.cloud6:light():saturate(0.7), hbg, s.bold },
+			{ "markdownh2", c.cloud6:saturate(0.7), hbg, s.bold },
+			{ "markdownh3", c.cloud6:dark(), hbg, s.bold },
+			{ "markdownh4", c.cloud6:dark(), hbg, s.bold },
+			{ "markdownh5", c.cloud6:dark(), hbg, s.bold },
 
 			{ "markdownCodeDelimiter", c.cloud8:dark(), c.cloud0:dark(0.1) },
 			{ "markdownCode", c.cloud4, c.cloud0:dark(0.1) },
@@ -257,25 +246,25 @@ local treesitter = function(c)
 
 	local groups = {
 		{ error, c.cloud1:light(), c.cloud9:dark(0.5), s.none },
-		{ punctuation, c.cloud3:dark(0.35) },
-		{ constants, c.cloud5:light() },
-		{ string, c.cloud10:light():light():saturate(0.25) },
-		{ boolean, c.cloud2:light() },
-		{ functions, c.cloud14 },
+		{ punctuation, c.cloud3:lighten_to(0.3):desaturate(0.1) },
+		{ constants, c.cloud5:light(0.1) },
+		{ string, c.cloud10:light(0.1):saturate(0.2) },
+		{ boolean, c.cloud2:light(0.1) },
+		{ functions, c.cloud14:saturate(0.2) },
 		{ methods, c.cloud14:light(0.1), c.none, s.italic },
-		{ fields, c.cloud8:light() },
-		{ number, c.cloud6:light() },
+		{ fields, c.cloud10:lighten_to(0.5):desaturate_to(0.1) },
+		{ number, c.cloud6:lighten_to(0.8):desaturate_to(0.1) },
 		{ parameters, c.cloud6:dark() },
-		{ operators, c.cloud3:dark():dark() },
-		{ forwords, c.cloud8:saturate(0.1):light(), c.none },
-		{ keyword, c.cloud4:dark(0.2):saturate(0.01):light(0.2), c.none, s.italic },
+		{ operators, c.cloud3:lighten_to(0.4):desaturate(0.1) },
+		{ forwords, c.cloud8:saturate(0.1), c.none },
+		{ keyword, c.cloud4:lighten_to(0.4), c.none, s.italic },
 		{ constructors, c.cloud10 },
 		{ types, c.cloud10 },
 		{ includes, c.cloud4 },
-		{ labels, c.cloud4:light() },
-		{ namespaces, c.cloud14:light() },
+		{ labels, c.cloud4:light(0.1) },
+		{ namespaces, c.cloud14:light(0.1) },
 		{ variables, c.cloud10:light(0.2) },
-		{ tags, c.cloud10:light() },
+		{ tags, c.cloud10:light(0.1) },
 		{ text, c.fg },
 	}
 
@@ -342,7 +331,7 @@ local colorscheme = function(c)
 
 		{ "Float", c.cloud4, c.none, s.NONE },
 
-		{ "NormalFloat", c.cloud6, c.cloud0:dark(0.4) },
+		{ "NormalFloat", c.cloud6:desaturate_to(0.8), c.cloud0:lighten_to(0.05):desaturate_to(0.0) },
 
 		-- Search
 		{ "IncSearch", c.cloud10:light(), c.cloud10:dark(0.5), s.italic },
@@ -462,13 +451,7 @@ end
 local M = {}
 
 M.apply = function(c)
-	vim.cmd(string.format(
-		"highlight %s guifg=%s guibg=%s gui=%s",
-		c[1],
-		c[2],
-		c[3],
-		c[4]
-	))
+	vim.cmd(string.format("highlight %s guifg=%s guibg=%s gui=%s", c[1], c[2], c[3], c[4]))
 end
 
 -- Use this function in your config
@@ -493,9 +476,7 @@ end
 
 M.setup = function()
 	local cloud_map = cloud()
-	local color_map = {
-		none = "none",
-	}
+	local color_map = { none = "none" }
 
 	-- cloud0 to cloud16 for all the available colors.
 	for i, c in ipairs(cloud_map) do
