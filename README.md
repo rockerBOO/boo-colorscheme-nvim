@@ -34,7 +34,7 @@ Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
 Then in your `init.vim` you can set it to use it as your color scheme.
 
 ```vimscript
-lua require'boo-colorscheme'.use{}
+colorscheme boo
 ```
 
 ## Tests
