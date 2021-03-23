@@ -457,6 +457,7 @@ end
 -- Use this function in your config
 M.use = function()
 	vim.g.termguicolors = true
+  vim.g.colors_name = "boo"
 	-- vim.cmd("hi! clear")
 	local colormap = M.setup()
 
