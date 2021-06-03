@@ -349,8 +349,8 @@ local colorscheme = function(c)
 		{ "Function", c.cloud8 },
 
 		-- Folds
-		{ "Folded", c.cloud4:dark(0.1) },
-		{ "FoldColumn", c.cloud4:light() },
+		{ "Folded", c.cloud3:dark(0.3) },
+		{ "FoldColumn", c.cloud3:light() },
 
 		-- Diff
 		{ "DiffAdd", c.none, c.cloud10 },
