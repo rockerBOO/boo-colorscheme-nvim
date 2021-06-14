@@ -296,8 +296,11 @@ local treesitter = function(c)
 
 			{ "TSField", c.cloud8 },
 
-			-- {"TSTitle", c.cloud4},
-			-- {"TSStrong", c.cloud4, c.none, s.bold},
+			{ "TSNodeKey", c.cloud10 },
+			{ "TSNodeUnmatched", c.cloud8:dark(0.2) },
+
+				-- {"TSTitle", c.cloud4},
+				-- {"TSStrong", c.cloud4, c.none, s.bold},
 		},
 	})
 end
