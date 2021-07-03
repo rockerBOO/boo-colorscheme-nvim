@@ -204,7 +204,7 @@ end
 local treesitter = function(c)
 	local error = { "TSError" }
 
-	local punctuation = { "TSPunctDelimiter", "TSPunctBracket", "TSPunchSpecial" }
+	local punctuation = { "TSPunctDelimiter", "TSPunctBracket", "TSPunctSpecial" }
 
 	local constants = { "TSConstant", "TsConstBuiltin", "TSConstMacro" }
 
