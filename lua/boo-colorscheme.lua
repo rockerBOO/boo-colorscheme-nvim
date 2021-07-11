@@ -493,4 +493,55 @@ M.setup = function()
 	return colorscheme(color_map)
 end
 
+-- Experimental export to colors/boo.vim
+-- Allows for the colorscheme to be used on vim
+M.export_to_vim = function()
+	-- Using relative paths which can be problematic
+	vim.loop.fs_open("./colors/boo.vim", "w", 438, function(err, fd)
+		if err then
+			print(string.format("err %s", err))
+			return
+		end
+
+		if fd == nil then
+			print("invalid file")
+			return
+		end
+
+		local lines = {}
+
+		for i, v in ipairs(M.setup()) do
+			local fg = (#v >= 2 and v[2] ~= nil and v[2] ~= "none") and v[2]:to_rgb() or "none"
+			local bg = (#v >= 3 and v[3] ~= nil) and v[3] ~= "none" and v[3]:to_rgb() or "none"
+			local styles = v[4] ~= nil and v[4] ~= "none" and v[4] or "none"
+
+			table.insert(lines, string.format("highlight %s guifg=%s guibg=%s gui=%s", v[1], fg, bg, styles))
+		end
+
+		local headers = string.format(
+			[[
+" Vim Color File
+" Name:     boo
+" Built On: %s
+
+hi! clear
+
+if exists('syntax on')
+  syntax reset
+endif
+
+if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
+  finish
+endif
+
+let g:colors_name = 'boo' ]],
+			os.date("%c")
+		)
+
+		vim.loop.fs_write(fd, headers .. "\n" .. table.concat(lines, "\n"), 0, function()
+			vim.loop.fs_close(fd)
+		end)
+	end)
+end
+
 return M
