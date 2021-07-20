@@ -77,14 +77,28 @@ end
 
 local lsp = function(c)
 	return {
-		{ "LspDiagnosticsDefaultHint", c.cloud13:saturate(0.05):light(0.1), c.cloud13:dark(0.9) },
+		{
+			"LspDiagnosticsDefaultHint",
+			c.cloud13:saturate(0.05):light(0.1),
+			c.cloud13:dark(0.9),
+			s.none,
+			{ winblend = 2 },
+		},
 		{
 			"LspDiagnosticsDefaultError",
 			c.cloud1:saturate(0.05):lighten_to(0.7),
 			c.cloud1:shade(0.8):lighten_by(0.7),
+			s.none,
+			{ winblend = 2 },
 		},
-		{ "LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
-		{ "LspDiagnosticsDefaultInformation", c.fg },
+		{
+			"LspDiagnosticsDefaultWarning",
+			c.cloud6,
+			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+			s.none,
+			{ winblend = 2 },
+		},
+		{ "LspDiagnosticsDefaultInformation", c.fg, c.none, s.none, { winblend = 2 } },
 	}
 end
 
@@ -311,7 +325,7 @@ end
 --]]
 local colorscheme = function(c)
 	local vim_groups = {
-		{ "Normal", c.fg:dark(0.01), c.bg:light(0.01) },
+		{ "Normal", c.fg:dark(0.1), c.bg:light(0.01) },
 
 		-- Conceal
 		{ "Conceal", c.cloud3:light() },
@@ -332,9 +346,15 @@ local colorscheme = function(c)
 		{ "Conditional", c.cloud10, c.none, s.NONE },
 		{ "Constant", c.cloud4, c.none, s.NONE },
 
-		{ "Float", c.cloud4, c.none, s.NONE },
+		{ "Float", c.fg, c.none, s.NONE },
 
-		{ "NormalFloat", c.cloud6:desaturate_to(0.8), c.cloud0:lighten_to(0.05):desaturate_to(0.0) },
+		{
+			"NormalFloat",
+			c.fg:dark(0.2):desaturate_to(0.0),
+			c.cloud0:lighten_to(0.05):desaturate_to(0.0),
+			s.NONE,
+			{ winblend = 2 },
+		},
 
 		-- Search
 		{ "IncSearch", c.cloud10:light(), c.cloud10:dark(0.5), s.italic },
@@ -405,7 +425,7 @@ local colorscheme = function(c)
 		{ "NonText", c.bg:light(), c.none },
 
 		-- Popup Menu
-		{ "PMenu", c.cloud2:light(), c.cloud5:dark(0.3) },
+		{ "PMenu", c.cloud2:light(), c.cloud5:dark(0.3), s.NONE, { winblend = 2 } },
 		{ "PmenuSbar", c.cloud4, c.cloud0:dark() },
 		{ "PMenuSel", c.cloud2:saturate(0.9):light(0.2), c.cloud0:dark(0.7) },
 		{ "PmenuThumb", c.cloud8, c.cloud3 },
@@ -453,8 +473,8 @@ end
 
 local M = {}
 
-M.apply = function(c)
-	vim.cmd(string.format("highlight %s guifg=%s guibg=%s gui=%s", c[1], c[2], c[3], c[4]))
+M.apply = function(highlight)
+	vim.cmd(M.generate_vim_highlight(highlight))
 end
 
 -- Use this function in your config
@@ -474,7 +494,7 @@ M.use = function()
 		local cNone = check_none("none")
 		local sNone = check_none(s.none)
 
-		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]) })
+		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]), group[5] })
 	end
 end
 
@@ -493,10 +513,25 @@ M.setup = function()
 	return colorscheme(color_map)
 end
 
+M.generate_vim_highlight = function(values)
+	local fg = (#values >= 2 and values[2] ~= nil and values[2] ~= "none") and values[2]:to_rgb() or "none"
+	local bg = (#values >= 3 and values[3] ~= nil) and values[3] ~= "none" and values[3]:to_rgb() or "none"
+	local styles = values[4] ~= nil and values[4] ~= "none" and values[4] or "none"
+	local options = values[5]
+
+	local highlight = string.format("highlight %s guifg=%s guibg=%s gui=%s", values[1], fg, bg, styles, options)
+
+	if (options ~= nil and options ~= nil) then
+		highlight = highlight .. " " .. string.format("blend=%d", options.winblend or 1)
+	end
+
+	return highlight
+end
+
 -- Experimental export to colors/boo.vim
 -- Allows for the colorscheme to be used on vim
 M.export_to_vim = function()
-	-- Using relative paths which can be problematic
+	-- FIXME Using relative paths which can be problematic
 	vim.loop.fs_open("./colors/boo.vim", "w", 438, function(err, fd)
 		if err then
 			print(string.format("err %s", err))
@@ -511,11 +546,7 @@ M.export_to_vim = function()
 		local lines = {}
 
 		for i, v in ipairs(M.setup()) do
-			local fg = (#v >= 2 and v[2] ~= nil and v[2] ~= "none") and v[2]:to_rgb() or "none"
-			local bg = (#v >= 3 and v[3] ~= nil) and v[3] ~= "none" and v[3]:to_rgb() or "none"
-			local styles = v[4] ~= nil and v[4] ~= "none" and v[4] or "none"
-
-			table.insert(lines, string.format("highlight %s guifg=%s guibg=%s gui=%s", v[1], fg, bg, styles))
+			table.insert(lines, M.generate_vim_highlight(v))
 		end
 
 		local headers = string.format(

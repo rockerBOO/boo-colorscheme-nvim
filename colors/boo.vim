@@ -1,6 +1,6 @@
 " Vim Color File
 " Name:     boo
-" Built On: Sun 11 Jul 2021 06:42:13 PM EDT
+" Built On: Tue 20 Jul 2021 03:37:28 PM EDT
 
 hi! clear
 
@@ -13,7 +13,7 @@ if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 
 endif
 
 let g:colors_name = 'boo' 
-highlight Normal guifg=#e1d9ea guibg=#131316 gui=none
+highlight Normal guifg=#cabbda guibg=#131316 gui=none
 highlight Conceal guifg=#9898ae guibg=none gui=none
 highlight VertSplit guifg=#222827 guibg=none gui=none
 highlight Function guifg=#5d6f74 guibg=none gui=none
@@ -26,8 +26,8 @@ highlight Character guifg=#849da2 guibg=none gui=none
 highlight Comment guifg=#9898ae guibg=#1b1b1e gui=none
 highlight Conditional guifg=#63b0b0 guibg=none gui=none
 highlight Constant guifg=#654a96 guibg=none gui=none
-highlight Float guifg=#654a96 guibg=none gui=none
-highlight NormalFloat guifg=#94dbf4 guibg=#0d0d0d gui=none
+highlight Float guifg=#e4dcec guibg=none gui=none
+highlight NormalFloat guifg=#b1b1b1 guibg=#0d0d0d gui=none blend=2
 highlight IncSearch guifg=#63b0b0 guibg=#060d0d gui=italic
 highlight Search guifg=#63b0b0 guibg=#ffffffffffffffd3ffffffffffffffa7ffffffffffffffa7 gui=none
 highlight Number guifg=#d9d6cf guibg=none gui=none
@@ -69,7 +69,7 @@ highlight iCursor guifg=#222827 guibg=#654a96 gui=none
 highlight EndOfBuffer guifg=#9898ae guibg=none gui=none
 highlight MatchParen guifg=none guibg=#3f3442 gui=none
 highlight NonText guifg=#111113 guibg=none gui=none
-highlight PMenu guifg=#9c75dd guibg=#120f12 gui=none
+highlight PMenu guifg=#9c75dd guibg=#120f12 gui=none blend=2
 highlight PmenuSbar guifg=#654a96 guibg=#222827 gui=none
 highlight PMenuSel guifg=#cfa7112 guibg=#ffffffffffffff7dffffffffffffff66ffffffffffffff6a gui=none
 highlight PmenuThumb guifg=#5d6f74 guibg=#9898ae gui=none
@@ -89,10 +89,10 @@ highlight TabLineFill guifg=#9c75dd guibg=#222827 gui=none
 highlight Question guifg=#63b0b0 guibg=none gui=none
 highlight Visual guifg=#63b0b0 guibg=#080709 gui=none
 highlight VisualNOS guifg=#9c75dd guibg=#d5a8e4 gui=none
-highlight LspDiagnosticsDefaultHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=none
-highlight LspDiagnosticsDefaultError guifg=#c988df guibg=#230d2a gui=none
-highlight LspDiagnosticsDefaultWarning guifg=#a9d1df guibg=#0d2026 gui=none
-highlight LspDiagnosticsDefaultInformation guifg=#e4dcec guibg=none gui=none
+highlight LspDiagnosticsDefaultHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=none blend=2
+highlight LspDiagnosticsDefaultError guifg=#c988df guibg=#230d2a gui=none blend=2
+highlight LspDiagnosticsDefaultWarning guifg=#a9d1df guibg=#0d2026 gui=none blend=2
+highlight LspDiagnosticsDefaultInformation guifg=#e4dcec guibg=none gui=none blend=2
 highlight TSError guifg=#d5a8e4 guibg=#30111f gui=none
 highlight TSPunctDelimiter guifg=#4b4b4e guibg=none gui=none
 highlight TSPunctBracket guifg=#4b4b4e guibg=none gui=none
