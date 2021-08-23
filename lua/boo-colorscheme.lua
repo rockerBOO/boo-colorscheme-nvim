@@ -201,6 +201,12 @@ local markdown = function(c)
 	})
 end
 
+local symbols_outline = function(c)
+	return {
+		{ "FocusedSymbol", c.none, c.cloud10:dark(0.4):desaturate_to(0.1), s.bold },
+	}
+end
+
 local treesitter = function(c)
 	local error = { "TSError" }
 
@@ -338,7 +344,7 @@ local colorscheme = function(c)
 
 		-- Search
 		{ "IncSearch", c.cloud10:light(), c.cloud10:dark(0.5), s.italic },
-		{ "Search", c.cloud10, c.cloud10:dark(0.8) },
+		{ "Search", c.none, c.cloud10:dark(0.4):desaturate_to(0.1), s.bold },
 
 		-- Numbers
 		{ "Number", c.cloud15, c.none, s.NONE },
@@ -448,6 +454,7 @@ local colorscheme = function(c)
 		markdown(c),
 		vimscript(c),
 		telescope(c),
+		symbols_outline(c),
 	})
 end
 
