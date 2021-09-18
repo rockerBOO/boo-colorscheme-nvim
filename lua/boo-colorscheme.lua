@@ -75,6 +75,39 @@ local vimscript = function(c)
 	}
 end
 
+local diagnostics = function(c)
+	return {
+		{ "DiagnosticHint", c.cloud13:saturate(0.05):light(0.1), c.cloud13:dark(0.9) },
+		{
+			"DiagnosticError",
+			c.cloud1:saturate(0.05):lighten_to(0.7),
+			c.cloud1:shade(0.8):lighten_by(0.7),
+		},
+		{ "DiagnosticWarning", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
+		{ "DiagnosticInformation", c.fg },
+
+		{
+			"DiagnosticUnderlineHint",
+			c.cloud13:saturate(0.05):light(0.1),
+			c.cloud13:dark(0.9),
+			s.underline,
+		},
+		{
+			"DiagnosticUnderlineError",
+			c.cloud1:saturate(0.05):lighten_to(0.7),
+			c.cloud1:shade(0.8):lighten_by(0.7),
+			s.underline,
+		},
+		{
+			"DiagnosticUnderlineWarning",
+			c.cloud6,
+			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+			s.underline,
+		},
+		{ "DiagnosticUnderlineInformation", c.fg, s.underline },
+	}
+end
+
 local lsp = function(c)
 	return {
 		{
@@ -213,6 +246,12 @@ local markdown = function(c)
 			{ "markdownLinkDelimiter", c.cloud8 },
 		},
 	})
+end
+
+local symbols_outline = function(c)
+	return {
+		{ "FocusedSymbol", c.none, c.cloud10:dark(0.4):desaturate_to(0.1), s.bold },
+	}
 end
 
 local treesitter = function(c)
@@ -358,7 +397,7 @@ local colorscheme = function(c)
 
 		-- Search
 		{ "IncSearch", c.cloud10:light(), c.cloud10:dark(0.5), s.italic },
-		{ "Search", c.cloud10, c.cloud10:dark(0.8) },
+		{ "Search", c.none, c.cloud10:dark(0.4):desaturate_to(0.1), s.bold },
 
 		-- Numbers
 		{ "Number", c.cloud15, c.none, s.NONE },
@@ -463,11 +502,13 @@ local colorscheme = function(c)
 	return merge({
 		vim_groups,
 		lsp(c),
+		diagnostics(c),
 		treesitter(c),
 		typescript(c),
 		markdown(c),
 		vimscript(c),
 		telescope(c),
+		symbols_outline(c),
 	})
 end
 

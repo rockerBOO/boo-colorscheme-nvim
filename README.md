@@ -58,6 +58,10 @@ Requires a busted supported test runner.
 
 ![go](https://user-images.githubusercontent.com/15027/101699325-ef31b280-3a48-11eb-94e8-a89152204358.png)
 
+### Telescope
+
+![telescope](https://user-images.githubusercontent.com/15027/130393678-526e0fd2-d50f-4db7-8d76-337475e4e125.png)
+
 ## Colors
 
 ![Colors Used](https://user-images.githubusercontent.com/15027/112667058-321a6900-8e33-11eb-9c06-7c15ab5b7b18.png)

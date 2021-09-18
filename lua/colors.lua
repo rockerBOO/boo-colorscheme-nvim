@@ -35,7 +35,7 @@ end
 M.new = new
 
 M.from_hex = function(hex)
-  local	h, s, l = rgb_string_to_hsl(hex)
+	local h, s, l = rgb_string_to_hsl(hex)
 
 	return new(h, s, l)
 end
