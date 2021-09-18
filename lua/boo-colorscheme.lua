@@ -104,7 +104,7 @@ local diagnostics = function(c)
 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 			s.underline,
 		},
-		{ "DiagnosticUnderlineInformation", c.fg, s.underline },
+		{ "DiagnosticUnderlineInformation", c.fg, c.none, s.underline },
 	}
 end
 

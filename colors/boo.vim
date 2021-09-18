@@ -1,6 +1,6 @@
 " Vim Color File
 " Name:     boo
-" Built On: Tue 20 Jul 2021 03:37:28 PM EDT
+" Built On: Sat 18 Sep 2021 12:57:06 PM EDT
 
 hi! clear
 
@@ -29,7 +29,7 @@ highlight Constant guifg=#654a96 guibg=none gui=none
 highlight Float guifg=#e4dcec guibg=none gui=none
 highlight NormalFloat guifg=#b1b1b1 guibg=#0d0d0d gui=none blend=2
 highlight IncSearch guifg=#63b0b0 guibg=#060d0d gui=italic
-highlight Search guifg=#63b0b0 guibg=#ffffffffffffffd3ffffffffffffffa7ffffffffffffffa7 gui=none
+highlight Search guifg=none guibg=#202727 gui=none
 highlight Number guifg=#d9d6cf guibg=none gui=none
 highlight Define guifg=#63b0b0 guibg=none gui=none
 highlight Delimiter guifg=#a9d1df guibg=none gui=none
@@ -93,6 +93,14 @@ highlight LspDiagnosticsDefaultHint guifg=#5d4663 guibg=#ffffffffffffff49fffffff
 highlight LspDiagnosticsDefaultError guifg=#c988df guibg=#230d2a gui=none blend=2
 highlight LspDiagnosticsDefaultWarning guifg=#a9d1df guibg=#0d2026 gui=none blend=2
 highlight LspDiagnosticsDefaultInformation guifg=#e4dcec guibg=none gui=none blend=2
+highlight DiagnosticHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=none
+highlight DiagnosticError guifg=#c988df guibg=#230d2a gui=none
+highlight DiagnosticWarning guifg=#a9d1df guibg=#0d2026 gui=none
+highlight DiagnosticInformation guifg=#e4dcec guibg=none gui=none
+highlight DiagnosticUnderlineHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=underline
+highlight DiagnosticUnderlineError guifg=#c988df guibg=#230d2a gui=underline
+highlight DiagnosticUnderlineWarning guifg=#a9d1df guibg=#0d2026 gui=underline
+highlight DiagnosticUnderlineInformation guifg=#e4dcec guibg=none gui=underline
 highlight TSError guifg=#d5a8e4 guibg=#30111f gui=none
 highlight TSPunctDelimiter guifg=#4b4b4e guibg=none gui=none
 highlight TSPunctBracket guifg=#4b4b4e guibg=none gui=none
@@ -228,3 +236,4 @@ highlight TelescopeNormal guifg=#697b78 guibg=none gui=none
 highlight TelescopePromptPrefix guifg=#3a7272 guibg=none gui=none
 highlight TelescopeSelection guifg=#63b0b0 guibg=#2f393b gui=none
 highlight TelescopeMatching guifg=#654a96 guibg=none gui=none
+highlight FocusedSymbol guifg=none guibg=#202727 gui=none
