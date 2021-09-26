@@ -83,8 +83,8 @@ local diagnostics = function(c)
 			c.cloud1:saturate(0.05):lighten_to(0.7),
 			c.cloud1:shade(0.8):lighten_by(0.7),
 		},
-		{ "DiagnosticWarning", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
-		{ "DiagnosticInformation", c.fg },
+		{ "DiagnosticWarn", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
+		{ "DiagnosticInfo", c.fg },
 
 		{
 			"DiagnosticUnderlineHint",
@@ -99,12 +99,12 @@ local diagnostics = function(c)
 			s.underline,
 		},
 		{
-			"DiagnosticUnderlineWarning",
+			"DiagnosticUnderlineWarn",
 			c.cloud6,
 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 			s.underline,
 		},
-		{ "DiagnosticUnderlineInformation", c.fg, c.none, s.underline },
+		{ "DiagnosticUnderlineInfo", c.fg, c.none, s.underline },
 	}
 end
 
