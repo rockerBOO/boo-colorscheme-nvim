@@ -1,6 +1,6 @@
 " Vim Color File
 " Name:     boo
-" Built On: Sat 18 Sep 2021 12:57:06 PM EDT
+" Built On: Fri 22 Oct 2021 02:49:23 PM EDT
 
 hi! clear
 
@@ -95,12 +95,12 @@ highlight LspDiagnosticsDefaultWarning guifg=#a9d1df guibg=#0d2026 gui=none blen
 highlight LspDiagnosticsDefaultInformation guifg=#e4dcec guibg=none gui=none blend=2
 highlight DiagnosticHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=none
 highlight DiagnosticError guifg=#c988df guibg=#230d2a gui=none
-highlight DiagnosticWarning guifg=#a9d1df guibg=#0d2026 gui=none
-highlight DiagnosticInformation guifg=#e4dcec guibg=none gui=none
+highlight DiagnosticWarn guifg=#a9d1df guibg=#0d2026 gui=none
+highlight DiagnosticInfo guifg=#e4dcec guibg=none gui=none
 highlight DiagnosticUnderlineHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=underline
 highlight DiagnosticUnderlineError guifg=#c988df guibg=#230d2a gui=underline
-highlight DiagnosticUnderlineWarning guifg=#a9d1df guibg=#0d2026 gui=underline
-highlight DiagnosticUnderlineInformation guifg=#e4dcec guibg=none gui=underline
+highlight DiagnosticUnderlineWarn guifg=#a9d1df guibg=#0d2026 gui=underline
+highlight DiagnosticUnderlineInfo guifg=#e4dcec guibg=none gui=underline
 highlight TSError guifg=#d5a8e4 guibg=#30111f gui=none
 highlight TSPunctDelimiter guifg=#4b4b4e guibg=none gui=none
 highlight TSPunctBracket guifg=#4b4b4e guibg=none gui=none
@@ -237,3 +237,8 @@ highlight TelescopePromptPrefix guifg=#3a7272 guibg=none gui=none
 highlight TelescopeSelection guifg=#63b0b0 guibg=#2f393b gui=none
 highlight TelescopeMatching guifg=#654a96 guibg=none gui=none
 highlight FocusedSymbol guifg=none guibg=#202727 gui=none
+highlight CmpItemMenu guifg=#202524 guibg=none gui=none
+highlight CmpItemAbbr guifg=#4e3974 guibg=none gui=none
+highlight CmpItemAbbrMatch guifg=#9c75dd guibg=none gui=none
+highlight CmpItemAbbrMatchFuzzy guifg=#9c75dd guibg=none gui=none
+highlight CmpItemKind guifg=#202524 guibg=none gui=none

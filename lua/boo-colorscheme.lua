@@ -135,6 +135,16 @@ local lsp = function(c)
 	}
 end
 
+local cmp = function(c)
+	return {
+		{ "CmpItemMenu", c.cloud0:dark(0.01) },
+		{ "CmpItemAbbr", c.cloud4 },
+		{ "CmpItemAbbrMatch", c.cloud2 },
+		{ "CmpItemAbbrMatchFuzzy", c.cloud2 },
+		{ "CmpItemKind", c.cloud0:dark(0.01) },
+	}
+end
+
 local telescope = function(c)
 	return {
 		{ "TelescopeBorder", c.cloud8:dark(0.3) },
@@ -509,6 +519,7 @@ local colorscheme = function(c)
 		vimscript(c),
 		telescope(c),
 		symbols_outline(c),
+		cmp(c),
 	})
 end
 
