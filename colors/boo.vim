@@ -1,6 +1,6 @@
 " Vim Color File
 " Name:     boo
-" Built On: Fri 22 Oct 2021 02:49:23 PM EDT
+" Built On: Tue 26 Oct 2021 05:32:09 PM EDT
 
 hi! clear
 
@@ -238,7 +238,7 @@ highlight TelescopeSelection guifg=#63b0b0 guibg=#2f393b gui=none
 highlight TelescopeMatching guifg=#654a96 guibg=none gui=none
 highlight FocusedSymbol guifg=none guibg=#202727 gui=none
 highlight CmpItemMenu guifg=#202524 guibg=none gui=none
-highlight CmpItemAbbr guifg=#4e3974 guibg=none gui=none
+highlight CmpItemAbbr guifg=#654a96 guibg=none gui=none
 highlight CmpItemAbbrMatch guifg=#9c75dd guibg=none gui=none
 highlight CmpItemAbbrMatchFuzzy guifg=#9c75dd guibg=none gui=none
 highlight CmpItemKind guifg=#202524 guibg=none gui=none
