@@ -269,7 +269,7 @@ local treesitter = function(c)
 
 	local punctuation = { "TSPunctDelimiter", "TSPunctBracket", "TSPunctSpecial" }
 
-	local constants = { "TSConstant", "TsConstBuiltin", "TSConstMacro" }
+	local constants = { "TSConstant", "TSConstBuiltin", "TSConstMacro" }
 
 	local constructors = { "TSConstructor" }
 
