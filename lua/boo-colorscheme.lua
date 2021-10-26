@@ -6,7 +6,7 @@ local s = require("style")
 
 -- local log = log_to_file("boo-colorscheme.log")
 
--- Merge a list of list-like tables togeter
+-- Merge a list of list-like tables together
 -- { {'x'}, {'y'} } -> {'x', 'y'}
 local merge = function(list)
 	local acc = {}
@@ -621,7 +621,7 @@ let g:colors_name = 'boo' ]],
 			os.date("%c")
 		)
 
-		vim.loop.fs_write(fd, headers .. "\n" .. table.concat(lines, "\n"), 0, function()
+		vim.loop.fs_write(fd, headers .. "\n" .. table.concat(lines, "\n") .. "\n", 0, function()
 			vim.loop.fs_close(fd)
 		end)
 	end)
