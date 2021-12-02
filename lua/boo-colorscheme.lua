@@ -441,7 +441,9 @@ local colorscheme = function(c)
 		{ "EndOfBuffer", c.cloud3, c.none },
 
 		{ "MatchParen", c.none, c.cloud13:dark() },
-		{ "NonText", c.bg:light(), c.none },
+
+		{ "NonText", c.bg:light(0.1), c.none },
+		{ "Whitespace", c.bg:light(0.1), c.none },
 
 		-- Popup Menu
 		{ "PMenu", c.cloud2:light(), c.cloud5:dark(0.3) },
