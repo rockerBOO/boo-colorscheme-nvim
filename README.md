@@ -27,8 +27,15 @@ endif
 
 ## Install
 
+### Plug
+
 ```vimscript
-Plug 'rockerBOO/boo-colorscheme-nvim', { 'branch': 'main' }
+Plug 'rockerBOO/boo-colorscheme-nvim'
+```
+### Packer
+
+```lua
+use 'rockerBOO/boo-colorscheme-nvim'
 ```
 
 Then in your `init.vim` you can set it to use it as your color scheme.
