@@ -114,7 +114,6 @@ local lsp = function(c)
 		{
 			"LspDiagnosticsDefaultError",
 			c.cloud1:saturate(0.05):lighten_to(0.7),
-      c.none,
 			c.cloud1:shade(0.8):lighten_by(0.7),
 		},
 		{ "LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
