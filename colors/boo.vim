@@ -1,11 +1,244 @@
 " Vim Color File
 " Name:     boo
-" Built On: 12/18/2020
+" Built On: Tue 26 Oct 2021 05:32:09 PM EDT
 
 hi! clear
 
-if exists('syntax on') 
-  syntax reset 
+if exists('syntax on')
+  syntax reset
 endif
 
-lua require"boo-colorscheme".use({})
+if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
+  finish
+endif
+
+let g:colors_name = 'boo' 
+highlight Normal guifg=#cabbda guibg=#131316 gui=none
+highlight Conceal guifg=#9898ae guibg=none gui=none
+highlight VertSplit guifg=#222827 guibg=none gui=none
+highlight Function guifg=#5d6f74 guibg=none gui=none
+highlight Error guifg=#cd749c guibg=none gui=none
+highlight ErrorMsg guifg=#d8a2ea guibg=#08020a gui=none
+highlight WarningMsg guifg=#b6a6d4 guibg=#233b57 gui=none
+highlight Exception guifg=#cd749c guibg=none gui=none
+highlight Boolean guifg=#9c75dd guibg=none gui=none
+highlight Character guifg=#849da2 guibg=none gui=none
+highlight Comment guifg=#9898ae guibg=#1b1b1e gui=none
+highlight Conditional guifg=#63b0b0 guibg=none gui=none
+highlight Constant guifg=#654a96 guibg=none gui=none
+highlight Float guifg=#e4dcec guibg=none gui=none
+highlight NormalFloat guifg=#b1b1b1 guibg=#0d0d0d gui=none blend=2
+highlight IncSearch guifg=#63b0b0 guibg=#060d0d gui=italic
+highlight Search guifg=none guibg=#202727 gui=none
+highlight Number guifg=#d9d6cf guibg=none gui=none
+highlight Define guifg=#63b0b0 guibg=none gui=none
+highlight Delimiter guifg=#a9d1df guibg=none gui=none
+highlight Directory guifg=#654a96 guibg=none gui=none
+highlight Function guifg=#5d6f74 guibg=none gui=none
+highlight Folded guifg=#4c4c60 guibg=none gui=none
+highlight FoldColumn guifg=#9898ae guibg=none gui=none
+highlight DiffAdd guifg=none guibg=#63b0b0 gui=none
+highlight DiffChange guifg=none guibg=#5786bc gui=none
+highlight DiffDelete guifg=none guibg=#cd749c gui=none
+highlight DiffText guifg=none guibg=#9898ae gui=none
+highlight Identifier guifg=#9c75dd guibg=none gui=none
+highlight Include guifg=#63b0b0 guibg=none gui=none
+highlight Keyword guifg=#654a96 guibg=none gui=italic
+highlight Label guifg=#63b0b0 guibg=none gui=italic
+highlight Operator guifg=#5786bc guibg=none gui=none
+highlight PreProc guifg=#63b0b0 guibg=none gui=none
+highlight Repeat guifg=#5786bc guibg=none gui=none
+highlight Statement guifg=#63b0b0 guibg=none gui=none
+highlight StorageClass guifg=#63b0b0 guibg=none gui=none
+highlight String guifg=#849da2 guibg=none gui=none
+highlight Structure guifg=#63b0b0 guibg=none gui=none
+highlight Tag guifg=#654a96 guibg=none gui=none
+highlight Title guifg=#654a96 guibg=none gui=none
+highlight Todo guifg=#3f3442 guibg=none gui=none
+highlight Type guifg=#63b0b0 guibg=none gui=italic
+highlight Typedef guifg=#63b0b0 guibg=none gui=none
+highlight CursorColumn guifg=#d5a8e4 guibg=none gui=none
+highlight LineNr guifg=#63b0b0 guibg=none gui=none
+highlight CursorLineNr guifg=#625566 guibg=none gui=none
+highlight Line guifg=#5786bc guibg=none gui=none
+highlight SignColumn guifg=none guibg=none gui=none
+highlight ColorColumn guifg=none guibg=#d5a8e4 gui=none
+highlight Cursor guifg=#222827 guibg=#654a96 gui=none
+highlight CursorLine guifg=none guibg=#222827 gui=none
+highlight iCursor guifg=#222827 guibg=#654a96 gui=none
+highlight EndOfBuffer guifg=#9898ae guibg=none gui=none
+highlight MatchParen guifg=none guibg=#3f3442 gui=none
+highlight NonText guifg=#111113 guibg=none gui=none
+highlight PMenu guifg=#9c75dd guibg=#120f12 gui=none blend=2
+highlight PmenuSbar guifg=#654a96 guibg=#222827 gui=none
+highlight PMenuSel guifg=#cfa7112 guibg=#ffffffffffffff7dffffffffffffff66ffffffffffffff6a gui=none
+highlight PmenuThumb guifg=#5d6f74 guibg=#9898ae gui=none
+highlight Special guifg=#654a96 guibg=none gui=none
+highlight SpecialChar guifg=#3f3442 guibg=none gui=none
+highlight SpecialKey guifg=#3f3442 guibg=none gui=none
+highlight SpecialComment guifg=#5d6f74 guibg=none gui=none
+highlight SpellBad guifg=#c0c0dd guibg=none gui=none
+highlight SpellCap guifg=#3f3442 guibg=none gui=none
+highlight SpellLocal guifg=#625566 guibg=none gui=none
+highlight SpellRare guifg=#a9d1df guibg=none gui=none
+highlight StatusLine guifg=#63b0b0 guibg=#2f393b gui=none
+highlight StatusLineNC guifg=#654a96 guibg=#191d1f gui=none
+highlight TabLine guifg=#9c75dd guibg=#222827 gui=none
+highlight TabLineSel guifg=#63b0b0 guibg=#3f3442 gui=none
+highlight TabLineFill guifg=#9c75dd guibg=#222827 gui=none
+highlight Question guifg=#63b0b0 guibg=none gui=none
+highlight Visual guifg=#63b0b0 guibg=#080709 gui=none
+highlight VisualNOS guifg=#9c75dd guibg=#d5a8e4 gui=none
+highlight LspDiagnosticsDefaultHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=none blend=2
+highlight LspDiagnosticsDefaultError guifg=#c988df guibg=#230d2a gui=none blend=2
+highlight LspDiagnosticsDefaultWarning guifg=#a9d1df guibg=#0d2026 gui=none blend=2
+highlight LspDiagnosticsDefaultInformation guifg=#e4dcec guibg=none gui=none blend=2
+highlight DiagnosticHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=none
+highlight DiagnosticError guifg=#c988df guibg=#230d2a gui=none
+highlight DiagnosticWarn guifg=#a9d1df guibg=#0d2026 gui=none
+highlight DiagnosticInfo guifg=#e4dcec guibg=none gui=none
+highlight DiagnosticUnderlineHint guifg=#5d4663 guibg=#ffffffffffffff49ffffffffffffff69ffffffffffffff40 gui=underline
+highlight DiagnosticUnderlineError guifg=#c988df guibg=#230d2a gui=underline
+highlight DiagnosticUnderlineWarn guifg=#a9d1df guibg=#0d2026 gui=underline
+highlight DiagnosticUnderlineInfo guifg=#e4dcec guibg=none gui=underline
+highlight TSError guifg=#d5a8e4 guibg=#30111f gui=none
+highlight TSPunctDelimiter guifg=#4b4b4e guibg=none gui=none
+highlight TSPunctBracket guifg=#4b4b4e guibg=none gui=none
+highlight TSPunctSpecial guifg=#4b4b4e guibg=none gui=none
+highlight TSConstant guifg=#7d6c82 guibg=none gui=none
+highlight TsConstBuiltin guifg=#7d6c82 guibg=none gui=none
+highlight TSConstMacro guifg=#7d6c82 guibg=none gui=none
+highlight TSStringRegex guifg=#72d4d4 guibg=none gui=none
+highlight TSString guifg=#72d4d4 guibg=none gui=none
+highlight TSStringEscape guifg=#72d4d4 guibg=none gui=none
+highlight TSBoolean guifg=#b99ee7 guibg=none gui=none
+highlight TSFunction guifg=#6eacb8 guibg=none gui=none
+highlight TSFuncBuiltin guifg=#6eacb8 guibg=none gui=none
+highlight TSFuncMacro guifg=#6eacb8 guibg=none gui=none
+highlight TSMethod guifg=#a1b4b8 guibg=none gui=italic
+highlight TSField guifg=#738d8d guibg=none gui=none
+highlight TSProperty guifg=#738d8d guibg=none gui=none
+highlight TSNumber guifg=#c8cfd2 guibg=none gui=none
+highlight TSFloat guifg=#c8cfd2 guibg=none gui=none
+highlight TSParameter guifg=#a9d1df guibg=none gui=none
+highlight TSParameterReference guifg=#a9d1df guibg=none gui=none
+highlight TSOperator guifg=#656568 guibg=none gui=none
+highlight TSConditional guifg=#53757e guibg=none gui=none
+highlight TSRepeat guifg=#53757e guibg=none gui=none
+highlight TSKeyword guifg=#5c4489 guibg=none gui=italic
+highlight TSKeywordOperator guifg=#5c4489 guibg=none gui=italic
+highlight TSConstructor guifg=#63b0b0 guibg=none gui=none
+highlight TSType guifg=#63b0b0 guibg=none gui=none
+highlight TSTypeBuiltin guifg=#63b0b0 guibg=none gui=none
+highlight TSInclude guifg=#654a96 guibg=none gui=none
+highlight TSLabel guifg=#7e61b2 guibg=none gui=none
+highlight TSNamespace guifg=#a1b4b8 guibg=none gui=none
+highlight TSVariable guifg=#a7d3d3 guibg=none gui=none
+highlight TSVariableBuiltin guifg=#a7d3d3 guibg=none gui=none
+highlight TSTag guifg=#85c1c1 guibg=none gui=none
+highlight TSTagDelimiter guifg=#85c1c1 guibg=none gui=none
+highlight TSText guifg=#e4dcec guibg=none gui=none
+highlight TSStrong guifg=#e4dcec guibg=none gui=none
+highlight TSEmphasis guifg=#e4dcec guibg=none gui=none
+highlight TSUnderline guifg=#e4dcec guibg=none gui=none
+highlight TSTitle guifg=#e4dcec guibg=none gui=none
+highlight TSLiteral guifg=#e4dcec guibg=none gui=none
+highlight TSURI guifg=#e4dcec guibg=none gui=none
+highlight TSPunctDelimiter guifg=#8f8fb7 guibg=none gui=none
+highlight TSTagDelimiter guifg=#3b4649 guibg=none gui=none
+highlight TSPunctSpecial guifg=#c5d5e8 guibg=none gui=none
+highlight TSVariableBuiltin guifg=#a9d1df guibg=none gui=none
+highlight TSConstBuiltin guifg=#4291ad guibg=none gui=none
+highlight TSTypeBuiltin guifg=#3a7272 guibg=none gui=none
+highlight TSFuncBuiltin guifg=#748a90 guibg=none gui=none
+highlight TSVariableBuiltin guifg=#32547b guibg=none gui=none
+highlight TSField guifg=#5d6f74 guibg=none gui=none
+highlight TSNodeKey guifg=#63b0b0 guibg=none gui=none
+highlight TSNodeUnmatched guifg=#2f393b guibg=none gui=none
+highlight tsxJsBlock guifg=#5d6f74 guibg=none gui=none
+highlight tsxclosetag guifg=#5d6f74 guibg=none gui=none
+highlight tsxelseoperator guifg=#3a7272 guibg=none gui=none
+highlight tsxclosetagname guifg=#63b0b0 guibg=none gui=none
+highlight tsxclosetag guifg=#5d6f74 guibg=none gui=none
+highlight tsxtypes guifg=#63b0b0 guibg=none gui=none
+highlight tsxtag guifg=#5d6f74 guibg=none gui=none
+highlight typescriptAliasDeclaration guifg=#5d6f74 guibg=none gui=none
+highlight typescriptObjectLiteral guifg=#5d6f74 guibg=none gui=none
+highlight typescriptBinaryOp guifg=#5d6f74 guibg=none gui=none
+highlight typescriptParenExp guifg=#5d6f74 guibg=none gui=none
+highlight typescriptparenexp guifg=#63b0b0 guibg=none gui=none
+highlight typescripttypeannotation guifg=#414152 guibg=none gui=none
+highlight typescriptEnum guifg=#63b0b0 guibg=none gui=none
+highlight typescriptString guifg=#c9e4e4 guibg=none gui=none
+highlight typescriptProp guifg=#63b0b0 guibg=none gui=none
+highlight typescriptUnion guifg=#5d6f74 guibg=none gui=none
+highlight typescriptObjectColon guifg=#414152 guibg=none gui=none
+highlight typescriptObjectSpread guifg=#69858a guibg=none gui=none
+highlight typescriptObjectType guifg=#5d6f74 guibg=none gui=none
+highlight typescriptRestOrSpread guifg=#5d6f74 guibg=none gui=none
+highlight typescriptInterfaceTypeParameter guifg=#5d6f74 guibg=none gui=none
+highlight typescriptInterfaceName guifg=#63b0b0 guibg=none gui=none
+highlight typescriptParens guifg=#5d6f74 guibg=none gui=none
+highlight typescriptTernaryOp guifg=#5d6f74 guibg=none gui=none
+highlight typescriptParenthesizedType guifg=#3a7272 guibg=none gui=none
+highlight typescriptIdentifierName guifg=#63b0b0 guibg=none gui=none
+highlight typescriptMemberOptionality guifg=#63b0b0 guibg=none gui=none
+highlight typescriptMember guifg=#a7d3d3 guibg=none gui=none
+highlight typescriptGlobal guifg=#e6ebe5 guibg=none gui=none
+highlight typescriptGenericCall guifg=#5d6f74 guibg=none gui=none
+highlight typescript1 guifg=#a3d4e5 guibg=none gui=none
+highlight typescriptAssign guifg=#a3d4e5 guibg=none gui=none
+highlight typescriptbraces guifg=#2f393b guibg=none gui=none
+highlight typescriptendcolons guifg=#63b0b0 guibg=none gui=none
+highlight typescriptFuncCallArg guifg=#a9d1df guibg=none gui=none
+highlight typescriptTypeBrackets guifg=#5d6f74 guibg=none gui=none
+highlight typescriptTypeAnnotation guifg=#5d6f74 guibg=none gui=none
+highlight typescriptTypeArguments guifg=#5d6f74 guibg=none gui=none
+highlight typescriptTypeReference guifg=#63b0b0 guibg=none gui=none
+highlight typescriptTypeCast guifg=#5d6f74 guibg=none gui=none
+highlight typescriptFuncType guifg=#63b0b0 guibg=none gui=none
+highlight typescriptUnaryOp guifg=#b6a6d4 guibg=none gui=none
+highlight typescriptaliasdeclaration guifg=#63b0b0 guibg=none gui=none
+highlight markdownH1Delimiter guifg=#625566 guibg=#362f38 gui=none
+highlight markdownH2Delimiter guifg=#625566 guibg=#362f38 gui=none
+highlight markdownH3Delimiter guifg=#625566 guibg=#362f38 gui=none
+highlight markdownH4Delimiter guifg=#625566 guibg=#362f38 gui=none
+highlight markdownH5Delimiter guifg=#625566 guibg=#362f38 gui=none
+highlight markdownH6Delimiter guifg=#625566 guibg=#362f38 gui=none
+highlight markdownh1 guifg=#7fe5109 guibg=#222827 gui=none
+highlight markdownh2 guifg=#7fe5109 guibg=#222827 gui=none
+highlight markdownh3 guifg=#a9d1df guibg=#222827 gui=none
+highlight markdownh4 guifg=#a9d1df guibg=#222827 gui=none
+highlight markdownh5 guifg=#a9d1df guibg=#222827 gui=none
+highlight markdownCodeDelimiter guifg=#5d6f74 guibg=#0a0c0c gui=none
+highlight markdownCode guifg=#654a96 guibg=#0a0c0c gui=none
+highlight markdownUrl guifg=#849da2 guibg=none gui=none
+highlight markdownLinkText guifg=#63b0b0 guibg=none gui=none
+highlight markdownLinkTextDelimiter guifg=#5d6f74 guibg=none gui=none
+highlight markdownLinkDelimiter guifg=#5d6f74 guibg=none gui=none
+highlight vimcommand guifg=#654a96 guibg=none gui=none
+highlight vimmap guifg=#654a96 guibg=none gui=none
+highlight vimbracket guifg=#63b0b0 guibg=none gui=none
+highlight vimmapmodkey guifg=#a9d1df guibg=none gui=none
+highlight vimnotation guifg=#a9d1df guibg=none gui=none
+highlight vimmaplhs guifg=#63b0b0 guibg=none gui=none
+highlight vimiscommand guifg=#63b0b0 guibg=none gui=none
+highlight vimFilter guifg=#e6ebe5 guibg=none gui=none
+highlight vimMapRhs guifg=#c2beb2 guibg=none gui=none
+highlight vimMapRhsExtend guifg=#c2beb2 guibg=none gui=none
+highlight vimlet guifg=#654a96 guibg=none gui=none
+highlight vimnotfunc guifg=#654a96 guibg=none gui=none
+highlight vimAutoCmdSfxList guifg=#a9d1df guibg=none gui=none
+highlight vimUserFunc guifg=#63b0b0 guibg=none gui=none
+highlight vimSetEqual guifg=#a9d1df guibg=none gui=none
+highlight TelescopeBorder guifg=#191d1f guibg=none gui=none
+highlight TelescopeNormal guifg=#697b78 guibg=none gui=none
+highlight TelescopePromptPrefix guifg=#3a7272 guibg=none gui=none
+highlight TelescopeSelection guifg=#63b0b0 guibg=#2f393b gui=none
+highlight TelescopeMatching guifg=#654a96 guibg=none gui=none
+highlight FocusedSymbol guifg=none guibg=#202727 gui=none
+highlight CmpItemMenu guifg=#202524 guibg=none gui=none
+highlight CmpItemAbbr guifg=#654a96 guibg=none gui=none
+highlight CmpItemAbbrMatch guifg=#9c75dd guibg=none gui=none
+highlight CmpItemAbbrMatchFuzzy guifg=#9c75dd guibg=none gui=none
+highlight CmpItemKind guifg=#202524 guibg=none gui=none
