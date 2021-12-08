@@ -83,40 +83,65 @@ local diagnostics = function(c)
 			c.cloud1:saturate(0.05):lighten_to(0.7),
 			c.cloud1:shade(0.8):lighten_by(0.7),
 		},
-		{ "DiagnosticWarn", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
+		{
+			"DiagnosticWarn",
+			c.cloud6,
+			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+		},
 		{ "DiagnosticInfo", c.fg },
-
 		{
 			"DiagnosticUnderlineHint",
-			c.cloud13:saturate(0.05):light(0.1),
+			--[[c.cloud13:saturate(0.05):light(0.1)]]
+			c.none,
 			c.cloud13:dark(0.9),
 			s.underline,
+			c.cloud13:saturate(0.05):lighten_to(0.2),
 		},
 		{
 			"DiagnosticUnderlineError",
-			c.cloud1:saturate(0.05):lighten_to(0.7),
+			--[[c.cloud1:saturate(0.05):lighten_to(0.7)]]
+			c.none,
 			c.cloud1:shade(0.8):lighten_by(0.7),
 			s.underline,
+			c.cloud1:saturate(0.05):lighten_to(0.2),
 		},
 		{
 			"DiagnosticUnderlineWarn",
-			c.cloud6,
+			--[[c.cloud6]]
+			c.none,
 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 			s.underline,
+			c.cloud6:dark(0.3),
 		},
-		{ "DiagnosticUnderlineInfo", c.fg, c.none, s.underline },
+		{
+			"DiagnosticUnderlineInfo",--[[c.fg]]
+			c.none,
+			c.none,
+			s.underline,
+			c.fg,
+		},
+		{},
 	}
 end
 
 local lsp = function(c)
 	return {
-		{ "LspDiagnosticsDefaultHint", c.cloud13:saturate(0.05):light(0.1), c.cloud13:dark(0.9) },
+		{
+			"LspDiagnosticsDefaultHint",--[[c.cloud13:saturate(0.05):light(0.1)]]
+			c.none,
+			c.cloud13:dark(0.9),
+		},
 		{
 			"LspDiagnosticsDefaultError",
-			c.cloud1:saturate(0.05):lighten_to(0.7),
+			-- c.cloud1:saturate(0.05):lighten_to(0.7),
+			c.none,
 			c.cloud1:shade(0.8):lighten_by(0.7),
 		},
-		{ "LspDiagnosticsDefaultWarning", c.cloud6, c.cloud6:desaturate_to(0.5):lighten_to(0.1) },
+		{
+			"LspDiagnosticsDefaultWarning",--[[c.cloud6]]
+			c.none,
+			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+		},
 		{ "LspDiagnosticsDefaultInformation", c.fg },
 	}
 end
@@ -497,7 +522,7 @@ end
 local M = {}
 
 M.apply = function(c)
-	vim.cmd(string.format("highlight %s guifg=%s guibg=%s gui=%s", c[1], c[2], c[3], c[4]))
+	vim.cmd(string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5]))
 end
 
 -- Use this function in your config
@@ -517,7 +542,7 @@ M.use = function()
 		local cNone = check_none("none")
 		local sNone = check_none(s.none)
 
-		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]) })
+		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]), cNone(group[5]) })
 	end
 end
 
