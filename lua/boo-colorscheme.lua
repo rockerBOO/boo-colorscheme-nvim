@@ -118,7 +118,7 @@ local diagnostics = function(c)
 			c.none,
 			c.none,
 			s.underline,
-			c.fg, 
+			c.fg,
 		},
 		{},
 	}
