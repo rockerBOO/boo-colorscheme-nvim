@@ -146,6 +146,16 @@ local lsp = function(c)
 	}
 end
 
+local cmp = function(c)
+	return {
+		{ "CmpItemMenu", c.cloud0:dark(0.01) },
+		{ "CmpItemAbbr", c.cloud4 },
+		{ "CmpItemAbbrMatch", c.cloud2 },
+		{ "CmpItemAbbrMatchFuzzy", c.cloud2 },
+		{ "CmpItemKind", c.cloud0:dark(0.01) },
+	}
+end
+
 local telescope = function(c)
 	return {
 		{ "TelescopeBorder", c.cloud8:dark(0.3) },
@@ -363,8 +373,8 @@ local treesitter = function(c)
 			{ "TSNodeKey", c.cloud10 },
 			{ "TSNodeUnmatched", c.cloud8:dark(0.2) },
 
-				-- {"TSTitle", c.cloud4},
-				-- {"TSStrong", c.cloud4, c.none, s.bold},
+			-- {"TSTitle", c.cloud4},
+			-- {"TSStrong", c.cloud4, c.none, s.bold},
 		},
 	})
 end
@@ -473,7 +483,7 @@ local colorscheme = function(c)
 		-- Popup Menu
 		{ "PMenu", c.cloud2:light(), c.cloud5:dark(0.3) },
 		{ "PmenuSbar", c.cloud4, c.cloud0:dark() },
-		{ "PMenuSel", c.cloud2:saturate(0.9):light(0.2), c.cloud0:dark(0.7) },
+		{ "PMenuSel", c.none, c.cloud0:lighten_to(0.08) },
 		{ "PmenuThumb", c.cloud8, c.cloud3 },
 
 		-- Special
@@ -514,6 +524,7 @@ local colorscheme = function(c)
 		typescript(c),
 		markdown(c),
 		vimscript(c),
+		cmp(c),
 		telescope(c),
 		symbols_outline(c),
 	})
