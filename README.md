@@ -44,20 +44,27 @@ Then in your `init.vim` you can set it to use it as your color scheme.
 colorscheme boo
 ```
 
-
 ## Themes
 
 - sunset_cloud
 
-```
+```lua
 vim.g.boo_colorscheme_theme = 'sunset_cloud'
 ```
 
 or
 
-```
+```lua
 require('boo-colorscheme').use({ theme = 'sunset_cloud' })
 ```
+
+or
+
+```vimscript
+let g:boo_colorscheme_theme = 'sunset_cloud'
+```
+
+![Screenshot of the source code showing sunset_cloud](https://user-images.githubusercontent.com/15027/162499722-a703531e-e9ac-461e-befb-dc9040234869.png)
 
 ## Support
 
