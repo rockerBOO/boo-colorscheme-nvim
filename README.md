@@ -4,7 +4,6 @@ Sorry, didn't mean to scare you.
 
 Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Treesitter.
 
-
 ![Full Screen](https://user-images.githubusercontent.com/15027/98894239-5bcd8780-2472-11eb-9ca4-a2c3142a848a.png)
 
 [![Action Status](https://github.com/rockerBOO/boo-colorscheme-nvim/workflows/Tests/badge.svg)](https://github.com/rockerBOO/boo-colorscheme-nvim/actions)
@@ -16,8 +15,8 @@ Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Tree
 
 ## Requirements
 
-* Neovim 0.4
-* termguicolors required (`:h 'termguicolors'`) 
+- Neovim 0.4
+- termguicolors required (`:h 'termguicolors'`)
 
 ```vimscript
 if (has("termguicolors"))
@@ -32,6 +31,7 @@ endif
 ```vimscript
 Plug 'rockerBOO/boo-colorscheme-nvim'
 ```
+
 ### Packer
 
 ```lua
@@ -44,12 +44,27 @@ Then in your `init.vim` you can set it to use it as your color scheme.
 colorscheme boo
 ```
 
-## Tests
+## Themes
 
-Requires a busted supported test runner. 
+- sunset_cloud
 
-- `make test` - 
+```lua
+vim.g.boo_colorscheme_theme = 'sunset_cloud'
+```
 
+or
+
+```lua
+require('boo-colorscheme').use({ theme = 'sunset_cloud' })
+```
+
+or
+
+```vimscript
+let g:boo_colorscheme_theme = 'sunset_cloud'
+```
+
+![Screenshot of the source code showing sunset_cloud](https://user-images.githubusercontent.com/15027/162499722-a703531e-e9ac-461e-befb-dc9040234869.png)
 
 ## Support
 
@@ -72,3 +87,11 @@ Requires a busted supported test runner.
 ## Colors
 
 ![Colors Used](https://user-images.githubusercontent.com/15027/112667058-321a6900-8e33-11eb-9c06-7c15ab5b7b18.png)
+
+## Development
+
+### Tests
+
+Requires a busted supported test runner.
+
+- `make test` -
