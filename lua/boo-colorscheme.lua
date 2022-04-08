@@ -54,6 +54,48 @@ local cloud = function()
 	}
 end
 
+local sunset_cloud = function()
+	return {
+		"#262904",
+		"#cd6d91",
+		"#947fbc",
+		"#8d9a59",
+		"#655a7c",
+		"#5e4531",
+		"#71d17c",
+		"#e0ec7a",
+		"#5d6f74",
+		"#bc5050",
+		"#4eae6e",
+		"#bbc373",
+		"#40719c",
+		"#3c2e1a",
+		"#809d7b",
+		"#dad36d",
+	}
+end
+
+local radioactive = function()
+	return {
+		"#282822",
+		"#e3e3a8",
+		"#56417a",
+		"#aeae98",
+		"#7b6c97",
+		"#666655",
+		"#dfdfa9",
+		"#a39778",
+		"#74745d",
+		"#cd749c",
+		"#a38c78",
+		"#bbbc57",
+		"#bbbc57",
+		"#424234",
+		"#a2a284",
+		"#d9d9cf",
+	}
+end
+
 local vimscript = function(c)
 	return {
 		{ "vimcommand", c.cloud4 },
@@ -81,19 +123,22 @@ local diagnostics = function(c)
 		{
 			"DiagnosticError",
 			c.cloud1:saturate(0.05):lighten_to(0.7),
-			c.cloud1:shade(0.8):lighten_by(0.7),
+			-- c.cloud1:shade(0.8):lighten_by(0.7),
+			c.none,
 		},
 		{
 			"DiagnosticWarn",
 			c.cloud6,
-			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+			-- c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+			c.none,
 		},
 		{ "DiagnosticInfo", c.fg },
 		{
 			"DiagnosticUnderlineHint",
 			--[[c.cloud13:saturate(0.05):light(0.1)]]
 			c.none,
-			c.cloud13:dark(0.9),
+			-- c.cloud13:dark(0.9),
+			c.none,
 			s.underline,
 			c.cloud13:saturate(0.05):lighten_to(0.2),
 		},
@@ -101,7 +146,8 @@ local diagnostics = function(c)
 			"DiagnosticUnderlineError",
 			--[[c.cloud1:saturate(0.05):lighten_to(0.7)]]
 			c.none,
-			c.cloud1:shade(0.8):lighten_by(0.7),
+			-- c.cloud1:shade(0.8):lighten_by(0.7),
+			c.none,
 			s.underline,
 			c.cloud1:saturate(0.05):lighten_to(0.2),
 		},
@@ -109,7 +155,8 @@ local diagnostics = function(c)
 			"DiagnosticUnderlineWarn",
 			--[[c.cloud6]]
 			c.none,
-			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+			-- c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+			c.none,
 			s.underline,
 			c.cloud6:dark(0.3),
 		},
@@ -143,6 +190,9 @@ local lsp = function(c)
 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 		},
 		{ "LspDiagnosticsDefaultInformation", c.fg },
+		{ "LspReferenceText", c.fg:light(0.1) },
+		{ "LspReferenceRead", c.fg:light(0.1) },
+		{ "LspReferenceWrite", c.fg:light(0.1) },
 	}
 end
 
@@ -158,7 +208,7 @@ end
 
 local telescope = function(c)
 	return {
-		{ "TelescopeBorder", c.cloud8:dark(0.3) },
+		{ "TelescopeBorder", c.bg:shade(0.1) },
 		{ "TelescopeNormal", c.cloud0:light(0.3) },
 		{ "TelescopePromptPrefix", c.cloud10:dark(0.2) },
 
@@ -284,7 +334,7 @@ local treesitter = function(c)
 
 	local constructors = { "TSConstructor" }
 
-	local string = { "TSStringRegex", "TSString", "TSStringEscape" }
+	local string = { "TSStringRegex", "TSString", "TSStringEscape", "TSStringSpecial" }
 
 	local boolean = { "TSBoolean" }
 
@@ -316,13 +366,15 @@ local treesitter = function(c)
 
 	local tags = { "TSTag", "TSTagDelimiter" }
 
-	local text = { "TSText", "TSStrong", "TSEmphasis", "TSUnderline", "TSTitle", "TSLiteral", "TSURI" }
+	local text = { "TSText", "TSStrong", "TSEmphasis", "TSUnderline", "TSLiteral", "TSURI" }
+
+	local title = { "TSTitle" }
 
 	local groups = {
 		{ error, c.cloud1:light(), c.cloud9:dark(0.5), s.none },
 		{ punctuation, c.cloud3:lighten_to(0.3):desaturate(0.1) },
 		{ constants, c.cloud5:light(0.1) },
-		{ string, c.cloud10:light(0.1):saturate(0.2) },
+		{ string, c.cloud10:lighten_to(0.8):desaturate_to(0.5) },
 		{ boolean, c.cloud2:light(0.1) },
 		{ functions, c.cloud14:saturate(0.2) },
 		{ methods, c.cloud14:light(0.1), c.none, s.italic },
@@ -337,9 +389,10 @@ local treesitter = function(c)
 		{ includes, c.cloud4 },
 		{ labels, c.cloud4:light(0.1) },
 		{ namespaces, c.cloud14:light(0.1) },
-		{ variables, c.cloud10:light(0.2) },
+		{ variables, c.cloud10:lighten_to(0.7) },
 		{ tags, c.cloud10:light(0.1) },
 		{ text, c.fg },
+		{ title, c.cloud10:desaturate_to(0.1) },
 	}
 
 	local highlights = {}
@@ -357,7 +410,7 @@ local treesitter = function(c)
 			{ "TSPunctDelimiter", c.cloud3:dark():dark():saturate(0.1) },
 			{ "TSTagDelimiter", c.cloud8:dark(0.15) },
 
-			{ "TSPunctSpecial", c.cloud12:dark():dark():light(0.3) },
+			{ "TSPunctSpecial", c.cloud12:desaturate_to(0.1):lighten_to(0.5) },
 			{ "TSVariableBuiltin", c.cloud6:dark(), c.none, s.bold },
 
 			-- null
@@ -366,7 +419,7 @@ local treesitter = function(c)
 			{ "TSTypeBuiltin", c.cloud10:dark(0.2), c.none, s.bold },
 			{ "TSFuncBuiltin", c.cloud8:light(0.1), c.none, s.bold },
 
-			{ "TSVariableBuiltin", c.cloud12:dark(0.2) },
+			{ "TSVariableBuiltin", c.cloud12:lighten_to(0.4) },
 
 			{ "TSField", c.cloud8 },
 
@@ -402,7 +455,7 @@ local colorscheme = function(c)
 
 		{ "Boolean", c.cloud2:dark(), c.none, s.NONE },
 		{ "Character", c.cloud14, c.none, s.NONE },
-		{ "Comment", c.cloud3:dark(), c.bg:light(0.04), s.NONE },
+		{ "Comment", c.cloud3:lighten_to(0.55), c.none, s.NONE },
 		{ "Conditional", c.cloud10, c.none, s.NONE },
 		{ "Constant", c.cloud4, c.none, s.NONE },
 
@@ -462,13 +515,13 @@ local colorscheme = function(c)
 		{ "Typedef", c.cloud10, c.none, s.NONE },
 
 		-- Side Column
-		{ "CursorColumn", c.cloud1, c.none, s.NONE },
-		{ "LineNr", c.cloud10, c.none, s.NONE },
-		{ "CursorLineNr", c.cloud5, c.none, s.NONE },
-		{ "Line", c.cloud12, c.none, s.bold },
-		{ "SignColumn", c.none, c.none, s.NONE },
+		{ "CursorColumn", c.cloud4:desaturate_to(0.1), c.none, s.NONE, c.none, "20" },
+		{ "LineNr", c.cloud10:desaturate_to(0.05):lighten_to(0.3) },
+		{ "CursorLineNr", c.cloud5 },
+		{ "Line", c.cloud12 },
+		{ "SignColumn" },
 
-		{ "ColorColumn", c.none, c.cloud1 },
+		{ "ColorColumn", c.none, c.cloud4:desaturate_to(0.1):lighten_to(0.1), s.None, c.none, "100" },
 		{ "Cursor", c.cloud0, c.cloud4 },
 		{ "CursorLine", c.none, c.cloud0 },
 		{ "iCursor", c.cloud0, c.cloud4 },
@@ -483,7 +536,7 @@ local colorscheme = function(c)
 		-- Popup Menu
 		{ "PMenu", c.cloud2:light(), c.cloud5:dark(0.3) },
 		{ "PmenuSbar", c.cloud4, c.cloud0:dark() },
-		{ "PMenuSel", c.none, c.cloud0:lighten_to(0.08) },
+		{ "PMenuSel", c.none, c.cloud0:lighten_to(0.15) },
 		{ "PmenuThumb", c.cloud8, c.cloud3 },
 
 		-- Special
@@ -518,7 +571,7 @@ local colorscheme = function(c)
 
 	return merge({
 		vim_groups,
-		lsp(c),
+		-- lsp(c),
 		diagnostics(c),
 		treesitter(c),
 		typescript(c),
@@ -533,15 +586,21 @@ end
 local M = {}
 
 M.apply = function(c)
-	vim.cmd(string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5]))
+	local cmd = string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5])
+
+	if c[6] then
+		cmd = string.format("%s blend=%s", cmd, c[6])
+	end
+
+	vim.cmd(cmd)
 end
 
 -- Use this function in your config
-M.use = function()
+M.use = function(opts)
 	vim.g.termguicolors = true
 	vim.g.colors_name = "boo"
 	-- vim.cmd("hi! clear")
-	local colormap = M.setup()
+	local colormap = M.setup(opts)
 
 	for _, group in ipairs(colormap) do
 		local check_none = function(none_resp)
@@ -557,8 +616,31 @@ M.use = function()
 	end
 end
 
-M.setup = function()
-	local cloud_map = cloud()
+local find_theme_colors = function(opts)
+	if opts ~= nil and opts["theme"] ~= nil then
+		if opts["theme"] == "sunset_cloud" then
+			return sunset_cloud
+		end
+
+		if opts["theme"] == "radioactive" then
+			return radioactive
+		end
+	end
+
+	if vim.g.boo_colorscheme_theme == "sunset_cloud" then
+		return sunset_cloud
+	end
+
+	if vim.g.boo_colorscheme_theme == "radioactive" then
+		return radioactive
+	end
+
+	return cloud
+end
+
+M.setup = function(opts)
+	local cloud_map = find_theme_colors(opts)()
+
 	local color_map = { none = "none" }
 
 	-- cloud0 to cloud16 for all the available colors.
@@ -568,6 +650,11 @@ M.setup = function()
 
 	color_map["fg"] = colors("#e4dcec")
 	color_map["bg"] = colors("#111113")
+
+	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "sunset_cloud" then
+		color_map["fg"] = colors("#ffffcf")
+		color_map["bg"] = colors("#0e0f06")
+	end
 
 	return colorscheme(color_map)
 end
