@@ -171,30 +171,30 @@ local diagnostics = function(c)
 	}
 end
 
-local lsp = function(c)
-	return {
-		{
-			"LspDiagnosticsDefaultHint",--[[c.cloud13:saturate(0.05):light(0.1)]]
-			c.none,
-			c.cloud13:dark(0.9),
-		},
-		{
-			"LspDiagnosticsDefaultError",
-			-- c.cloud1:saturate(0.05):lighten_to(0.7),
-			c.none,
-			c.cloud1:shade(0.8):lighten_by(0.7),
-		},
-		{
-			"LspDiagnosticsDefaultWarning",--[[c.cloud6]]
-			c.none,
-			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
-		},
-		{ "LspDiagnosticsDefaultInformation", c.fg },
-		{ "LspReferenceText", c.fg:light(0.1) },
-		{ "LspReferenceRead", c.fg:light(0.1) },
-		{ "LspReferenceWrite", c.fg:light(0.1) },
-	}
-end
+-- local lsp = function(c)
+-- 	return {
+-- 		{
+-- 			"LspDiagnosticsDefaultHint",--[[c.cloud13:saturate(0.05):light(0.1)]]
+-- 			c.none,
+-- 			c.cloud13:dark(0.9),
+-- 		},
+-- 		{
+-- 			"LspDiagnosticsDefaultError",
+-- 			-- c.cloud1:saturate(0.05):lighten_to(0.7),
+-- 			c.none,
+-- 			c.cloud1:shade(0.8):lighten_by(0.7),
+-- 		},
+-- 		{
+-- 			"LspDiagnosticsDefaultWarning",--[[c.cloud6]]
+-- 			c.none,
+-- 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+-- 		},
+-- 		{ "LspDiagnosticsDefaultInformation", c.fg },
+-- 		{ "LspReferenceText", c.fg:light(0.1) },
+-- 		{ "LspReferenceRead", c.fg:light(0.1) },
+-- 		{ "LspReferenceWrite", c.fg:light(0.1) },
+-- 	}
+-- end
 
 local cmp = function(c)
 	return {
