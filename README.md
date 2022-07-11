@@ -77,15 +77,15 @@ let g:boo_colorscheme_theme = 'sunset_cloud'
 
 ### `radioactive_waste`
 
-![Screenshot of the source code showing radioactive waste]()
+![Screenshot of the source code showing radioactive waste](https://user-images.githubusercontent.com/15027/178177587-620c2623-c31a-469a-944f-e2c5bbc1bea6.png)
 
 ### `forest_stream`
 
-![Screenshot of the source code showing forest stream]()
+![Screenshot of the source code showing forest stream](https://user-images.githubusercontent.com/15027/178177588-cfe53f8c-08a3-49af-b44a-6667574b1fda.png)
 
 ### `crimson_moonlight`
 
-![Screenshot of the source code showing crimson_moonlight]()
+![Screenshot of the source code showing crimson_moonlight](https://user-images.githubusercontent.com/15027/178177589-bcfe7280-9c43-4d41-abf4-f40e56be9803.png)
 
 ## Support
 

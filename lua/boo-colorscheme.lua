@@ -4,8 +4,6 @@
 local colors = require("colors")
 local s = require("style")
 
--- local log = log_to_file("boo-colorscheme.log")
-
 -- Merge a list of list-like tables togeter
 -- { {'x'}, {'y'} } -> {'x', 'y'}
 local merge = function(list)
@@ -681,7 +679,6 @@ local M = {}
 -- TODO: Simplify what happens at this stage if we are using nvim_set_hi
 -- we can define the styles, fg, bg and others by their name
 M.apply = function(c)
-  
 	-- local cmd = string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5])
 	-- if c[6] then
 	-- 	cmd = string.format("%s blend=%s", cmd, c[6])
@@ -724,7 +721,6 @@ M.apply = function(c)
 
 	vim.api.nvim_set_hl(0, c[1], val)
 end
-
 
 -- Use this function in your config
 -- @param opts table
