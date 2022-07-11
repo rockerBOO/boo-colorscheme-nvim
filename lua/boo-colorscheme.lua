@@ -12,7 +12,9 @@ local merge = function(list)
 	local acc = {}
 
 	for _, result in ipairs(list) do
-		vim.list_extend(acc, result)
+		if result ~= nil then
+			vim.list_extend(acc, result)
+		end
 	end
 
 	return acc
@@ -51,6 +53,50 @@ local cloud = function()
 		"#3f3442",
 		"#849da2",
 		"#d9d6cf",
+	}
+end
+
+local forest_stream = function()
+	return {
+		"#0d1f0f",
+		"#caade1",
+		"#7a77cd",
+		"#2f594c",
+		"#42647f",
+		"#3e4d45",
+		"#89d9d0",
+		"#e8f4e7",
+		"#3c7153",
+		"#c7566f",
+		"#41b193",
+		"#a5c1cd",
+		"#3788a2",
+		"#243528",
+		"#609f83",
+		"#f0f4e7",
+	}
+end
+
+local crimson_moonlight = function()
+	return {
+		"#201c1c",
+		"#fca2ae",
+		"#e15774",
+		"#bc969a",
+		-- "#9d4e5c",
+		-- "#42647f",
+		"#714e75",
+		"#6c494d",
+		"#e9bfc4",
+		"#f9f1f2",
+		"#796769",
+		"#dd5571",
+		"#d19299",
+		"#dfb8bc",
+		"#b96a76",
+		"#473234",
+		"#ab9295",
+		"#f9f2f3",
 	}
 end
 
@@ -128,7 +174,10 @@ local diagnostics = function(c)
 		},
 		{
 			"DiagnosticWarn",
-			c.cloud6,
+
+			-- "#e0ec7a",
+			c.cloud11,
+			-- c.cloud6,
 			-- c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 			c.none,
 		},
@@ -208,7 +257,7 @@ end
 
 local telescope = function(c)
 	return {
-		{ "TelescopeBorder", c.bg:shade(0.1) },
+		{ "TelescopeBorder", c.bg:lighten_to(0.3) },
 		{ "TelescopeNormal", c.cloud0:light(0.3) },
 		{ "TelescopePromptPrefix", c.cloud10:dark(0.2) },
 
@@ -325,6 +374,47 @@ local symbols_outline = function(c)
 	}
 end
 
+local nvim_dap_virtual_text = function(c)
+	return {
+
+		{ "NvimDapVirtualText", c.cloud4:lighten_to(0.4), c.none, s.italic },
+		-- { "NvimDapVirtualText", c.cloud3:lighten_to(0.55), c.none, s.NONE },
+	}
+end
+
+local nvim_dap_ui = function(c)
+	return {
+		{ "DapUIValue", "TSVariable" },
+		{ "DapUIFrameName", "Normal" },
+		{ "DapUIVariable", "TSVariable" },
+
+		{ "DapUIScope", c.cloud14:light(0.1) },
+		{ "DapUIType", c.cloud13:lighten_to(0.4) },
+		{ "DapUIModifiedValue", c.cloud14:light(0.1), c.none, s.bold },
+		{ "DapUIDecoration", c.cloud14:light(0.1) },
+		{ "DapUIThread", c.cloud11 },
+		{ "DapUIStoppedThread", c.cloud14 },
+		{ "DapUISource", c.cloud13 },
+		{ "DapUILineNumber", c.cloud14:light(0.1) },
+		{ "DapUIFloatBorder", c.cloud14:light(0.1) },
+		{ "DapUIWatchesEmpty", c.cloud9 },
+		{ "DapUIWatchesValue", c.cloud10 },
+		{ "DapUIWatchesError", c.cloud9 },
+		{ "DapUIBreakpointsPath", c.cloud14:light(0.1) },
+		{ "DapUIBreakpointsInfo", c.cloud10 },
+		{ "DapUIBreakpointsCurrentLine", c.cloud10, c.none, s.bold },
+		{ "DapUIBreakpointsDisabledLine", c.cloud15 },
+
+		{ "DapUIBreakpointsLine", "DapUILineNumber" },
+	}
+end
+
+local harpoon = function(c)
+	return {
+		{ "HarpoonBorder", c.bg:lighten_to(0.3) },
+	}
+end
+
 local treesitter = function(c)
 	local error = { "TSError" }
 
@@ -372,7 +462,7 @@ local treesitter = function(c)
 
 	local groups = {
 		{ error, c.cloud1:light(), c.cloud9:dark(0.5), s.none },
-		{ punctuation, c.cloud3:lighten_to(0.3):desaturate(0.1) },
+		{ punctuation, c.cloud3:lighten_to(0.4):desaturate(0.1) },
 		{ constants, c.cloud5:light(0.1) },
 		{ string, c.cloud10:lighten_to(0.8):desaturate_to(0.5) },
 		{ boolean, c.cloud2:light(0.1) },
@@ -455,7 +545,7 @@ local colorscheme = function(c)
 
 		{ "Boolean", c.cloud2:dark(), c.none, s.NONE },
 		{ "Character", c.cloud14, c.none, s.NONE },
-		{ "Comment", c.cloud3:lighten_to(0.55), c.none, s.NONE },
+		{ "Comment", c.cloud3:desaturate_to(0.1):lighten_to(0.5), c.none, s.NONE },
 		{ "Conditional", c.cloud10, c.none, s.NONE },
 		{ "Constant", c.cloud4, c.none, s.NONE },
 
@@ -546,10 +636,10 @@ local colorscheme = function(c)
 		{ "SpecialComment", c.cloud8, c.none, s.NONE },
 
 		-- Spell
-		{ "SpellBad", c.cloud11, c.none },
-		{ "SpellCap", c.cloud13, c.none },
-		{ "SpellLocal", c.cloud5, c.none },
-		{ "SpellRare", c.cloud6, c.none },
+		{ "SpellBad", c.cloud11, c.none, s.undercurl },
+		{ "SpellCap", c.cloud13, c.none, s.undercurl },
+		{ "SpellLocal", c.cloud5, c.none, s.undercurl },
+		{ "SpellRare", c.cloud6, c.none, s.undercurl },
 
 		-- Statusline
 		{ "StatusLine", c.cloud10, c.cloud8:dark(0.2) },
@@ -579,23 +669,65 @@ local colorscheme = function(c)
 		vimscript(c),
 		cmp(c),
 		telescope(c),
+		harpoon(c),
 		symbols_outline(c),
+		nvim_dap_virtual_text(c),
+		nvim_dap_ui(c),
 	})
 end
 
 local M = {}
 
+-- TODO: Simplify what happens at this stage if we are using nvim_set_hi
+-- we can define the styles, fg, bg and others by their name
 M.apply = function(c)
-	local cmd = string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5])
+  
+	-- local cmd = string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5])
+	-- if c[6] then
+	-- 	cmd = string.format("%s blend=%s", cmd, c[6])
+	-- end
+	-- vim.cmd(cmd)
+	local val = {}
 
-	if c[6] then
-		cmd = string.format("%s blend=%s", cmd, c[6])
+	if c[2] ~= nil and c[2] ~= "none" then
+		-- are we using a link or a color?
+		-- links are discovered by being a string currently
+		if type(c[2]) == "string" then
+			val["link"] = c[2]
+		else
+			val["fg"] = c[2]:to_rgb()
+		end
 	end
 
-	vim.cmd(cmd)
+	if c[3] ~= nil and c[3] ~= "none" then
+		val.bg = c[3]:to_rgb()
+	end
+
+	if c[4] ~= nil and c[4] ~= "none" then
+		val[c[4]] = true
+	end
+
+	if c[6] ~= nil and c[6] ~= "none" then
+		val["blend"] = c[6]:to_rgb()
+	end
+
+	for k, v in pairs(val) do
+		if type(v) == "string" and #v > 7 then
+			val[k] = nil
+		end
+	end
+
+	-- invalid data coming in
+	if c[1] == nil then
+		return
+	end
+
+	vim.api.nvim_set_hl(0, c[1], val)
 end
 
+
 -- Use this function in your config
+-- @param opts table
 M.use = function(opts)
 	vim.g.termguicolors = true
 	vim.g.colors_name = "boo"
@@ -622,8 +754,16 @@ local find_theme_colors = function(opts)
 			return sunset_cloud
 		end
 
-		if opts["theme"] == "radioactive" then
+		if opts["theme"] == "radioactive_waste" then
 			return radioactive
+		end
+
+		if opts["theme"] == "forest_stream" then
+			return forest_stream
+		end
+
+		if opts["theme"] == "crimson_moonlight" then
+			return crimson_moonlight
 		end
 	end
 
@@ -631,8 +771,16 @@ local find_theme_colors = function(opts)
 		return sunset_cloud
 	end
 
-	if vim.g.boo_colorscheme_theme == "radioactive" then
+	if vim.g.boo_colorscheme_theme == "radioactive_waste" then
 		return radioactive
+	end
+
+	if vim.g.boo_colorscheme_theme == "forest_stream" then
+		return forest_stream
+	end
+
+	if vim.g.boo_colorscheme_theme == "crimson_moonlight" then
+		return crimson_moonlight
 	end
 
 	return cloud
@@ -649,7 +797,22 @@ M.setup = function(opts)
 	end
 
 	color_map["fg"] = colors("#e4dcec")
-	color_map["bg"] = colors("#111113")
+	color_map["bg"] = colors("#111113"):lighten_to(0.05)
+
+	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "sunset_cloud" then
+		color_map["fg"] = colors("#ffffcf")
+		color_map["bg"] = colors("#0e0f06")
+	end
+
+	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "forest_stream" then
+		color_map["fg"] = colors("#e3f5e7")
+		color_map["bg"] = colors("#0b0c0b")
+	end
+
+	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "crimson_moonlight" then
+		color_map["fg"] = colors("#f9f2f3")
+		color_map["bg"] = colors("#0f0e0e")
+	end
 
 	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "sunset_cloud" then
 		color_map["fg"] = colors("#ffffcf")
