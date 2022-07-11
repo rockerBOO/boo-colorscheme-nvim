@@ -93,6 +93,10 @@ let g:boo_colorscheme_theme = 'sunset_cloud'
 
 ![typescript](https://user-images.githubusercontent.com/15027/178179116-15203812-037b-458c-b27e-3ce3f1663a51.png)
 
+### Rust
+
+![rust](https://user-images.githubusercontent.com/15027/178296453-9b0cc27b-417f-46e4-8bc1-a4d47d49788e.png)
+
 ### Lua
 
 ![lua](https://user-images.githubusercontent.com/15027/98894334-9505f780-2472-11eb-9b73-b76b2b1f68b9.png)
