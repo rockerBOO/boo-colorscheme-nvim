@@ -681,7 +681,7 @@ local M = {}
 M.apply = function(c)
 	-- local cmd = string.format("highlight %s guifg=%s guibg=%s gui=%s guisp=%s", c[1], c[2], c[3], c[4], c[5])
 	-- if c[6] then
-	-- 	cmd = string.format("%s blend=%s", cmd, c[6])
+	-- cmd = string.format("%s blend=%s", cmd, c[6])
 	-- end
 	-- vim.cmd(cmd)
 	local val = {}
