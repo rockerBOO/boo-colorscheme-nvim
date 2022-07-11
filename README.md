@@ -4,7 +4,7 @@ Sorry, didn't mean to scare you.
 
 Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Treesitter.
 
-![Full Screen](https://user-images.githubusercontent.com/15027/98894239-5bcd8780-2472-11eb-9ca4-a2c3142a848a.png)
+![Full Screen](https://user-images.githubusercontent.com/15027/178179115-3e238800-8c53-4160-962f-90b9d1ad3747.png)
 
 [![Action Status](https://github.com/rockerBOO/boo-colorscheme-nvim/workflows/Tests/badge.svg)](https://github.com/rockerBOO/boo-colorscheme-nvim/actions)
 
@@ -91,7 +91,7 @@ let g:boo_colorscheme_theme = 'sunset_cloud'
 
 ### Typescript/TSX/JSX
 
-![typescript](https://user-images.githubusercontent.com/15027/98894240-5c661e00-2472-11eb-9bbe-96cca05c5590.png)
+![typescript](https://user-images.githubusercontent.com/15027/178179116-15203812-037b-458c-b27e-3ce3f1663a51.png)
 
 ### Lua
 
