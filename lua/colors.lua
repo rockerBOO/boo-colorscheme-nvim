@@ -321,8 +321,10 @@ end
 Color_mt.__tostring = Color.to_rgb
 
 -- allow to use `colors(...)` instead of `colors.new(...)`
-setmetatable(M, { __call = function(_, ...)
-	return new(...)
-end })
+setmetatable(M, {
+	__call = function(_, ...)
+		return new(...)
+	end,
+})
 
 return M

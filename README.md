@@ -38,15 +38,24 @@ Plug 'rockerBOO/boo-colorscheme-nvim'
 use 'rockerBOO/boo-colorscheme-nvim'
 ```
 
-Then in your `init.vim` you can set it to use it as your color scheme.
+Then in your `init.vim` or `init.lua` you can set it to use it as your color scheme.
 
 ```vimscript
 colorscheme boo
 ```
 
+Or in lua with the use function. This allows you to pass options like `{ theme = "radioactive_waste" }`.
+
+```lua
+require("boo-colorscheme").use({})
+```
+
 ## Themes
 
-- sunset_cloud
+- [`sunset_cloud`](#sunset_cloud)
+- [`radioactive_waste`](#radioactive_waste)
+- [`forest_stream`](#forest_stream)
+- [`crimson_moonlight`](#crimson_moonlight)
 
 ```lua
 vim.g.boo_colorscheme_theme = 'sunset_cloud'
@@ -65,6 +74,18 @@ let g:boo_colorscheme_theme = 'sunset_cloud'
 ```
 
 ![Screenshot of the source code showing sunset_cloud](https://user-images.githubusercontent.com/15027/162499722-a703531e-e9ac-461e-befb-dc9040234869.png)
+
+### `radioactive_waste`
+
+![Screenshot of the source code showing radioactive waste](https://user-images.githubusercontent.com/15027/178177587-620c2623-c31a-469a-944f-e2c5bbc1bea6.png)
+
+### `forest_stream`
+
+![Screenshot of the source code showing forest stream](https://user-images.githubusercontent.com/15027/178177588-cfe53f8c-08a3-49af-b44a-6667574b1fda.png)
+
+### `crimson_moonlight`
+
+![Screenshot of the source code showing crimson_moonlight](https://user-images.githubusercontent.com/15027/178177589-bcfe7280-9c43-4d41-abf4-f40e56be9803.png)
 
 ## Support
 
