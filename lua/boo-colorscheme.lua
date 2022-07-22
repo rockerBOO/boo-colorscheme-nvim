@@ -471,7 +471,7 @@ local treesitter = function(c)
 		{ parameters, c.cloud6:dark() },
 		{ operators, c.cloud3:lighten_to(0.4):desaturate(0.1) },
 		{ forwords, c.cloud8:saturate(0.1), c.none },
-		{ keyword, c.cloud4:lighten_to(0.4), c.none, s.italic },
+		{ keyword, c.cloud4:lighten_to(0.45), c.none, s.italic },
 		{ constructors, c.cloud10 },
 		{ types, c.cloud10 },
 		{ includes, c.cloud4 },
@@ -543,7 +543,7 @@ local colorscheme = function(c)
 
 		{ "Boolean", c.cloud2:dark(), c.none, s.NONE },
 		{ "Character", c.cloud14, c.none, s.NONE },
-		{ "Comment", c.cloud3:desaturate_to(0.1):lighten_to(0.5), c.none, s.NONE },
+		{ "Comment", c.cloud14:desaturate_to(0.2):lighten_to(0.5), c.none, s.NONE },
 		{ "Conditional", c.cloud10, c.none, s.NONE },
 		{ "Constant", c.cloud4, c.none, s.NONE },
 
