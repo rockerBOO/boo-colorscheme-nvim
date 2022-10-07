@@ -218,30 +218,72 @@ local diagnostics = function(c)
 	}
 end
 
--- local lsp = function(c)
--- 	return {
--- 		{
--- 			"LspDiagnosticsDefaultHint",--[[c.cloud13:saturate(0.05):light(0.1)]]
--- 			c.none,
--- 			c.cloud13:dark(0.9),
--- 		},
--- 		{
--- 			"LspDiagnosticsDefaultError",
--- 			-- c.cloud1:saturate(0.05):lighten_to(0.7),
--- 			c.none,
--- 			c.cloud1:shade(0.8):lighten_by(0.7),
--- 		},
--- 		{
--- 			"LspDiagnosticsDefaultWarning",--[[c.cloud6]]
--- 			c.none,
--- 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
--- 		},
--- 		{ "LspDiagnosticsDefaultInformation", c.fg },
--- 		{ "LspReferenceText", c.fg:light(0.1) },
--- 		{ "LspReferenceRead", c.fg:light(0.1) },
--- 		{ "LspReferenceWrite", c.fg:light(0.1) },
--- 	}
--- end
+local diff = function(c)
+	-- DiffviewNormal xxx links to NormalSB
+	-- DiffviewFilePanelTitle xxx gui=bold guifg=#7aa2f7
+	-- DiffviewFilePanelCounter xxx gui=bold guifg=#bb9af7
+	-- DiffviewFilePanelFileName xxx guifg=#c0caf5
+	-- DiffviewFilePanelPath xxx links to Comment
+	-- DiffviewSignColumn xxx links to Normal
+	-- DiffviewFilePanelInsertions xxx links to diffAdded
+	-- DiffviewStatusDeleted xxx links to diffRemoved
+	-- DiffviewStatusUnmerged xxx links to diffChanged
+	-- DiffviewStatusUntracked xxx links to diffAdded
+	-- DiffviewStatusModified xxx links to diffChanged
+	-- DiffviewStatusRenamed xxx links to diffChanged
+	-- DiffviewFilePanelRootPath xxx links to DiffviewFilePanelTitle
+	-- DiffviewStatusAdded xxx links to diffAdded
+	-- DiffviewStatusBroken xxx links to diffRemoved
+	-- DiffviewStatusUnknown xxx links to diffRemoved
+	-- DiffviewCursorLine xxx links to CursorLine
+	-- DiffviewEndOfBuffer xxx links to EndOfBuffer
+	-- DiffviewStatusTypeChange xxx links to diffChanged
+	-- DiffviewStatusCopied xxx links to diffChanged
+	-- DiffviewFilePanelDeletions xxx links to diffRemoved
+	-- DiffviewVertSplit xxx links to VertSplit
+	-- DiffviewStatusLine xxx links to StatusLine
+	-- DiffviewStatusLineNC xxx links to StatusLineNC
+	return {
+		{ "diffAdded", c.none, c.cloud6:lighten_to(0.1):desaturate_to(0.2) },
+		{ "diffRemoved", c.none, c.cloud1:lighten_to(0.1):desaturate_to(0.2) },
+		{ "diffChanged", c.none, c.cloud2:lighten_to(0.1):desaturate_to(0.2) },
+		{ "DiffAdd", c.none, c.cloud6:lighten_to(0.1):desaturate_to(0.2) },
+		{ "DiffDelete", c.none, c.cloud1:lighten_to(0.1):desaturate_to(0.2) },
+		{ "DiffChange", c.none, c.cloud2:lighten_to(0.1):desaturate_to(0.2) },
+		{ "DiffText", c.cloud7 },
+	}
+end
+
+local lsp = function(c)
+	return {
+		-- 		{
+		-- 			"LspDiagnosticsDefaultHint",--[[c.cloud13:saturate(0.05):light(0.1)]]
+		-- 			c.none,
+		-- 			c.cloud13:dark(0.9),
+		-- 		},
+		-- 		{
+		-- 			"LspDiagnosticsDefaultError",
+		-- 			-- c.cloud1:saturate(0.05):lighten_to(0.7),
+		-- 			c.none,
+		-- 			c.cloud1:shade(0.8):lighten_by(0.7),
+		-- 		},
+		-- 		{
+		-- 			"LspDiagnosticsDefaultWarning",--[[c.cloud6]]
+		-- 			c.none,
+		-- 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
+		-- 		},
+		-- 		{ "LspDiagnosticsDefaultInformation", c.fg },
+		{ "LspReferenceText", c.cloud6:lighten_to(0.9):desaturate_to(0.8) },
+		{ "LspReferenceRead", c.cloud14:lighten_to(0.9):desaturate_to(0.8) },
+		{ "LspReferenceWrite", c.cloud12:lighten_to(0.9):desaturate_to(0.8) },
+	}
+end
+
+local lsp_semantic_tokens = function()
+	return {
+		{ "LspParameter", nil, nil, s.italic },
+	}
+end
 
 local cmp = function(c)
 	return {
@@ -659,7 +701,8 @@ local colorscheme = function(c)
 
 	return merge({
 		vim_groups,
-		-- lsp(c),
+		lsp(c),
+		lsp_semantic_tokens(c),
 		diagnostics(c),
 		treesitter(c),
 		typescript(c),
@@ -671,6 +714,7 @@ local colorscheme = function(c)
 		symbols_outline(c),
 		nvim_dap_virtual_text(c),
 		nvim_dap_ui(c),
+		diff(c),
 	})
 end
 
