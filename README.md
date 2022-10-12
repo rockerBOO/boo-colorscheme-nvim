@@ -18,10 +18,18 @@ Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Tree
 - Neovim 0.4
 - termguicolors required (`:h 'termguicolors'`)
 
+`vimscript`
 ```vimscript
 if (has("termguicolors"))
   set termguicolors
 endif
+```
+
+`lua`
+```lua
+if vim.fn.has("termguicolors") then
+  vim.opt.termguicolors = true
+end
 ```
 
 ## Install
@@ -72,6 +80,8 @@ or
 ```vimscript
 let g:boo_colorscheme_theme = 'sunset_cloud'
 ```
+
+### `sunset_cloud`
 
 ![Screenshot of the source code showing sunset_cloud](https://user-images.githubusercontent.com/15027/162499722-a703531e-e9ac-461e-befb-dc9040234869.png)
 
