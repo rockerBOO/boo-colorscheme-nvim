@@ -356,7 +356,7 @@ local treesitter = function(c)
 		"TSConstMacro",
 	}
 
-	local constructors = { { "TSConstructor", link = "@constructor" } }
+	local constructors = { "TSConstructor" }
 
 	local string = { "TSStringRegex", "TSString", "TSStringEscape", "TSStringSpecial" }
 
