@@ -16,7 +16,7 @@ Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Tree
 ## Requirements
 
 - Neovim 0.4
-- termguicolors required (`:h 'termguicolors'`)
+- `termguicolors` required (`:h 'termguicolors'`)
 
 `vimscript`
 ```vimscript

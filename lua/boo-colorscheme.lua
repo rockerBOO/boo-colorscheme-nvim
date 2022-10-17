@@ -25,7 +25,15 @@ local highlight_to_groups = function(highlight)
 		local acc = {}
 
 		for _, name in ipairs(groups) do
-			table.insert(acc, { name, highlight[1], highlight[2], highlight[3] })
+			if type(name) == "table" then
+				-- name
+				-- { "TSName", link = "@name" }
+				table.insert(acc, { name[0], highlight[1], highlight[2], highlight[3], link = name["link"] })
+			else
+				-- name
+				--  "TSName"
+				table.insert(acc, { name, highlight[1], highlight[2], highlight[3] })
+			end
 		end
 
 		return acc
@@ -167,48 +175,37 @@ local diagnostics = function(c)
 		{
 			"DiagnosticError",
 			c.cloud1:saturate(0.05):lighten_to(0.7),
-			-- c.cloud1:shade(0.8):lighten_by(0.7),
 			c.none,
 		},
 		{
 			"DiagnosticWarn",
-
-			-- "#e0ec7a",
 			c.cloud11,
-			-- c.cloud6,
-			-- c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 			c.none,
 		},
 		{ "DiagnosticInfo", c.fg },
 		{
 			"DiagnosticUnderlineHint",
-			--[[c.cloud13:saturate(0.05):light(0.1)]]
 			c.none,
-			-- c.cloud13:dark(0.9),
 			c.none,
 			s.underline,
 			c.cloud13:saturate(0.05):lighten_to(0.2),
 		},
 		{
 			"DiagnosticUnderlineError",
-			--[[c.cloud1:saturate(0.05):lighten_to(0.7)]]
 			c.none,
-			-- c.cloud1:shade(0.8):lighten_by(0.7),
 			c.none,
 			s.underline,
 			c.cloud1:saturate(0.05):lighten_to(0.2),
 		},
 		{
 			"DiagnosticUnderlineWarn",
-			--[[c.cloud6]]
 			c.none,
-			-- c.cloud6:desaturate_to(0.5):lighten_to(0.1),
 			c.none,
 			s.underline,
 			c.cloud6:dark(0.3),
 		},
 		{
-			"DiagnosticUnderlineInfo",--[[c.fg]]
+			"DiagnosticUnderlineInfo",
 			c.none,
 			c.none,
 			s.underline,
@@ -219,30 +216,6 @@ local diagnostics = function(c)
 end
 
 local diff = function(c)
-	-- DiffviewNormal xxx links to NormalSB
-	-- DiffviewFilePanelTitle xxx gui=bold guifg=#7aa2f7
-	-- DiffviewFilePanelCounter xxx gui=bold guifg=#bb9af7
-	-- DiffviewFilePanelFileName xxx guifg=#c0caf5
-	-- DiffviewFilePanelPath xxx links to Comment
-	-- DiffviewSignColumn xxx links to Normal
-	-- DiffviewFilePanelInsertions xxx links to diffAdded
-	-- DiffviewStatusDeleted xxx links to diffRemoved
-	-- DiffviewStatusUnmerged xxx links to diffChanged
-	-- DiffviewStatusUntracked xxx links to diffAdded
-	-- DiffviewStatusModified xxx links to diffChanged
-	-- DiffviewStatusRenamed xxx links to diffChanged
-	-- DiffviewFilePanelRootPath xxx links to DiffviewFilePanelTitle
-	-- DiffviewStatusAdded xxx links to diffAdded
-	-- DiffviewStatusBroken xxx links to diffRemoved
-	-- DiffviewStatusUnknown xxx links to diffRemoved
-	-- DiffviewCursorLine xxx links to CursorLine
-	-- DiffviewEndOfBuffer xxx links to EndOfBuffer
-	-- DiffviewStatusTypeChange xxx links to diffChanged
-	-- DiffviewStatusCopied xxx links to diffChanged
-	-- DiffviewFilePanelDeletions xxx links to diffRemoved
-	-- DiffviewVertSplit xxx links to VertSplit
-	-- DiffviewStatusLine xxx links to StatusLine
-	-- DiffviewStatusLineNC xxx links to StatusLineNC
 	return {
 		{ "diffAdded", c.none, c.cloud6:lighten_to(0.1):desaturate_to(0.2) },
 		{ "diffRemoved", c.none, c.cloud1:lighten_to(0.1):desaturate_to(0.2) },
@@ -256,23 +229,6 @@ end
 
 local lsp = function(c)
 	return {
-		-- 		{
-		-- 			"LspDiagnosticsDefaultHint",--[[c.cloud13:saturate(0.05):light(0.1)]]
-		-- 			c.none,
-		-- 			c.cloud13:dark(0.9),
-		-- 		},
-		-- 		{
-		-- 			"LspDiagnosticsDefaultError",
-		-- 			-- c.cloud1:saturate(0.05):lighten_to(0.7),
-		-- 			c.none,
-		-- 			c.cloud1:shade(0.8):lighten_by(0.7),
-		-- 		},
-		-- 		{
-		-- 			"LspDiagnosticsDefaultWarning",--[[c.cloud6]]
-		-- 			c.none,
-		-- 			c.cloud6:desaturate_to(0.5):lighten_to(0.1),
-		-- 		},
-		-- 		{ "LspDiagnosticsDefaultInformation", c.fg },
 		{ "LspReferenceText", c.cloud6:lighten_to(0.9):desaturate_to(0.8) },
 		{ "LspReferenceRead", c.cloud14:lighten_to(0.9):desaturate_to(0.8) },
 		{ "LspReferenceWrite", c.cloud12:lighten_to(0.9):desaturate_to(0.8) },
@@ -303,75 +259,6 @@ local telescope = function(c)
 
 		{ "TelescopeSelection", c.cloud10:light(), c.cloud8:dark(0.2), s.bold },
 		{ "TelescopeMatching", c.cloud4:light() },
-	}
-end
-
-local typescript = function(c)
-	-- {"typescriptbraces", c.cloud14:dark()},
-
-	-- tsx
-	return {
-		{ "tsxJsBlock", c.cloud8:light() },
-		{ "tsxclosetag", c.cloud8 },
-		{ "tsxelseoperator", c.cloud10:dark(0.2) },
-		{ "tsxclosetagname", c.cloud10 },
-
-		{ "tsxclosetag", c.cloud8:dark() },
-
-		{ "tsxtypes", c.cloud10:light(), c.none, s.none },
-		{ "tsxtag", c.cloud8 },
-
-		{ "typescriptAliasDeclaration", c.cloud8 },
-		{ "typescriptObjectLiteral", c.cloud8 },
-		{ "typescriptBinaryOp", c.cloud8 },
-
-		{ "typescriptParenExp", c.cloud8 },
-		-- Actually used as this? not sure if case sensitive
-		{ "typescriptparenexp", c.cloud10 },
-
-		{ "typescripttypeannotation", c.cloud3:dark(0.35) },
-
-		{ "typescriptEnum", c.cloud10 },
-		{ "typescriptString", c.cloud10:light(0.3) },
-		{ "typescriptProp", c.cloud10 },
-		{ "typescriptUnion", c.cloud8:dark() },
-
-		{ "typescriptObjectColon", c.cloud3:dark(0.35) },
-		{ "typescriptObjectSpread", c.cloud14:dark(0.1) },
-		{ "typescriptObjectType", c.cloud8:dark() },
-
-		{ "typescriptRestOrSpread", c.cloud8:dark() },
-
-		{ "typescriptInterfaceTypeParameter", c.cloud8:dark() },
-		{ "typescriptInterfaceName", c.cloud10 },
-
-		{ "typescriptParens", c.cloud8 },
-		{ "typescriptTernaryOp", c.cloud8 },
-		{ "typescriptParenthesizedType", c.cloud10:dark(0.2) },
-		{ "typescriptIdentifierName", c.cloud10 },
-
-		{ "typescriptMemberOptionality", c.cloud10:light() },
-		{ "typescriptMember", c.cloud10:light(0.2) },
-
-		{ "typescriptGlobal", c.cloud7 },
-		{ "typescriptGenericCall", c.cloud8 },
-		{ "typescript1", c.cloud6:dark():saturate(0.1) },
-
-		{ "typescriptAssign", c.cloud6:dark():saturate(0.1) },
-		{ "typescriptbraces", c.cloud8:dark(0.2) },
-		{ "typescriptendcolons", c.cloud10:light() },
-
-		{ "typescriptFuncCallArg", c.cloud6 },
-		{ "typescriptTypeBrackets", c.cloud8:dark() },
-		{ "typescriptTypeAnnotation", c.cloud8 },
-		{ "typescriptTypeArguments", c.cloud8 },
-		{ "typescriptTypeReference", c.cloud10 },
-		{ "typescriptTypeCast", c.cloud8 },
-		{ "typescriptFuncType", c.cloud10 },
-
-		{ "typescriptUnaryOp", c.cloud4:light(0.3), c.none, s.bold },
-
-		{ "typescriptaliasdeclaration", c.cloud10 },
 	}
 end
 
@@ -418,7 +305,6 @@ local nvim_dap_virtual_text = function(c)
 	return {
 
 		{ "NvimDapVirtualText", c.cloud4:lighten_to(0.4), c.none, s.italic },
-		-- { "NvimDapVirtualText", c.cloud3:lighten_to(0.55), c.none, s.NONE },
 	}
 end
 
@@ -458,11 +344,19 @@ end
 local treesitter = function(c)
 	local error = { "TSError" }
 
-	local punctuation = { "TSPunctDelimiter", "TSPunctBracket", "TSPunctSpecial" }
+	local punctuation = {
+		"TSPunctDelimiter",
+		"TSPunctBracket",
+		"TSPunctSpecial",
+	}
 
-	local constants = { "TSConstant", "TsConstBuiltin", "TSConstMacro" }
+	local constants = {
+		"TSConstant",
+		"TSConstBuiltin",
+		"TSConstMacro",
+	}
 
-	local constructors = { "TSConstructor" }
+	local constructors = { { "TSConstructor", link = "@constructor" } }
 
 	local string = { "TSStringRegex", "TSString", "TSStringEscape", "TSStringSpecial" }
 
@@ -482,7 +376,7 @@ local treesitter = function(c)
 
 	local forwords = { "TSConditional", "TSRepeat" }
 
-	local keyword = { "TSKeyword", "TSKeywordOperator" }
+	local keyword = { "TSKeyword", "TSKeywordFunction", "TSKeywordReturn", "TSKeywordOperator" }
 
 	local types = { "TSType", "TSTypeBuiltin" }
 
@@ -535,8 +429,6 @@ local treesitter = function(c)
 	return merge({
 		highlights,
 		{
-
-			-- {"TSPunctBracket", c.blue},
 			{ "TSPunctDelimiter", c.cloud3:dark():dark():saturate(0.1) },
 			{ "TSTagDelimiter", c.cloud8:dark(0.15) },
 
@@ -551,15 +443,128 @@ local treesitter = function(c)
 
 			{ "TSVariableBuiltin", c.cloud12:lighten_to(0.4) },
 
+			{ "TSComment", c.cloud14:desaturate_to(0.2):lighten_to(0.5) },
+
 			{ "TSField", c.cloud8 },
 
 			{ "TSNodeKey", c.cloud10 },
 			{ "TSNodeUnmatched", c.cloud8:dark(0.2) },
-
-			-- {"TSTitle", c.cloud4},
-			-- {"TSStrong", c.cloud4, c.none, s.bold},
 		},
 	})
+end
+
+local treesitter_migrate = function()
+	local map = {
+		["annotation"] = "TSAnnotation",
+
+		["attribute"] = "TSAttribute",
+
+		["boolean"] = "TSBoolean",
+
+		["character"] = "TSCharacter",
+		["character.special"] = "TSCharacterSpecial",
+
+		["comment"] = "TSComment",
+
+		["conditional"] = "TSConditional",
+
+		["constant"] = "TSConstant",
+		["constant.builtin"] = "TSConstBuiltin",
+		["constant.macro"] = "TSConstMacro",
+
+		["constructor"] = "TSConstructor",
+
+		["debug"] = "TSDebug",
+		["define"] = "TSDefine",
+
+		["error"] = "TSError",
+		["exception"] = "TSException",
+
+		["field"] = "TSField",
+
+		["float"] = "TSFloat",
+
+		["function"] = "TSFunction",
+		["function.call"] = "TSFunctionCall",
+		["function.builtin"] = "TSFuncBuiltin",
+		["function.macro"] = "TSFuncMacro",
+
+		["include"] = "TSInclude",
+
+		["keyword"] = "TSKeyword",
+		["keyword.function"] = "TSKeywordFunction",
+		["keyword.operator"] = "TSKeywordOperator",
+		["keyword.return"] = "TSKeywordReturn",
+
+		["label"] = "TSLabel",
+
+		["method"] = "TSMethod",
+		["method.call"] = "TSMethodCall",
+
+		["namespace"] = "TSNamespace",
+
+		["none"] = "TSNone",
+		["number"] = "TSNumber",
+
+		["operator"] = "TSOperator",
+
+		["parameter"] = "TSParameter",
+		["parameter.reference"] = "TSParameterReference",
+
+		["preproc"] = "TSPreProc",
+
+		["property"] = "TSProperty",
+
+		["punctuation.delimiter"] = "TSPunctDelimiter",
+		["punctuation.bracket"] = "TSPunctBracket",
+		["punctuation.special"] = "TSPunctSpecial",
+
+		["repeat"] = "TSRepeat",
+
+		["storageclass"] = "TSStorageClass",
+
+		["string"] = "TSString",
+		["string.regex"] = "TSStringRegex",
+		["string.escape"] = "TSStringEscape",
+		["string.special"] = "TSStringSpecial",
+
+		["symbol"] = "TSSymbol",
+
+		["tag"] = "TSTag",
+		["tag.attribute"] = "TSTagAttribute",
+		["tag.delimiter"] = "TSTagDelimiter",
+
+		["text"] = "TSText",
+		["text.strong"] = "TSStrong",
+		["text.emphasis"] = "TSEmphasis",
+		["text.underline"] = "TSUnderline",
+		["text.strike"] = "TSStrike",
+		["text.title"] = "TSTitle",
+		["text.literal"] = "TSLiteral",
+		["text.uri"] = "TSURI",
+		["text.math"] = "TSMath",
+		["text.reference"] = "TSTextReference",
+		["text.environment"] = "TSEnvironment",
+		["text.environment.name"] = "TSEnvironmentName",
+
+		["text.note"] = "TSNote",
+		["text.warning"] = "TSWarning",
+		["text.danger"] = "TSDanger",
+
+		["todo"] = "TSTodo",
+
+		["type"] = "TSType",
+		["type.builtin"] = "TSTypeBuiltin",
+		["type.qualifier"] = "TSTypeQualifier",
+		["type.definition"] = "TSTypeDefinition",
+
+		["variable"] = "TSVariable",
+		["variable.builtin"] = "TSVariableBuiltin",
+	}
+
+	for capture, hlgroup in pairs(map) do
+		vim.api.nvim_set_hl(0, "@" .. capture, { link = hlgroup, default = true })
+	end
 end
 
 --[[ How this works:
@@ -581,15 +586,15 @@ local colorscheme = function(c)
 		{ "ErrorMsg", c.cloud1:dark():saturate(0.1), c.cloud1:dark(0.7):saturate(0.1):dark(0.05) },
 
 		{ "WarningMsg", c.cloud4:light(0.3), c.cloud12:dark(0.3) },
-		{ "Exception", c.cloud9, c.none, s.NONE },
+		{ "Exception", c.cloud9 },
 
-		{ "Boolean", c.cloud2:dark(), c.none, s.NONE },
-		{ "Character", c.cloud14, c.none, s.NONE },
-		{ "Comment", c.cloud14:desaturate_to(0.2):lighten_to(0.5), c.none, s.NONE },
-		{ "Conditional", c.cloud10, c.none, s.NONE },
-		{ "Constant", c.cloud4, c.none, s.NONE },
+		{ "Boolean", c.cloud2:dark() },
+		{ "Character", c.cloud14 },
+		{ "Comment", c.cloud14:desaturate_to(0.2):lighten_to(0.5) },
+		{ "Conditional", c.cloud10 },
+		{ "Constant", c.cloud4 },
 
-		{ "Float", c.cloud4, c.none, s.NONE },
+		{ "Float", c.cloud4 },
 
 		{ "NormalFloat", c.cloud6:desaturate_to(0.8), c.cloud0:lighten_to(0.05):desaturate_to(0.0) },
 
@@ -598,11 +603,11 @@ local colorscheme = function(c)
 		{ "Search", c.none, c.cloud10:dark(0.4):desaturate_to(0.1), s.bold },
 
 		-- Numbers
-		{ "Number", c.cloud15, c.none, s.NONE },
+		{ "Number", c.cloud15 },
 
-		{ "Define", c.cloud10, c.none, s.NONE },
+		{ "Define", c.cloud10 },
 
-		{ "Delimiter", c.cloud6, c.none, s.NONE },
+		{ "Delimiter", c.cloud3:dark():dark():saturate(0.1) },
 
 		{ "Directory", c.cloud4 },
 
@@ -618,40 +623,40 @@ local colorscheme = function(c)
 		{ "DiffDelete", c.none, c.cloud9 },
 		{ "DiffText", c.none, c.cloud3 },
 
-		{ "Identifier", c.cloud2, c.none, s.NONE },
-		{ "Include", c.cloud10, c.none, s.NONE },
+		{ "Identifier", c.cloud2 },
+		{ "Include", c.cloud10 },
 
 		{ "Keyword", c.cloud4, c.none, s.italic },
 
 		{ "Label", c.cloud10, c.none, s.italic },
 
-		{ "Operator", c.cloud12:dark(), c.none, s.NONE },
+		{ "Operator", c.cloud12:dark() },
 
-		{ "PreProc", c.cloud10, c.none, s.NONE },
+		{ "PreProc", c.cloud10 },
 
-		{ "Repeat", c.cloud12:dark(), c.none, s.NONE },
+		{ "Repeat", c.cloud12:dark() },
 
-		{ "Statement", c.cloud10, c.none, s.NONE },
-		{ "StorageClass", c.cloud10, c.none, s.NONE },
-		{ "String", c.cloud14, c.none, s.NONE },
-		{ "Structure", c.cloud10, c.none, s.NONE },
-		{ "Tag", c.cloud4, c.none, s.NONE },
+		{ "Statement", c.cloud10 },
+		{ "StorageClass", c.cloud10 },
+		{ "String", c.cloud14 },
+		{ "Structure", c.cloud10 },
+		{ "Tag", c.cloud4 },
 
 		{ "Title", c.cloud4, c.none },
 
-		{ "Todo", c.cloud13, c.none, s.NONE },
+		{ "Todo", c.cloud13 },
 
 		{ "Type", c.cloud10:light(), c.none, s.italic },
-		{ "Typedef", c.cloud10, c.none, s.NONE },
+		{ "Typedef", c.cloud10 },
 
 		-- Side Column
-		{ "CursorColumn", c.cloud4:desaturate_to(0.1), c.none, s.NONE, c.none, "20" },
+		{ "CursorColumn", c.cloud4:desaturate_to(0.1), c.none, s.NONE, "20" },
 		{ "LineNr", c.cloud10:desaturate_to(0.05):lighten_to(0.3) },
 		{ "CursorLineNr", c.cloud5 },
 		{ "Line", c.cloud12 },
-		{ "SignColumn" },
+		{ "SignColumn", c.none },
 
-		{ "ColorColumn", c.none, c.cloud4:desaturate_to(0.1):lighten_to(0.1), s.None, c.none, "100" },
+		{ "ColorColumn", c.none, c.cloud4:desaturate_to(0.1):lighten_to(0.1) },
 		{ "Cursor", c.cloud0, c.cloud4 },
 		{ "CursorLine", c.none, c.cloud0 },
 		{ "iCursor", c.cloud0, c.cloud4 },
@@ -670,10 +675,10 @@ local colorscheme = function(c)
 		{ "PmenuThumb", c.cloud8, c.cloud3 },
 
 		-- Special
-		{ "Special", c.cloud4, c.none, s.NONE },
-		{ "SpecialChar", c.cloud13, c.none, s.NONE },
+		{ "Special", c.cloud4 },
+		{ "SpecialChar", c.cloud13 },
 		{ "SpecialKey", c.cloud13 },
-		{ "SpecialComment", c.cloud8, c.none, s.NONE },
+		{ "SpecialComment", c.cloud8 },
 
 		-- Spell
 		{ "SpellBad", c.cloud11, c.none, s.undercurl },
@@ -705,7 +710,6 @@ local colorscheme = function(c)
 		lsp_semantic_tokens(c),
 		diagnostics(c),
 		treesitter(c),
-		typescript(c),
 		markdown(c),
 		vimscript(c),
 		cmp(c),
@@ -758,6 +762,10 @@ M.apply = function(c)
 		end
 	end
 
+	if c["link"] ~= nil and c["link"] ~= "none" then
+		val["link"] = c["link"]
+	end
+
 	-- invalid data coming in
 	if c[1] == nil then
 		return
@@ -786,6 +794,8 @@ M.use = function(opts)
 
 		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]), cNone(group[5]) })
 	end
+
+	treesitter_migrate()
 end
 
 local find_theme_colors = function(opts)
