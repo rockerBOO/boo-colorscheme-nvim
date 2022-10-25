@@ -72,7 +72,7 @@ require("boo-colorscheme").use({
 or in vimscript
 
 ```vimscript
-vim.g.boo_colorscheme_italic = true
+let g:boo_colorscheme_italic = true
 ```
 
 ## Themes
@@ -89,7 +89,7 @@ require('boo-colorscheme').use({ theme = 'sunset_cloud' })
 or
 
 ```vimscript
-vim.g.boo_colorscheme_theme = 'sunset_cloud'
+let g:boo_colorscheme_theme = 'sunset_cloud'
 ```
 
 ### `sunset_cloud`
