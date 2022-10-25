@@ -118,13 +118,9 @@ let g:boo_colorscheme_theme = 'sunset_cloud'
 
 ![rust](https://user-images.githubusercontent.com/15027/178296453-9b0cc27b-417f-46e4-8bc1-a4d47d49788e.png)
 
-### Lua
-
-![lua](https://user-images.githubusercontent.com/15027/98894334-9505f780-2472-11eb-9b73-b76b2b1f68b9.png)
-
 ### Go
 
-![go](https://user-images.githubusercontent.com/15027/101699325-ef31b280-3a48-11eb-94e8-a89152204358.png)
+![go](https://user-images.githubusercontent.com/15027/197879409-cd019366-4ac3-480a-a130-233f1977496b.png)
 
 ### Telescope
 
