@@ -89,8 +89,6 @@ local crimson_moonlight = function()
 		"#fca2ae",
 		"#e15774",
 		"#bc969a",
-		-- "#9d4e5c",
-		-- "#42647f",
 		"#714e75",
 		"#6c494d",
 		"#e9bfc4",
@@ -866,7 +864,6 @@ end
 M.use = function(opts)
 	vim.g.termguicolors = true
 	vim.g.colors_name = "boo"
-	-- vim.cmd("hi! clear")
 	local colormap = M.setup(opts)
 
 	for _, group in ipairs(colormap) do
@@ -878,6 +875,10 @@ M.use = function(opts)
 
 		local cNone = check_none("none")
 		local sNone = check_none(s.none)
+
+		if sNone(group[4]) == s.italic and opts.italic == false or vim.g.boo_colorscheme_italic == false then
+			group[4] = s.none
+		end
 
 		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]), cNone(group[5]) })
 	end

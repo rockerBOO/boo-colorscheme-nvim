@@ -19,6 +19,7 @@ Boo is a colorscheme for Neovim with handcrafted-artisanal support for LSP, Tree
 - `termguicolors` required (`:h 'termguicolors'`)
 
 `vimscript`
+
 ```vimscript
 if (has("termguicolors"))
   set termguicolors
@@ -26,6 +27,7 @@ endif
 ```
 
 `lua`
+
 ```lua
 if vim.fn.has("termguicolors") then
   vim.opt.termguicolors = true
@@ -58,6 +60,21 @@ Or in lua with the use function. This allows you to pass options like `{ theme =
 require("boo-colorscheme").use({})
 ```
 
+## Options
+
+```lua
+require("boo-colorscheme").use({
+	italic = true, -- toggle italics
+	theme = "boo"
+})
+```
+
+or in vimscript
+
+```vimscript
+vim.g.boo_colorscheme_italic = true
+```
+
 ## Themes
 
 - [`sunset_cloud`](#sunset_cloud)
@@ -66,19 +83,13 @@ require("boo-colorscheme").use({})
 - [`crimson_moonlight`](#crimson_moonlight)
 
 ```lua
-vim.g.boo_colorscheme_theme = 'sunset_cloud'
-```
-
-or
-
-```lua
 require('boo-colorscheme').use({ theme = 'sunset_cloud' })
 ```
 
 or
 
 ```vimscript
-let g:boo_colorscheme_theme = 'sunset_cloud'
+vim.g.boo_colorscheme_theme = 'sunset_cloud'
 ```
 
 ### `sunset_cloud`
