@@ -64,8 +64,8 @@ require("boo-colorscheme").use({})
 
 ```lua
 require("boo-colorscheme").use({
-	italic = true, -- toggle italics
-	theme = "boo"
+  italic = true, -- toggle italics
+  theme = "boo"
 })
 ```
 
