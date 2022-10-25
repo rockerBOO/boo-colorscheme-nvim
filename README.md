@@ -128,7 +128,7 @@ let g:boo_colorscheme_theme = 'sunset_cloud'
 
 ### Telescope
 
-![telescope](https://user-images.githubusercontent.com/15027/130393678-526e0fd2-d50f-4db7-8d76-337475e4e125.png)
+![telescope](https://user-images.githubusercontent.com/15027/197878218-9d976b7d-2c47-4242-b5ca-1fb4db5ac803.png)
 
 ## Colors
 
