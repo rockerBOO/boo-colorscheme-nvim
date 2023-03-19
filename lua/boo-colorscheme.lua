@@ -40,25 +40,49 @@ local highlight_to_groups = function(highlight)
 	end
 end
 
+-- Used in tuning colors to be more base 16 based
+-- This will allow us to have our scheme work with base 16 colors that could
+-- be dynamically added
+local default = function()
+	return {
+		"#282a2e", -- 0
+		"#a54242",
+		"#8c9440",
+		"#de935f",
+		"#5f819d", -- 4
+		"#85678f",
+		"#5e8d87",
+		"#707880",
+		"#373b41", -- 8
+		"#cc6666",
+		"#b5bd68",
+		"#f0c674",
+		"#81a2be", -- 12
+		"#b294bb",
+		"#8abeb7",
+		"#c5c8c6", -- 15
+	}
+end
+
 -- Cloud colors
 local cloud = function()
 	return {
-		"#222827",
+		"#222827", -- 0
 		"#d5a8e4",
 		"#9c75dd",
 		"#9898ae",
-		"#654a96",
+		"#654a96", -- 4
 		"#625566",
 		"#a9d1df",
 		"#e6ebe5",
-		"#5d6f74",
+		"#5d6f74", -- 8
 		"#cd749c",
 		"#63b0b0",
 		"#c0c0dd",
-		"#5786bc",
+		"#5786bc", -- 12
 		"#3f3442",
 		"#849da2",
-		"#d9d6cf",
+		"#d9d6cf", -- 15
 	}
 end
 
@@ -181,35 +205,34 @@ local diagnostics = function(c)
 			c.none,
 		},
 		{ "DiagnosticInfo", c.fg },
-		{
-			"DiagnosticUnderlineHint",
-			c.none,
-			c.none,
-			s.underline,
-			c.cloud13:saturate(0.05):lighten_to(0.2),
-		},
-		{
-			"DiagnosticUnderlineError",
-			c.none,
-			c.none,
-			s.underline,
-			c.cloud1:saturate(0.05):lighten_to(0.2),
-		},
-		{
-			"DiagnosticUnderlineWarn",
-			c.none,
-			c.none,
-			s.underline,
-			c.cloud6:dark(0.3),
-		},
-		{
-			"DiagnosticUnderlineInfo",
-			c.none,
-			c.none,
-			s.underline,
-			c.fg,
-		},
-		{},
+		-- {
+		-- 	"DiagnosticUnderlineHint",
+		-- 	c.none,
+		-- 	c.none,
+		-- 	s.underline,
+		-- 	c.cloud13:saturate(0.05):lighten_to(0.2),
+		-- },
+		-- {
+		-- 	"DiagnosticUnderlineError",
+		-- 	c.none,
+		-- 	c.none,
+		-- 	s.underline,
+		-- 	c.cloud1:saturate(0.05):lighten_to(0.9),
+		-- },
+		-- {
+		-- 	"DiagnosticUnderlineWarn",
+		-- 	c.none,
+		-- 	c.none,
+		-- 	s.underline,
+		-- 	c.cloud6:lighten_to(0.9),
+		-- },
+		-- {
+		-- 	"DiagnosticUnderlineInfo",
+		-- 	c.none,
+		-- 	c.none,
+		-- 	s.underline,
+		-- 	c.fg:lighten_to(0.1),
+		-- },
 	}
 end
 
@@ -308,9 +331,9 @@ end
 
 local nvim_dap_ui = function(c)
 	return {
-		{ "DapUIValue", "TSVariable" },
+		{ "DapUIValue", "@variable" },
 		{ "DapUIFrameName", "Normal" },
-		{ "DapUIVariable", "TSVariable" },
+		{ "DapUIVariable", "@variable" },
 
 		{ "DapUIScope", c.cloud14:light(0.1) },
 		{ "DapUIType", c.cloud13:lighten_to(0.4) },
@@ -346,49 +369,103 @@ local treesitter = function(c)
 		"TSPunctDelimiter",
 		"TSPunctBracket",
 		"TSPunctSpecial",
+		"@punctuation.delimiter",
+		"@punctuation.bracket",
+		"@punctuation.special",
 	}
 
 	local constants = {
 		"TSConstant",
 		"TSConstBuiltin",
 		"TSConstMacro",
+		"@constant",
+		"@constant.builtin",
+		"@constant.macro",
 	}
 
-	local constructors = { "TSConstructor" }
+	local constructors = { "TSConstructor", "@constructor" }
 
-	local string = { "TSStringRegex", "TSString", "TSStringEscape", "TSStringSpecial" }
+	local string = {
+		"TSStringRegex",
+		"TSString",
+		"TSStringEscape",
+		"TSStringSpecial",
+		"@string.regex",
+		"@string",
+		"@string.escape",
+		"@string.special",
+	}
 
-	local boolean = { "TSBoolean" }
+	local boolean = { "TSBoolean", "@boolean" }
 
-	local functions = { "TSFunction", "TSFuncBuiltin", "TSFuncMacro" }
+	local functions = {
+		"TSFunction",
+		"TSFuncBuiltin",
+		"TSFuncMacro",
+		"@function",
+		"@function.builtin",
+		"@function.macro",
+		"@function.call",
+	}
 
-	local methods = { "TSMethod" }
+	local methods = { "TSMethod", "@method", "@method.call" }
 
-	local fields = { "TSField", "TSProperty" }
+	local fields = { "TSField", "TSProperty", "@field", "@property" }
 
-	local number = { "TSNumber", "TSFloat" }
+	local number = { "TSNumber", "TSFloat", "@number", "@float" }
 
-	local parameters = { "TSParameter", "TSParameterReference" }
+	local parameters = { "TSParameter", "TSParameterReference", "@parameter", "@parameter.reference" }
 
-	local operators = { "TSOperator" }
+	local operators = { "TSOperator", "@operator" }
 
-	local forwords = { "TSConditional", "TSRepeat" }
+	local forwords = { "TSConditional", "TSRepeat", "@conditional", "@repeat" }
 
-	local keyword = { "TSKeyword", "TSKeywordFunction", "TSKeywordReturn", "TSKeywordOperator" }
+	local keyword = {
+		"TSKeyword",
+		"TSKeywordFunction",
+		"TSKeywordReturn",
+		"TSKeywordOperator",
+		"@keyword",
+		"@keyword.function",
+		"@keyword.operator",
+		"@keyword.return",
+	}
 
-	local types = { "TSType", "TSTypeBuiltin" }
+	-- local labels = { "TSLabel", "@label" }
 
-	local labels = { "TSLabel" }
+	local types = { "TSType", "TSTypeBuiltin", "@type", "@type.builtin", "@type.qualifier", "@type.defintion" }
 
-	local namespaces = { "TSNamespace" }
+	local namespaces = { "TSNamespace", "@namespace" }
 
-	local includes = { "TSInclude" }
+	local includes = { "TSInclude", "@include" }
 
-	local variables = { "TSVariable", "TSVariableBuiltin" }
+	-- local variables = { -- "TSVariable", "TSVariableBuiltin",
+	-- 	"@variable",
+	-- 	"@variable.builtin",
+	-- }
 
-	local tags = { "TSTag", "TSTagDelimiter" }
+	local tags = { "TSTag", "TSTagDelimiter", "@tag", "@tag.delimiter", "@tag.attribute" }
 
-	local text = { "TSText", "TSStrong", "TSEmphasis", "TSUnderline", "TSLiteral", "TSURI" }
+	local text = {
+		"TSText",
+		"TSStrong",
+		"TSEmphasis",
+		"TSUnderline",
+		"TSLiteral",
+		"TSURI",
+		"@text",
+		"@text.string",
+		"@text.emphassis",
+		"@text.underline",
+		"@text.strike",
+		"@text.title",
+		"@text.literal",
+		"@text.uri",
+		"@text.math",
+		"@text.reference",
+		"@text.environment",
+		"@text.environment.name",
+	}
 
 	local title = { "TSTitle" }
 
@@ -399,19 +476,19 @@ local treesitter = function(c)
 		{ string, c.cloud10:lighten_to(0.8):desaturate_to(0.5) },
 		{ boolean, c.cloud2:light(0.1) },
 		{ functions, c.cloud14:saturate(0.2) },
-		{ methods, c.cloud14:light(0.1), c.none, s.italic },
-		{ fields, c.cloud10:lighten_to(0.5):desaturate_to(0.1) },
-		{ number, c.cloud6:lighten_to(0.8):desaturate_to(0.1) },
+		-- { methods, c.cloud14:lighten_to(0.1), c.none, s.italic },
+		-- { fields, c.cloud10:lighten_to(0.5):desaturate_to(0.1) },
+		-- { number, c.cloud6:lighten_to(0.8):desaturate_to(0.1) },
 		{ parameters, c.cloud6:dark() },
-		{ operators, c.cloud3:lighten_to(0.4):desaturate(0.1) },
+		-- { operators, c.cloud3:lighten_to(0.4):desaturate(0.1) },
 		{ forwords, c.cloud8:saturate(0.1), c.none },
 		{ keyword, c.cloud4:lighten_to(0.45), c.none, s.italic },
 		{ constructors, c.cloud10 },
 		{ types, c.cloud10 },
 		{ includes, c.cloud4 },
-		{ labels, c.cloud4:light(0.1) },
+		-- { labels, c.cloud4 },
 		{ namespaces, c.cloud14:light(0.1) },
-		{ variables, c.cloud10:lighten_to(0.7) },
+		-- { variables, c.cloud9 },
 		{ tags, c.cloud10:light(0.1) },
 		{ text, c.fg },
 		{ title, c.cloud10:desaturate_to(0.1) },
@@ -427,229 +504,37 @@ local treesitter = function(c)
 	return merge({
 		highlights,
 		{
-			{ "TSPunctDelimiter", c.cloud3:dark():dark():saturate(0.1) },
-			{ "TSTagDelimiter", c.cloud8:dark(0.15) },
+			{ "@punctuation.delimiter", c.cloud3:desaturate_to(0.05):lighten_to(0.4) },
+			{ "@punctuation.special", c.cloud12:desaturate_to(0.1):lighten_to(0.5) },
+			{ "@tag.delimiter", c.cloud8:dark(0.15) },
+			{ "@variable.builtin", c.cloud6:dark(), c.none, s.bold },
+			{ "@constant.builtin", c.cloud6:dark(0.3), c.none, s.bold },
 
-			{ "TSPunctSpecial", c.cloud12:desaturate_to(0.1):lighten_to(0.5) },
-			{ "TSVariableBuiltin", c.cloud6:dark(), c.none, s.bold },
+			{ "@function.builtin", c.cloud10:dark(0.2), c.none, s.bold },
+			{ "@type.builtin", c.cloud8:light(0.1), c.none, s.bold },
 
-			-- null
-			{ "TSConstBuiltin", c.cloud6:dark(0.3), c.none, s.bold },
+			{ "@variable.builtin", c.cloud12:lighten_to(0.4) },
+			-- { "@field", c.cloud7 },
 
-			{ "TSTypeBuiltin", c.cloud10:dark(0.2), c.none, s.bold },
-			{ "TSFuncBuiltin", c.cloud8:light(0.1), c.none, s.bold },
+			{ "TSPunctDelimiter", "@punctuation.delimiter" },
+			{ "TSPunctSpecial", "@punctuation.special" },
 
-			{ "TSVariableBuiltin", c.cloud12:lighten_to(0.4) },
+			{ "TSTagDelimiter", "@tag.delimiter" },
 
-			{ "TSField", c.cloud8 },
+			{ "TSConstBuiltin", "@constant.builtin" },
+			{ "TSVariableBuiltin", "@variable.builtin" },
 
-			{ "TSNodeKey", c.cloud10 },
-			{ "TSNodeUnmatched", c.cloud8:dark(0.2) },
+			{ "TSFuncBuiltin", "@function.builtin" },
+			{ "TSTypeBuiltin", "@type.builtin" },
+
+			{ "TSVariableBuiltin", "@variable.builtin" },
+
+			-- { "TSField", "@field" },
+
+			-- { "TSNodeKey", c.cloud10 },
+			-- { "TSNodeUnmatched", c.cloud8:dark(0.2) },
 		},
 	})
-end
-
--- Temporary migration until we port over to the new names (and backport for older versions of Neovim)
-local treesitter_migrate = function()
-	local map = {
-		["annotation"] = "TSAnnotation",
-
-		["attribute"] = "TSAttribute",
-
-		["boolean"] = "TSBoolean",
-
-		["character"] = "TSCharacter",
-		["character.special"] = "TSCharacterSpecial",
-
-		["comment"] = "TSComment",
-
-		["conditional"] = "TSConditional",
-
-		["constant"] = "TSConstant",
-		["constant.builtin"] = "TSConstBuiltin",
-		["constant.macro"] = "TSConstMacro",
-
-		["constructor"] = "TSConstructor",
-
-		["debug"] = "TSDebug",
-		["define"] = "TSDefine",
-
-		["error"] = "TSError",
-		["exception"] = "TSException",
-
-		["field"] = "TSField",
-
-		["float"] = "TSFloat",
-
-		["function"] = "TSFunction",
-		["function.call"] = "TSFunctionCall",
-		["function.builtin"] = "TSFuncBuiltin",
-		["function.macro"] = "TSFuncMacro",
-
-		["include"] = "TSInclude",
-
-		["keyword"] = "TSKeyword",
-		["keyword.function"] = "TSKeywordFunction",
-		["keyword.operator"] = "TSKeywordOperator",
-		["keyword.return"] = "TSKeywordReturn",
-
-		["label"] = "TSLabel",
-
-		["method"] = "TSMethod",
-		["method.call"] = "TSMethodCall",
-
-		["namespace"] = "TSNamespace",
-
-		["none"] = "TSNone",
-		["number"] = "TSNumber",
-
-		["operator"] = "TSOperator",
-
-		["parameter"] = "TSParameter",
-		["parameter.reference"] = "TSParameterReference",
-
-		["preproc"] = "TSPreProc",
-
-		["property"] = "TSProperty",
-
-		["punctuation.delimiter"] = "TSPunctDelimiter",
-		["punctuation.bracket"] = "TSPunctBracket",
-		["punctuation.special"] = "TSPunctSpecial",
-
-		["repeat"] = "TSRepeat",
-
-		["storageclass"] = "TSStorageClass",
-
-		["string"] = "TSString",
-		["string.regex"] = "TSStringRegex",
-		["string.escape"] = "TSStringEscape",
-		["string.special"] = "TSStringSpecial",
-
-		["symbol"] = "TSSymbol",
-
-		["tag"] = "TSTag",
-		["tag.attribute"] = "TSTagAttribute",
-		["tag.delimiter"] = "TSTagDelimiter",
-
-		["text"] = "TSText",
-		["text.strong"] = "TSStrong",
-		["text.emphasis"] = "TSEmphasis",
-		["text.underline"] = "TSUnderline",
-		["text.strike"] = "TSStrike",
-		["text.title"] = "TSTitle",
-		["text.literal"] = "TSLiteral",
-		["text.uri"] = "TSURI",
-		["text.math"] = "TSMath",
-		["text.reference"] = "TSTextReference",
-		["text.environment"] = "TSEnvironment",
-		["text.environment.name"] = "TSEnvironmentName",
-
-		["text.note"] = "TSNote",
-		["text.warning"] = "TSWarning",
-		["text.danger"] = "TSDanger",
-
-		["todo"] = "TSTodo",
-
-		["type"] = "TSType",
-		["type.builtin"] = "TSTypeBuiltin",
-		["type.qualifier"] = "TSTypeQualifier",
-		["type.definition"] = "TSTypeDefinition",
-
-		["variable"] = "TSVariable",
-		["variable.builtin"] = "TSVariableBuiltin",
-	}
-
-	for capture, hlgroup in pairs(map) do
-		vim.api.nvim_set_hl(0, "@" .. capture, { link = hlgroup, default = true })
-	end
-
-	local defaults = {
-		TSNone = { default = true },
-		TSPunctDelimiter = { link = "Delimiter", default = true },
-		TSPunctBracket = { link = "Delimiter", default = true },
-		TSPunctSpecial = { link = "Delimiter", default = true },
-
-		TSConstant = { link = "Constant", default = true },
-		TSConstBuiltin = { link = "Special", default = true },
-		TSConstMacro = { link = "Define", default = true },
-		TSString = { link = "String", default = true },
-		TSStringRegex = { link = "String", default = true },
-		TSStringEscape = { link = "SpecialChar", default = true },
-		TSStringSpecial = { link = "SpecialChar", default = true },
-		TSCharacter = { link = "Character", default = true },
-		TSCharacterSpecial = { link = "SpecialChar", default = true },
-		TSNumber = { link = "Number", default = true },
-		TSBoolean = { link = "Boolean", default = true },
-		TSFloat = { link = "Float", default = true },
-
-		TSFunction = { link = "Function", default = true },
-		TSFunctionCall = { link = "TSFunction", default = true },
-		TSFuncBuiltin = { link = "Special", default = true },
-		TSFuncMacro = { link = "Macro", default = true },
-		TSParameter = { link = "Identifier", default = true },
-		TSParameterReference = { link = "TSParameter", default = true },
-		TSMethod = { link = "Function", default = true },
-		TSMethodCall = { link = "TSMethod", default = true },
-		TSField = { link = "Identifier", default = true },
-		TSProperty = { link = "Identifier", default = true },
-		TSConstructor = { link = "Special", default = true },
-		TSAnnotation = { link = "PreProc", default = true },
-		TSAttribute = { link = "PreProc", default = true },
-		TSNamespace = { link = "Include", default = true },
-		TSSymbol = { link = "Identifier", default = true },
-
-		TSConditional = { link = "Conditional", default = true },
-		TSRepeat = { link = "Repeat", default = true },
-		TSLabel = { link = "Label", default = true },
-		TSOperator = { link = "Operator", default = true },
-		TSKeyword = { link = "Keyword", default = true },
-		TSKeywordFunction = { link = "Keyword", default = true },
-		TSKeywordOperator = { link = "TSOperator", default = true },
-		TSKeywordReturn = { link = "TSKeyword", default = true },
-		TSException = { link = "Exception", default = true },
-		TSDebug = { link = "Debug", default = true },
-		TSDefine = { link = "Define", default = true },
-		TSPreProc = { link = "PreProc", default = true },
-		TSStorageClass = { link = "StorageClass", default = true },
-
-		TSTodo = { link = "Todo", default = true },
-
-		TSType = { link = "Type", default = true },
-		TSTypeBuiltin = { link = "Type", default = true },
-		TSTypeQualifier = { link = "Type", default = true },
-		TSTypeDefinition = { link = "Typedef", default = true },
-
-		TSInclude = { link = "Include", default = true },
-
-		TSVariableBuiltin = { link = "Special", default = true },
-
-		TSText = { link = "TSNone", default = true },
-		TSStrong = { bold = true, default = true },
-		TSEmphasis = { italic = true, default = true },
-		TSUnderline = { underline = true },
-		TSStrike = { strikethrough = true },
-
-		TSMath = { link = "Special", default = true },
-		TSTextReference = { link = "Constant", default = true },
-		TSEnvironment = { link = "Macro", default = true },
-		TSEnvironmentName = { link = "Type", default = true },
-		TSTitle = { link = "Title", default = true },
-		TSLiteral = { link = "String", default = true },
-		TSURI = { link = "Underlined", default = true },
-
-		TSComment = { link = "Comment", default = true },
-		TSNote = { link = "SpecialComment", default = true },
-		TSWarning = { link = "Todo", default = true },
-		TSDanger = { link = "WarningMsg", default = true },
-
-		TSTag = { link = "Label", default = true },
-		TSTagDelimiter = { link = "Delimiter", default = true },
-		TSTagAttribute = { link = "TSProperty", default = true },
-	}
-
-	for group, val in pairs(defaults) do
-		vim.api.nvim_set_hl(0, group, val)
-	end
 end
 
 --[[ How this works:
@@ -670,7 +555,11 @@ local colorscheme = function(c)
 		{ "Error", c.cloud9, c.none, s.bold },
 		{ "ErrorMsg", c.cloud1:dark():saturate(0.1), c.cloud1:dark(0.7):saturate(0.1):dark(0.05) },
 
-		{ "WarningMsg", c.cloud4:light(0.3), c.cloud12:dark(0.3) },
+		{
+			"WarningMsg",
+			c.cloud11,
+			-- c.cloud12:dark(0.3)
+		},
 		{ "Exception", c.cloud9 },
 
 		{ "Boolean", c.cloud2:dark() },
@@ -708,14 +597,16 @@ local colorscheme = function(c)
 		{ "DiffDelete", c.none, c.cloud9 },
 		{ "DiffText", c.none, c.cloud3 },
 
-		{ "Identifier", c.cloud2 },
+		{ "Identifier", c.cloud14 },
+		{ "Structure", c.cloud10 },
+
 		{ "Include", c.cloud10 },
 
 		{ "Keyword", c.cloud4, c.none, s.italic },
 
 		{ "Label", c.cloud10, c.none, s.italic },
 
-		{ "Operator", c.cloud12:dark() },
+		{ "Operator", c.cloud12:lighten_to(0.5) },
 
 		{ "PreProc", c.cloud10 },
 
@@ -724,7 +615,6 @@ local colorscheme = function(c)
 		{ "Statement", c.cloud10 },
 		{ "StorageClass", c.cloud10 },
 		{ "String", c.cloud14 },
-		{ "Structure", c.cloud10 },
 		{ "Tag", c.cloud4 },
 
 		{ "Title", c.cloud4, c.none },
@@ -792,7 +682,7 @@ local colorscheme = function(c)
 	return merge({
 		vim_groups,
 		lsp(c),
-		lsp_semantic_tokens(c),
+		lsp_semantic_tokens(),
 		diagnostics(c),
 		treesitter(c),
 		markdown(c),
@@ -830,11 +720,17 @@ M.apply = function(c)
 	end
 
 	if c[3] ~= nil and c[3] ~= "none" then
-		val.bg = c[3]:to_rgb()
+		val["bg"] = c[3]:to_rgb()
 	end
 
 	if c[4] ~= nil and c[4] ~= "none" then
 		val[c[4]] = true
+	end
+
+	if c[5] ~= nil and c[5] ~= "none" then
+		if type(c[5]) ~= "string" then
+			val["sp"] = c[5]:to_rgb()
+		end
 	end
 
 	if c[6] ~= nil and c[6] ~= "none" then
@@ -883,7 +779,7 @@ M.use = function(opts)
 		M.apply({ group[1], cNone(group[2]), cNone(group[3]), sNone(group[4]), cNone(group[5]) })
 	end
 
-	treesitter_migrate()
+	-- treesitter_migrate()
 end
 
 local find_theme_colors = function(opts)
@@ -903,6 +799,10 @@ local find_theme_colors = function(opts)
 		if opts["theme"] == "crimson_moonlight" then
 			return crimson_moonlight
 		end
+
+		if opts["theme"] == "default" then
+			return default
+		end
 	end
 
 	if vim.g.boo_colorscheme_theme == "sunset_cloud" then
@@ -918,6 +818,10 @@ local find_theme_colors = function(opts)
 	end
 
 	if vim.g.boo_colorscheme_theme == "crimson_moonlight" then
+		return crimson_moonlight
+	end
+
+	if vim.g.boo_colorscheme_theme == "default" then
 		return crimson_moonlight
 	end
 
@@ -955,6 +859,12 @@ M.setup = function(opts)
 	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "sunset_cloud" then
 		color_map["fg"] = colors("#ffffcf")
 		color_map["bg"] = colors("#0e0f06")
+	end
+
+	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "default" then
+		color_map["fg"] = colors("#c5c8c6")
+		color_map["bg"] = colors("#1d1f21")
+		-- *.cursorColor:  #c5c8c6
 	end
 
 	return colorscheme(color_map)
