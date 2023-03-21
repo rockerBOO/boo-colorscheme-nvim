@@ -408,15 +408,15 @@ local treesitter = function(c)
 		"@function.call",
 	}
 
-	local methods = { "TSMethod", "@method", "@method.call" }
-
-	local fields = { "TSField", "TSProperty", "@field", "@property" }
-
-	local number = { "TSNumber", "TSFloat", "@number", "@float" }
+	-- local methods = { "TSMethod", "@method", "@method.call" }
+	--
+	-- local fields = { "TSField", "TSProperty", "@field", "@property" }
+	--
+	-- local number = { "TSNumber", "TSFloat", "@number", "@float" }
 
 	local parameters = { "TSParameter", "TSParameterReference", "@parameter", "@parameter.reference" }
 
-	local operators = { "TSOperator", "@operator" }
+	-- local operators = { "TSOperator", "@operator" }
 
 	local forwords = { "TSConditional", "TSRepeat", "@conditional", "@repeat" }
 
@@ -444,10 +444,10 @@ local treesitter = function(c)
 	-- 	"@variable.builtin",
 	-- }
 
-	local tags = { "TSTag", "TSTagDelimiter", "@tag"   }
+	local tags = { "TSTag", "TSTagDelimiter", "@tag" }
 
-  local tag_punctuation = { "@tag.delimiter" }
-  local tag_fields = { "@tag.attribute" }
+	local tag_punctuation = { "@tag.delimiter" }
+	local tag_fields = { "@tag.attribute" }
 
 	local text = {
 		"TSText",
@@ -869,7 +869,6 @@ M.setup = function(opts)
 	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "default" then
 		color_map["fg"] = colors("#c5c8c6")
 		color_map["bg"] = colors("#1d1f21")
-		-- *.cursorColor:  #c5c8c6
 	end
 
 	return colorscheme(color_map)
