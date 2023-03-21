@@ -250,9 +250,9 @@ end
 
 local lsp = function(c)
 	return {
-		{ "LspReferenceText", c.cloud6:lighten_to(0.9):desaturate_to(0.8) },
-		{ "LspReferenceRead", c.cloud14:lighten_to(0.9):desaturate_to(0.8) },
-		{ "LspReferenceWrite", c.cloud12:lighten_to(0.9):desaturate_to(0.8) },
+		{ "LspReferenceText", c.cloud6:lighten_to(0.9):desaturate_to(0.5) },
+		{ "LspReferenceRead", c.none, c.cloud12:lighten_to(0.1) },
+		{ "LspReferenceWrite", c.none, c.cloud12:lighten_to(0.1) },
 	}
 end
 
@@ -444,7 +444,10 @@ local treesitter = function(c)
 	-- 	"@variable.builtin",
 	-- }
 
-	local tags = { "TSTag", "TSTagDelimiter", "@tag", "@tag.delimiter", "@tag.attribute" }
+	local tags = { "TSTag", "TSTagDelimiter", "@tag"   }
+
+  local tag_punctuation = { "@tag.delimiter" }
+  local tag_fields = { "@tag.attribute" }
 
 	local text = {
 		"TSText",
@@ -490,6 +493,8 @@ local treesitter = function(c)
 		{ namespaces, c.cloud14:light(0.1) },
 		-- { variables, c.cloud9 },
 		{ tags, c.cloud10:light(0.1) },
+		{ tag_punctuation, c.cloud3:lighten_to(0.4):desaturate(0.1) },
+		{ tag_fields, c.cloud10:lighten_to(0.5):desaturate_to(0.1) },
 		{ text, c.fg },
 		{ title, c.cloud10:desaturate_to(0.1) },
 	}
@@ -606,7 +611,7 @@ local colorscheme = function(c)
 
 		{ "Label", c.cloud10, c.none, s.italic },
 
-		{ "Operator", c.cloud12:lighten_to(0.5) },
+		{ "Operator", c.cloud3:lighten_to(0.4):desaturate(0.1) },
 
 		{ "PreProc", c.cloud10 },
 
