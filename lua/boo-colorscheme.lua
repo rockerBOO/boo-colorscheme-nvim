@@ -827,7 +827,7 @@ local find_theme_colors = function(opts)
 	end
 
 	if vim.g.boo_colorscheme_theme == "default" then
-		return crimson_moonlight
+		return default
 	end
 
 	return cloud
