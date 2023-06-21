@@ -504,7 +504,7 @@ local treesitter = function(c)
 		{ string, c.cloud10:lighten_to(0.9):desaturate_to(0.5) },
 		{ uri, c.cloud10:lighten_to(0.4):desaturate_to(0.3) },
 		{ boolean, c.cloud2:light(0.1) },
-		-- { functions, c.cloud14:saturate(0.2) },
+		{ functions, c.cloud14:desaturate_to(0.2) },
 		{ { "@function" }, c.cloud14:desaturate_to(0.2), c.none, s.italic },
 		{ function_calls, c.cloud14:lighten_to(0.5):desaturate_to(0.4), c.none, s.italic },
 
