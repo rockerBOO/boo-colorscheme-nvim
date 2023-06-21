@@ -900,11 +900,6 @@ M.setup = function(opts)
 		color_map["bg"] = colors("#0f0e0e")
 	end
 
-	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "sunset_cloud" then
-		color_map["fg"] = colors("#ffffcf")
-		color_map["bg"] = colors("#0e0f06")
-	end
-
 	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "default" then
 		color_map["fg"] = colors("#c5c8c6")
 		color_map["bg"] = colors("#1d1f21")
