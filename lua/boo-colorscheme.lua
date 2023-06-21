@@ -64,6 +64,27 @@ local default = function()
 	}
 end
 
+local boo_lora = function()
+	return {
+		"#08413f", -- 0 #08413f
+		"#9e1f0a", -- #9e1f0a
+		"#074c0e", -- #074c0e
+		"#c2ef36", -- #c2ef36
+		"#142d5a", -- 4 #142d5a
+		"#4a1f61", -- #4a1f61
+		"#23d1c5", -- #23d1c5
+		"#064341", -- #064341
+		"#373b41", -- 8
+		"#a32d2e", --  #a32d2e
+		"#17bb20", -- #17bb20
+		"#c1ff92", -- #c1ff92
+		"#f0c674", -- 12 #07262e
+		"#5c1847", --    #5c1847
+		"#19d190", --    #19d190
+		"#13cdc6", -- 15 #13cdc6
+	}
+end
+
 -- Cloud colors
 local cloud = function()
 	return {
@@ -405,10 +426,13 @@ local treesitter = function(c)
 		"@function",
 		"@function.builtin",
 		"@function.macro",
-		"@function.call",
 	}
 
-	-- local methods = { "TSMethod", "@method", "@method.call" }
+	local function_calls = { "@function.call" }
+
+	local attributes = { "@attribute" }
+
+	local methods = { "TSMethod", "@method", "@method.call" }
 	--
 	-- local fields = { "TSField", "TSProperty", "@field", "@property" }
 	--
@@ -439,10 +463,7 @@ local treesitter = function(c)
 
 	local includes = { "TSInclude", "@include" }
 
-	-- local variables = { -- "TSVariable", "TSVariableBuiltin",
-	-- 	"@variable",
-	-- 	"@variable.builtin",
-	-- }
+	local variables = { "TSVariable", "TSVariableBuiltin", "@variable", "@variable.builtin" }
 
 	local tags = { "TSTag", "TSTagDelimiter", "@tag" }
 
@@ -463,35 +484,43 @@ local treesitter = function(c)
 		"@text.strike",
 		"@text.title",
 		"@text.literal",
-		"@text.uri",
 		"@text.math",
 		"@text.reference",
 		"@text.environment",
 		"@text.environment.name",
 	}
 
+	local uri = { "@text.uri" }
+
 	local title = { "TSTitle" }
 
 	local groups = {
+		{ attributes, c.cloud7:lighten_to(0.4):desaturate(0.3) },
 		{ error, c.cloud1:light(), c.cloud9:dark(0.5), s.none },
 		{ punctuation, c.cloud3:lighten_to(0.4):desaturate(0.1) },
 		{ constants, c.cloud5:light(0.1) },
-		{ string, c.cloud10:lighten_to(0.8):desaturate_to(0.5) },
+		{ string, c.cloud10:lighten_to(0.9):desaturate_to(0.5) },
+		{ uri, c.cloud10:lighten_to(0.4):desaturate_to(0.3) },
 		{ boolean, c.cloud2:light(0.1) },
-		{ functions, c.cloud14:saturate(0.2) },
-		-- { methods, c.cloud14:lighten_to(0.1), c.none, s.italic },
+		-- { functions, c.cloud14:saturate(0.2) },
+		{ { "@function" }, c.cloud14:desaturate_to(0.2), c.none, s.italic },
+		{ function_calls, c.cloud14:lighten_to(0.5):desaturate_to(0.4), c.none, s.italic },
+
+		{ methods, c.cloud14:lighten_to(0.5):desaturate_to(0.4), c.none, s.italic },
 		-- { fields, c.cloud10:lighten_to(0.5):desaturate_to(0.1) },
 		-- { number, c.cloud6:lighten_to(0.8):desaturate_to(0.1) },
 		{ parameters, c.cloud6:dark() },
 		-- { operators, c.cloud3:lighten_to(0.4):desaturate(0.1) },
 		{ forwords, c.cloud8:saturate(0.1), c.none },
 		{ keyword, c.cloud4:lighten_to(0.45), c.none, s.italic },
+		{ { "@keyword.function" }, c.cloud4:lighten_to(0.45), c.none, s.italic },
+
 		{ constructors, c.cloud10 },
 		{ types, c.cloud10 },
 		{ includes, c.cloud4 },
 		-- { labels, c.cloud4 },
 		{ namespaces, c.cloud14:light(0.1) },
-		-- { variables, c.cloud9 },
+		{ variables, c.cloud6:lighten_to(0.7):desaturate_to(0.4) },
 		{ tags, c.cloud10:light(0.1) },
 		{ tag_punctuation, c.cloud3:lighten_to(0.4):desaturate(0.1) },
 		{ tag_fields, c.cloud10:lighten_to(0.5):desaturate_to(0.1) },
@@ -808,6 +837,10 @@ local find_theme_colors = function(opts)
 		if opts["theme"] == "default" then
 			return default
 		end
+
+		if opts["theme"] == "boo_lora" then
+			return boo_lora
+		end
 	end
 
 	if vim.g.boo_colorscheme_theme == "sunset_cloud" then
@@ -828,6 +861,10 @@ local find_theme_colors = function(opts)
 
 	if vim.g.boo_colorscheme_theme == "default" then
 		return default
+	end
+
+	if vim.g.boo_colorscheme_theme == "boo_lora" then
+		return boo_lora
 	end
 
 	return cloud
@@ -869,6 +906,11 @@ M.setup = function(opts)
 	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "default" then
 		color_map["fg"] = colors("#c5c8c6")
 		color_map["bg"] = colors("#1d1f21")
+	end
+
+	if opts ~= nil and opts["theme"] ~= nil and opts["theme"] == "boo_lora" then
+		color_map["fg"] = colors("#e4dcec")
+		color_map["bg"] = colors("#111113"):lighten_to(0.05)
 	end
 
 	return colorscheme(color_map)
