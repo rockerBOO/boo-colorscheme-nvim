@@ -274,6 +274,8 @@ local lsp = function(c)
 		{ "LspReferenceText", c.cloud6:lighten_to(0.9):desaturate_to(0.5) },
 		{ "LspReferenceRead", c.none, c.cloud12:lighten_to(0.1) },
 		{ "LspReferenceWrite", c.none, c.cloud12:lighten_to(0.1) },
+
+		{ "LspInlayHint", c.cloud12:lighten_to(0.3):desaturate_to(0.3) },
 	}
 end
 
