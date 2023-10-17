@@ -613,7 +613,7 @@ local colorscheme = function(c)
 		{ "Search", c.none, c.cloud10:dark(0.4):desaturate_to(0.1), s.bold },
 
 		-- Numbers
-		{ "Number", c.cloud15 },
+		{ "Number", c.cloud4 },
 
 		{ "Define", c.cloud10 },
 
@@ -709,8 +709,14 @@ local colorscheme = function(c)
 		{ "Question", c.cloud10, c.none, s.bold },
 
 		-- Visual
-		{ "Visual", c.cloud10, c.cloud13:dark(0.2) },
-		{ "VisualNOS", c.cloud2, c.cloud1 },
+    -- possible foreground colors
+		-- { "Visual", c.cloud4:lighten_to(0.8):desaturate_to(0.9), c.cloud6:lighten_to(0.15) },
+		-- { "VisualNOS", c.cloud4:lighten_to(0.8):desaturate_to(0.9), c.cloud6:lighten_to(0.15) },
+
+		{ "Visual", c.none, c.cloud6:lighten_to(0.15) },
+		{ "VisualNOS", c.none, c.cloud6:lighten_to(0.15) },
+
+		{ "WildMenu", c.none, c.cloud4 },
 	}
 
 	-- M:ale()
