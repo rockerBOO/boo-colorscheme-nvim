@@ -82,11 +82,19 @@ let g:boo_colorscheme_italic = true
 - [`forest_stream`](#forest_stream)
 - [`crimson_moonlight`](#crimson_moonlight)
 
+These are full colorschemes so you can call them directly
+
+```
+colorscheme sunset_cloud
+```
+
+or
+
 ```lua
 require('boo-colorscheme').use({ theme = 'sunset_cloud' })
 ```
 
-or
+or set in combination with the `colorscheme boo` and the following
 
 ```vimscript
 let g:boo_colorscheme_theme = 'sunset_cloud'
