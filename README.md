@@ -84,7 +84,7 @@ let g:boo_colorscheme_italic = true
 
 These are full colorschemes so you can call them directly
 
-```
+```vimscript
 colorscheme sunset_cloud
 ```
 
