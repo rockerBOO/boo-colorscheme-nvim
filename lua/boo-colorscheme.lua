@@ -709,7 +709,7 @@ local colorscheme = function(c)
 		{ "Question", c.cloud10, c.none, s.bold },
 
 		-- Visual
-    -- possible foreground colors
+		-- possible foreground colors
 		-- { "Visual", c.cloud4:lighten_to(0.8):desaturate_to(0.9), c.cloud6:lighten_to(0.15) },
 		-- { "VisualNOS", c.cloud4:lighten_to(0.8):desaturate_to(0.9), c.cloud6:lighten_to(0.15) },
 
@@ -717,9 +717,9 @@ local colorscheme = function(c)
 		{ "VisualNOS", c.none, c.cloud6:lighten_to(0.15) },
 
 		{ "WildMenu", c.none, c.cloud4 },
-	}
 
-	-- M:ale()
+		{ "WinSeparator", c.cloud12:lighten_to(0.2) },
+	}
 
 	return merge({
 		vim_groups,
