@@ -385,6 +385,44 @@ local harpoon = function(c)
 	}
 end
 
+local llama = function(c)
+	return {
+		{ "llama_hl_hint", c.cloud12:lighten_to(0.3):desaturate_to(0.3) },
+	}
+end
+
+local notify_plugin = function(c)
+	-- NotifyBackground xxx links to Normal
+	-- NotifyERRORBorder xxx guifg=#8a1f1f
+	-- NotifyWARNBorder xxx guifg=#79491d
+	-- NotifyINFOBorder xxx guifg=#4f6752
+	-- NotifyDEBUGBorder xxx guifg=#8b8b8b
+	-- NotifyTRACEBorder xxx guifg=#4f3552
+	-- NotifyERRORIcon xxx guifg=#f70067
+	-- NotifyWARNIcon xxx guifg=#f79000
+	-- NotifyINFOIcon xxx guifg=#a9ff68
+	-- NotifyDEBUGIcon xxx guifg=#8b8b8b
+	-- NotifyTRACEIcon xxx guifg=#d484ff
+	-- NotifyERRORTitle xxx guifg=#f70067
+	-- NotifyWARNTitle xxx guifg=#f79000
+	-- NotifyINFOTitle xxx guifg=#a9ff68
+	-- NotifyDEBUGTitle xxx guifg=#8b8b8b
+	-- NotifyTRACETitle xxx guifg=#d484ff
+	-- NotifyERRORBody xxx links to Normal
+	-- NotifyWARNBody xxx links to Normal
+	-- NotifyINFOBody xxx links to Normal
+	-- NotifyDEBUGBody xxx links to Normal
+	-- NotifyTRACEBody xxx links to Normal
+	-- NotifyLogTime  xxx links to Comment
+	-- NotifyLogTitle xxx links to Special
+	return {
+		{ "NotifyINFOBorder", c.bg, c.none, s.none },
+		{ "NotifyINFOTitle", c.cloud12, c.none, s.none },
+		{ "NotifyINFOIcon", c.cloud12:lighten_by(1.1), c.none, s.none },
+		{ "NotifyINFOBody", c.cloud12, c.none, s.none },
+	}
+end
+
 local treesitter = function(c)
 	local error = { "TSError" }
 
@@ -573,6 +611,11 @@ local treesitter = function(c)
 	})
 end
 
+local json = function(c)
+  return {
+  }
+end
+
 --[[ How this works:
 --  We create a data structure that is a list of 4 item tables
 --  { { group, fg, bg, styles }, ... }
@@ -655,6 +698,8 @@ local colorscheme = function(c)
 
 		{ "Title", c.cloud4, c.none },
 
+		{ "Quote", c.cloud3:lighten_to(0.4):desaturate(0.1) },
+
 		{ "Todo", c.cloud13 },
 
 		{ "Type", c.cloud10:light(), c.none, s.italic },
@@ -736,6 +781,8 @@ local colorscheme = function(c)
 		nvim_dap_virtual_text(c),
 		nvim_dap_ui(c),
 		diff(c),
+		notify_plugin(c),
+		llama(c),
 	})
 end
 
