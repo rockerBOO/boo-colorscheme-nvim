@@ -611,11 +611,6 @@ local treesitter = function(c)
 	})
 end
 
-local json = function(c)
-  return {
-  }
-end
-
 --[[ How this works:
 --  We create a data structure that is a list of 4 item tables
 --  { { group, fg, bg, styles }, ... }
