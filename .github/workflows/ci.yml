@@ -16,8 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: Restore cache for today nightly.
+      - name: Set today's date
         run: date +%F > todays-date
+
+      - name: Restore cache for today nightly.
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
         with:
           path: |
