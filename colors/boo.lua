@@ -1,1 +1,1 @@
-require("boo-colorscheme").use({  })
+require("boo-colorscheme").use({})

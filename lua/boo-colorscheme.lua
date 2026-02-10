@@ -20,7 +20,6 @@ end
 
 -- param groups table list of Groups to apply the highlights
 local highlight_to_groups = function(highlight)
-	-- param highlight table 3 element table { fg colorbuddy.Color, bg colorbuddy.Color, styles colorbuddy.Styles }
 	return function(groups)
 		local acc = {}
 
@@ -45,22 +44,25 @@ end
 -- be dynamically added
 local default = function()
 	return {
-		"#282a2e", -- 0
-		"#a54242",
-		"#8c9440",
-		"#de935f",
-		"#5f819d", -- 4
-		"#85678f",
-		"#5e8d87",
-		"#707880",
-		"#373b41", -- 8
-		"#cc6666",
-		"#b5bd68",
-		"#f0c674",
-		"#81a2be", -- 12
-		"#b294bb",
-		"#8abeb7",
-		"#c5c8c6", -- 15
+		-- Standard Colors (ANSI 0-7)
+		"#282a2e", -- 0: Black (dark gray)
+		"#a54242", -- 1: Red (dark red)
+		"#8c9440", -- 2: Green (dark green/olive)
+		"#de935f", -- 3: Yellow (dark yellow/orange)
+		"#5f819d", -- 4: Blue (dark blue)
+		"#85678f", -- 5: Magenta (dark purple)
+		"#5e8d87", -- 6: Cyan (dark teal)
+		"#707880", -- 7: White (light gray)
+
+		-- Bright Colors (ANSI 8-15)
+		"#373b41", -- 8: Bright Black (darker gray)
+		"#cc6666", -- 9: Bright Red
+		"#b5bd68", -- 10: Bright Green
+		"#f0c674", -- 11: Bright Yellow
+		"#81a2be", -- 12: Bright Blue
+		"#b294bb", -- 13: Bright Magenta
+		"#8abeb7", -- 14: Bright Cyan
+		"#c5c8c6", -- 15: Bright White (lightest gray)
 	}
 end
 
