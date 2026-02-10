@@ -228,34 +228,34 @@ local diagnostics = function(c)
 			c.none,
 		},
 		{ "DiagnosticInfo", c.fg },
-		-- {
-		-- 	"DiagnosticUnderlineHint",
-		-- 	c.none,
-		-- 	c.none,
-		-- 	s.underline,
-		-- 	c.cloud13:saturate(0.05):lighten_to(0.2),
-		-- },
-		-- {
-		-- 	"DiagnosticUnderlineError",
-		-- 	c.none,
-		-- 	c.none,
-		-- 	s.underline,
-		-- 	c.cloud1:saturate(0.05):lighten_to(0.9),
-		-- },
-		-- {
-		-- 	"DiagnosticUnderlineWarn",
-		-- 	c.none,
-		-- 	c.none,
-		-- 	s.underline,
-		-- 	c.cloud6:lighten_to(0.9),
-		-- },
-		-- {
-		-- 	"DiagnosticUnderlineInfo",
-		-- 	c.none,
-		-- 	c.none,
-		-- 	s.underline,
-		-- 	c.fg:lighten_to(0.1),
-		-- },
+		{
+			"DiagnosticUnderlineHint",
+			c.none,
+			c.none,
+			s.undercurl,
+			c.cloud13:saturate(0.05):lighten_to(0.5),
+		},
+		{
+			"DiagnosticUnderlineError",
+			c.none,
+			c.none,
+			s.undercurl,
+			c.cloud1:saturate(0.05):lighten_to(0.7),
+		},
+		{
+			"DiagnosticUnderlineWarn",
+			c.none,
+			c.none,
+			s.undercurl,
+			c.cloud11,
+		},
+		{
+			"DiagnosticUnderlineInfo",
+			c.none,
+			c.none,
+			s.undercurl,
+			c.cloud12,
+		},
 	}
 end
 
@@ -268,6 +268,43 @@ local diff = function(c)
 		{ "DiffDelete", c.none, c.cloud1:lighten_to(0.1):desaturate_to(0.2) },
 		{ "DiffChange", c.none, c.cloud2:lighten_to(0.1):desaturate_to(0.2) },
 		{ "DiffText", c.cloud7 },
+		{ "DiffAdded", c.cloud10 },
+		{ "DiffRemoved", c.cloud9 },
+		{ "DiffFile", c.cloud9 },
+		{ "DiffNewFile", c.cloud10 },
+		{ "DiffLine", c.cloud12 },
+	}
+end
+
+local git = function(c)
+	return {
+		-- Git commit
+		{ "gitcommitOverflow", c.cloud9 },
+		{ "gitcommitSummary", c.cloud10 },
+		{ "gitcommitComment", c.cloud8:lighten_to(0.4) },
+		{ "gitcommitUntracked", c.cloud8 },
+		{ "gitcommitDiscarded", c.cloud8 },
+		{ "gitcommitSelected", c.cloud8 },
+		{ "gitcommitHeader", c.cloud13 },
+		{ "gitcommitSelectedType", c.cloud12 },
+		{ "gitcommitUnmergedType", c.cloud12 },
+		{ "gitcommitDiscardedType", c.cloud12 },
+		{ "gitcommitBranch", c.cloud11, c.none, s.bold },
+		{ "gitcommitUntrackedFile", c.cloud11 },
+		{ "gitcommitUnmergedFile", c.cloud9, c.none, s.bold },
+		{ "gitcommitDiscardedFile", c.cloud9, c.none, s.bold },
+		{ "gitcommitSelectedFile", c.cloud10, c.none, s.bold },
+
+		-- GitGutter
+		{ "GitGutterAdd", c.cloud10, c.bg },
+		{ "GitGutterChange", c.cloud12, c.bg },
+		{ "GitGutterDelete", c.cloud9, c.bg },
+		{ "GitGutterChangeDelete", c.cloud13, c.bg },
+
+		-- GitSigns
+		{ "GitSignsAdd", c.cloud10, c.bg },
+		{ "GitSignsChange", c.cloud12, c.bg },
+		{ "GitSignsDelete", c.cloud9, c.bg },
 	}
 end
 
@@ -621,6 +658,11 @@ local colorscheme = function(c)
 	local vim_groups = {
 		{ "Normal", c.fg:dark(0.01), c.bg:light(0.01) },
 
+		-- Text styling
+		{ "Bold", c.none, c.none, s.bold },
+		{ "Italic", c.none, c.none, s.italic },
+		{ "Underlined", c.cloud10, c.none, s.underline },
+
 		-- Conceal
 		{ "Conceal", c.cloud3:light() },
 
@@ -761,6 +803,38 @@ local colorscheme = function(c)
 		{ "WildMenu", c.none, c.cloud4 },
 
 		{ "WinSeparator", c.cloud12:lighten_to(0.2) },
+
+		-- Window bars
+		{ "WinBar", c.cloud10, c.none },
+		{ "WinBarNC", c.cloud8, c.none },
+
+		-- Additional editor UI
+		{ "Substitute", c.cloud0, c.cloud10 },
+		{ "QuickFixLine", c.none, c.cloud0:lighten_to(0.15) },
+		{ "FloatBorder", c.cloud10:desaturate_to(0.3), c.cloud0:lighten_to(0.05) },
+		{ "NormalNC", c.fg, c.bg },
+		{ "TermCursor", c.bg, c.fg },
+		{ "TermCursorNC", c.bg, c.fg:dark(0.3) },
+
+		-- Messages
+		{ "ModeMsg", c.cloud10, c.none },
+		{ "MoreMsg", c.cloud10, c.none },
+		{ "Macro", c.cloud9 },
+		{ "Debug", c.cloud9 },
+
+		-- Internal
+		{ "NvimInternalError", c.bg, c.cloud9 },
+
+		-- Statusline user highlights
+		{ "User1", c.cloud9, c.cloud8:dark(0.2) },
+		{ "User2", c.cloud10, c.cloud8:dark(0.2) },
+		{ "User3", c.cloud11, c.cloud8:dark(0.2) },
+		{ "User4", c.cloud12, c.cloud8:dark(0.2) },
+		{ "User5", c.cloud13, c.cloud8:dark(0.2) },
+		{ "User6", c.cloud14, c.cloud8:dark(0.2) },
+		{ "User7", c.cloud6, c.cloud8:dark(0.2) },
+		{ "User8", c.cloud7, c.cloud8:dark(0.2) },
+		{ "User9", c.cloud15, c.cloud8:dark(0.2) },
 	}
 
 	return merge({
@@ -778,6 +852,7 @@ local colorscheme = function(c)
 		nvim_dap_virtual_text(c),
 		nvim_dap_ui(c),
 		diff(c),
+		git(c),
 		notify_plugin(c),
 		llama(c),
 	})
@@ -844,8 +919,24 @@ end
 -- Use this function in your config
 -- @param opts table
 M.use = function(opts)
+	-- Clear all existing highlights first to prevent color bleeding from previous schemes
+	vim.cmd("highlight clear")
+
+	if vim.fn.exists("syntax_on") then
+		vim.cmd("syntax reset")
+	end
+
 	vim.g.termguicolors = true
 	vim.g.colors_name = "boo"
+
+	-- Get theme colors for terminal
+	local cloud_map = M.find_theme_colors(opts)()
+
+	-- Set terminal colors (for :terminal)
+	for i, color in ipairs(cloud_map) do
+		vim.g["terminal_color_" .. (i - 1)] = color
+	end
+
 	local colormap = M.setup(opts)
 
 	for _, group in ipairs(colormap) do
@@ -868,7 +959,7 @@ M.use = function(opts)
 	-- treesitter_migrate()
 end
 
-local find_theme_colors = function(opts)
+M.find_theme_colors = function(opts)
 	if opts ~= nil and opts["theme"] ~= nil then
 		if opts["theme"] == "sunset_cloud" then
 			return sunset_cloud
@@ -923,7 +1014,7 @@ local find_theme_colors = function(opts)
 end
 
 M.setup = function(opts)
-	local cloud_map = find_theme_colors(opts)()
+	local cloud_map = M.find_theme_colors(opts)()
 
 	local color_map = { none = "none" }
 
