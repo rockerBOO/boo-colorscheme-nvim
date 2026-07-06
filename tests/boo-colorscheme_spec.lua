@@ -41,7 +41,6 @@ end)
 describe("treesitter punctuation groups", function()
 	it("links TSPunctBracket to the real @punctuation.bracket definition", function()
 		local colors = require("colors")
-		local cs = require("boo-colorscheme")
 
 		local cloud_map = cs.find_theme_colors({})()
 		local c = { none = "none" }
@@ -72,8 +71,6 @@ describe("treesitter punctuation groups", function()
 end)
 
 describe("M.apply", function()
-	local cs = require("boo-colorscheme")
-
 	it("does not strip long link target names", function()
 		cs.apply({ "TestLinkGroup", "@punctuation.bracket" })
 
