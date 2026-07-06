@@ -39,6 +39,18 @@ local highlight_to_groups = function(highlight)
 	end
 end
 
+-- param primary string name of the group that holds the real highlight
+-- param names table list of group names that should link to `primary`
+local links = function(primary, names)
+	local acc = {}
+
+	for _, name in ipairs(names) do
+		table.insert(acc, { name, primary })
+	end
+
+	return acc
+end
+
 -- Used in tuning colors to be more base 16 based
 -- This will allow us to have our scheme work with base 16 colors that could
 -- be dynamically added
@@ -859,6 +871,8 @@ local colorscheme = function(c)
 end
 
 local M = {}
+
+M._links = links
 
 -- TODO: Simplify what happens at this stage if we are using nvim_set_hi
 -- we can define the styles, fg, bg and others by their name
