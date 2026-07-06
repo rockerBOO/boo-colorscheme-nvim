@@ -158,6 +158,7 @@ function Color:to_rgb()
 	local rgb = { hsl_to_rgb(self.h, self.s, self.l) }
 	local buffer = "#"
 	for _, v in ipairs(rgb) do
+		-- clamp: v * 256 can round to 256 at the top of the range, which would overflow %02x's 2-digit width
 		local byte = math.max(0, math.min(255, math.floor(v * 256 + 0.5)))
 		buffer = buffer .. string.format("%02x", byte)
 	end

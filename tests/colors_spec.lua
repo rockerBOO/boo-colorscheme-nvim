@@ -16,4 +16,11 @@ describe("Color", function()
 		assert.are.equal(7, #rgb)
 		assert.are.equal("#", rgb:sub(1, 1))
 	end)
+
+	it("does not overflow to_rgb at maximum lightness", function()
+		local c = colors.new(0, 0, 1)
+		local rgb = c:to_rgb()
+
+		assert.are.equal("#ffffff", rgb)
+	end)
 end)
