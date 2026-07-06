@@ -24,15 +24,7 @@ local highlight_to_groups = function(highlight)
 		local acc = {}
 
 		for _, name in ipairs(groups) do
-			if type(name) == "table" then
-				-- name
-				-- { "TSName", link = "@name" }
-				table.insert(acc, { name[0], highlight[1], highlight[2], highlight[3], link = name["link"] })
-			else
-				-- name
-				--  "TSName"
-				table.insert(acc, { name, highlight[1], highlight[2], highlight[3] })
-			end
+			table.insert(acc, { name, highlight[1], highlight[2], highlight[3] })
 		end
 
 		return acc
@@ -1067,5 +1059,7 @@ M.setup = function(opts)
 
 	return colorscheme(color_map)
 end
+
+M._highlight_to_groups = highlight_to_groups
 
 return M
