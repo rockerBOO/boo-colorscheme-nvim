@@ -24,19 +24,23 @@ local highlight_to_groups = function(highlight)
 		local acc = {}
 
 		for _, name in ipairs(groups) do
-			if type(name) == "table" then
-				-- name
-				-- { "TSName", link = "@name" }
-				table.insert(acc, { name[0], highlight[1], highlight[2], highlight[3], link = name["link"] })
-			else
-				-- name
-				--  "TSName"
-				table.insert(acc, { name, highlight[1], highlight[2], highlight[3] })
-			end
+			table.insert(acc, { name, highlight[1], highlight[2], highlight[3] })
 		end
 
 		return acc
 	end
+end
+
+-- param primary string name of the group that holds the real highlight
+-- param names table list of group names that should link to `primary`
+local links = function(primary, names)
+	local acc = {}
+
+	for _, name in ipairs(names) do
+		table.insert(acc, { name, primary })
+	end
+
+	return acc
 end
 
 -- Used in tuning colors to be more base 16 based
@@ -467,12 +471,15 @@ local treesitter = function(c)
 
 	local punctuation = {
 		"TSPunctDelimiter",
-		"TSPunctBracket",
 		"TSPunctSpecial",
 		"@punctuation.delimiter",
-		"@punctuation.bracket",
 		"@punctuation.special",
 	}
+
+	local punctuation_bracket_groups = merge({
+		{ { "@punctuation.bracket", c.cloud3:lighten_to(0.4):desaturate(0.1) } },
+		links("@punctuation.bracket", { "TSPunctBracket" }),
+	})
 
 	local constants = {
 		"TSConstant",
@@ -616,6 +623,7 @@ local treesitter = function(c)
 
 	return merge({
 		highlights,
+		punctuation_bracket_groups,
 		{
 			{ "@punctuation.delimiter", c.cloud3:desaturate_to(0.05):lighten_to(0.4) },
 			{ "@punctuation.special", c.cloud12:desaturate_to(0.1):lighten_to(0.5) },
@@ -860,6 +868,9 @@ end
 
 local M = {}
 
+M._links = links
+M._treesitter = treesitter
+
 -- TODO: Simplify what happens at this stage if we are using nvim_set_hi
 -- we can define the styles, fg, bg and others by their name
 M.apply = function(c)
@@ -896,12 +907,6 @@ M.apply = function(c)
 
 	if c[6] ~= nil and c[6] ~= "none" then
 		val["blend"] = c[6]:to_rgb()
-	end
-
-	for k, v in pairs(val) do
-		if type(v) == "string" and #v > 7 then
-			val[k] = nil
-		end
 	end
 
 	if c["link"] ~= nil and c["link"] ~= "none" then
@@ -1053,5 +1058,7 @@ M.setup = function(opts)
 
 	return colorscheme(color_map)
 end
+
+M._highlight_to_groups = highlight_to_groups
 
 return M

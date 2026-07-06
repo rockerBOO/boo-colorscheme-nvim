@@ -30,6 +30,11 @@ local function new(h, s, l)
 		h, s, l = rgb_string_to_hsl(h)
 	end
 	assert(Color_mt)
+
+	h = h % 360
+	s = math.max(0, math.min(1, s))
+	l = math.max(0, math.min(1, l))
+
 	return setmetatable({ h = h, s = s, l = l }, Color_mt)
 end
 M.new = new
@@ -153,7 +158,9 @@ function Color:to_rgb()
 	local rgb = { hsl_to_rgb(self.h, self.s, self.l) }
 	local buffer = "#"
 	for _, v in ipairs(rgb) do
-		buffer = buffer .. string.format("%02x", math.floor(v * 256 + 0.5))
+		-- clamp: v * 256 can round to 256 at the top of the range, which would overflow %02x's 2-digit width
+		local byte = math.max(0, math.min(255, math.floor(v * 256 + 0.5)))
+		buffer = buffer .. string.format("%02x", byte)
 	end
 	return buffer
 end
