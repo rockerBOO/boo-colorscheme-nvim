@@ -70,3 +70,22 @@ describe("treesitter punctuation groups", function()
 		assert.are.same({ "TSPunctSpecial", "@punctuation.special" }, by_name["TSPunctSpecial"])
 	end)
 end)
+
+describe("M.apply", function()
+	local cs = require("boo-colorscheme")
+
+	it("does not strip long link target names", function()
+		cs.apply({ "TestLinkGroup", "@punctuation.bracket" })
+
+		local hl = vim.api.nvim_get_hl(0, { name = "TestLinkGroup" })
+		assert.are.equal("@punctuation.bracket", hl.link)
+	end)
+
+	it("still sets a normal fg color correctly", function()
+		local colors = require("colors")
+		cs.apply({ "TestColorGroup", colors("#a3b4c5") })
+
+		local hl = vim.api.nvim_get_hl(0, { name = "TestColorGroup" })
+		assert.is_not_nil(hl.fg)
+	end)
+end)

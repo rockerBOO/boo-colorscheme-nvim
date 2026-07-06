@@ -909,12 +909,6 @@ M.apply = function(c)
 		val["blend"] = c[6]:to_rgb()
 	end
 
-	for k, v in pairs(val) do
-		if type(v) == "string" and #v > 7 then
-			val[k] = nil
-		end
-	end
-
 	if c["link"] ~= nil and c["link"] ~= "none" then
 		val["link"] = c["link"]
 	end
