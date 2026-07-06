@@ -471,12 +471,15 @@ local treesitter = function(c)
 
 	local punctuation = {
 		"TSPunctDelimiter",
-		"TSPunctBracket",
 		"TSPunctSpecial",
 		"@punctuation.delimiter",
-		"@punctuation.bracket",
 		"@punctuation.special",
 	}
+
+	local punctuation_bracket_groups = merge({
+		{ { "@punctuation.bracket", c.cloud3:lighten_to(0.4):desaturate(0.1) } },
+		links("@punctuation.bracket", { "TSPunctBracket" }),
+	})
 
 	local constants = {
 		"TSConstant",
@@ -620,6 +623,7 @@ local treesitter = function(c)
 
 	return merge({
 		highlights,
+		punctuation_bracket_groups,
 		{
 			{ "@punctuation.delimiter", c.cloud3:desaturate_to(0.05):lighten_to(0.4) },
 			{ "@punctuation.special", c.cloud12:desaturate_to(0.1):lighten_to(0.5) },
@@ -865,6 +869,7 @@ end
 local M = {}
 
 M._links = links
+M._treesitter = treesitter
 
 -- TODO: Simplify what happens at this stage if we are using nvim_set_hi
 -- we can define the styles, fg, bg and others by their name

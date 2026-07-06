@@ -37,3 +37,36 @@ describe("highlight_to_groups", function()
 		}, result)
 	end)
 end)
+
+describe("treesitter punctuation groups", function()
+	it("links TSPunctBracket to the real @punctuation.bracket definition", function()
+		local colors = require("colors")
+		local cs = require("boo-colorscheme")
+
+		local cloud_map = cs.find_theme_colors({})()
+		local c = { none = "none" }
+		for i, hex in ipairs(cloud_map) do
+			c["cloud" .. i - 1] = colors(hex)
+		end
+		c.fg = colors("#e4dcec")
+		c.bg = colors("#111113"):lighten_to(0.05)
+
+		local result = cs._treesitter(c)
+
+		local by_name = {}
+		for _, entry in ipairs(result) do
+			by_name[entry[1]] = entry
+		end
+
+		-- @punctuation.bracket holds the real color definition
+		assert.is_not_nil(by_name["@punctuation.bracket"])
+		assert.is_not.equal("string", type(by_name["@punctuation.bracket"][2]))
+
+		-- TSPunctBracket links to it
+		assert.are.same({ "TSPunctBracket", "@punctuation.bracket" }, by_name["TSPunctBracket"])
+
+		-- untouched names still resolve exactly as before
+		assert.are.same({ "TSPunctDelimiter", "@punctuation.delimiter" }, by_name["TSPunctDelimiter"])
+		assert.are.same({ "TSPunctSpecial", "@punctuation.special" }, by_name["TSPunctSpecial"])
+	end)
+end)
